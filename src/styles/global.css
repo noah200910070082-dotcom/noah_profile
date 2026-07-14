@@ -34,8 +34,9 @@
 }
 
 @layer scenes {
-  .world-app { position: relative; width: 100%; height: 100dvh; overflow: hidden; background: #181b1e; }
-  .scene-viewport { position: relative; width: 100%; height: 100%; overflow: hidden; }
+  .world-app { position: relative; width: 100%; height: 100dvh; overflow-x: hidden; overflow-y: auto; background: #181b1e; scroll-behavior: smooth; scroll-snap-type: y proximity; }
+  .scene-viewport { position: relative; width: 100%; min-height: 200dvh; overflow: visible; }
+  .scene-stage { position: relative; width: 100%; height: 100dvh; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; }
 
   .world-scene {
     position: absolute;
@@ -44,14 +45,12 @@
     width: min(100vw, 193.78dvh);
     aspect-ratio: 1746 / 901;
     overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(-50%, -50%) scale(1.015);
-    transition: opacity 260ms steps(5), transform 260ms steps(5);
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
     image-rendering: pixelated;
   }
 
-  .world-scene.is-active { z-index: 2; opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
   .scene-art, .scene-art picture, .scene-art img { width: 100%; height: 100%; }
   .scene-art { position: absolute; inset: 0; }
   .scene-art img { object-fit: fill; image-rendering: pixelated; animation: scene-breathe 14s ease-in-out infinite alternate; }

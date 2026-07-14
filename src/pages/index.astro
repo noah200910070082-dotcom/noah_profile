@@ -80,7 +80,8 @@ const detailDialogs = [
 <Layout title="Noah_Xu — Pixel World" description={description} image={pixelCover.src}>
   <div class="world-app">
     <main class="scene-viewport" aria-label="Noah Xu interactive pixel profile">
-      <section class="world-scene is-active" id="cover-scene" data-scene-panel="home" aria-label="Pixel world home" style={`--hotspot-scene: url('${pixelCover.src}')`}>
+      <div class="scene-stage" data-scene-stage="home">
+      <section class="world-scene" id="cover-scene" data-scene-panel="home" aria-label="Pixel world home" style={`--hotspot-scene: url('${pixelCover.src}')`}>
         <div class="scene-art">
           <Image src={pixelCover} alt="A warm pixel-art landscape with a developer, cat, bench and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} loading="eager" />
         </div>
@@ -112,8 +113,10 @@ const detailDialogs = [
 
         <div class="cover-signature">© 2026 NOAH_XU · MACAU</div>
       </section>
+      </div>
 
-      <section class="world-scene" id="build-scene" data-scene-panel="build" aria-label="Project landscape" aria-hidden="true" style={`--hotspot-scene: url('${pixelBuild.src}')`}>
+      <div class="scene-stage" data-scene-stage="build">
+      <section class="world-scene" id="build-scene" data-scene-panel="build" aria-label="Project landscape" style={`--hotspot-scene: url('${pixelBuild.src}')`}>
         <div class="scene-art">
           <Image src={pixelBuild} alt="A pixel-art mountain landscape with project signboards, a developer, cat and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} />
         </div>
@@ -138,6 +141,7 @@ const detailDialogs = [
 
         <div class="build-signature">© 2026 NOAH_XU · BUILD TOGETHER</div>
       </section>
+      </div>
 
       <div class="mobile-scene-nav cover-mobile-nav" data-mobile-nav="home">
         <strong>NOAH_XU · MACAU</strong>
@@ -191,7 +195,7 @@ const detailDialogs = [
   </div>
 
   <script>
-    const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene-panel]'));
+    const worldApp = document.querySelector<HTMLElement>('.world-app');
     const mobileNavs = Array.from(document.querySelectorAll<HTMLElement>('[data-mobile-nav]'));
     const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>('.pixel-dialog'));
     const toast = document.querySelector<HTMLElement>('.toast');
@@ -205,21 +209,35 @@ const detailDialogs = [
       window.setTimeout(() => toast.classList.remove('is-visible'), 2100);
     };
 
-    const switchScene = (scene: string, updateHash = true) => {
-      currentScene = scene === 'build' ? 'build' : 'home';
-      scenes.forEach((panel) => {
-        const active = panel.dataset.scenePanel === currentScene;
-        panel.classList.toggle('is-active', active);
-        panel.setAttribute('aria-hidden', String(!active));
-      });
+    const syncSceneUI = () => {
       mobileNavs.forEach((nav) => nav.toggleAttribute('hidden', nav.dataset.mobileNav !== currentScene));
+    };
+
+    const switchScene = (scene: string, updateHash = true, behavior: ScrollBehavior = 'smooth') => {
+      currentScene = scene === 'build' ? 'build' : 'home';
+      syncSceneUI();
+      const targetStage = document.querySelector<HTMLElement>(`[data-scene-stage="${currentScene}"]`);
+      if (worldApp && targetStage) worldApp.scrollTo({ top: targetStage.offsetTop, behavior });
       if (updateHash) history.replaceState(null, '', currentScene === 'build' ? '#build' : '#home');
     };
+
+    let scrollFrame = 0;
+    worldApp?.addEventListener('scroll', () => {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        const nextScene = worldApp.scrollTop >= worldApp.clientHeight / 2 ? 'build' : 'home';
+        if (nextScene === currentScene) return;
+        currentScene = nextScene;
+        syncSceneUI();
+        if (!dialogs.some((dialog) => dialog.open)) history.replaceState(null, '', currentScene === 'build' ? '#build' : '#home');
+      });
+    }, { passive: true });
 
     const openDialog = (id: string, updateHash = true) => {
       const dialog = document.getElementById(id) as HTMLDialogElement | null;
       if (!dialog) return;
-      if (buildDialogIds.has(id)) switchScene('build', false);
+      if (buildDialogIds.has(id)) switchScene('build', false, 'auto');
       dialogs.forEach((item) => { if (item !== dialog && item.open) item.close(); });
       if (!dialog.open) dialog.showModal();
       if (updateHash) history.replaceState(null, '', `#${id}`);
@@ -266,9 +284,9 @@ const detailDialogs = [
 
     const initial = location.hash.slice(1);
     if (initial === 'build') {
-      switchScene('home', false);
+      switchScene('home', false, 'auto');
       history.replaceState(null, '', '#home');
     } else if (document.getElementById(initial)?.matches('dialog')) openDialog(initial, false);
-    else switchScene('home', false);
+    else switchScene('home', false, 'auto');
   </script>
 </Layout>
