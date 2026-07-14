@@ -1,361 +1,271 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-import avatar from '../assets/noah-avatar.jpg';
 import imscPhoto from '../assets/imsc-macau-2026.jpg';
+import pixelCover from '../assets/pixel-cover.png';
+import pixelBuild from '../assets/pixel-build.png';
 
-const year = new Date().getFullYear();
-const description = 'Explore Noah Xu’s pixel room — a one-screen interactive profile about code, competitions, sport, music and life in Macau.';
+const description = 'Noah Xu’s interactive pixel-world profile — explore projects, competitions, sport, music and life in Macau.';
 
-const dockItems = [
-  { id: 'about', icon: 'NX', en: 'Profile', zh: '關於' },
-  { id: 'projects', icon: '</>', en: 'Builds', zh: '作品' },
-  { id: 'imsc', icon: 'Σ', en: 'IMSC', zh: '數學' },
-  { id: 'life', icon: '●', en: 'Life', zh: '生活' },
-  { id: 'contact', icon: '@', en: 'Contact', zh: '聯絡' }
+const buildCards = [
+  { id: 'houkong', pos: 'board-one', icon: '⌘', en: 'Hou Kong Pass', zh: '濠江通', enNote: 'Sports day assistant', zhNote: '校運會管理助手' },
+  { id: 'ai-hub', pos: 'board-two', icon: 'AI', en: 'AI Relay Hub', zh: 'AI 中轉站', enNote: 'Useful tools, connected', zhNote: '連接實用 AI 能力' },
+  { id: 'imsc', pos: 'board-three', icon: 'Σ', en: 'IMSC 2026', zh: '國際數學夏令營', enNote: 'Macau delegation', zhNote: '澳門代表隊' },
+  { id: 'tennis', pos: 'board-four', icon: '◎', en: 'Tennis', zh: '網球', enNote: 'One more ball', zhNote: '再多救一球' },
+  { id: 'go', pos: 'board-five', icon: '●', en: 'Go · 3 Dan', zh: '圍棋三段', enNote: 'See the whole board', zhNote: '看全局，落一子' },
+  { id: 'music', pos: 'board-six', icon: '♪', en: 'Music & Miles', zh: '音樂與旅行', enNote: 'Violin · travel', zhNote: '小提琴 · 旅行' }
+];
+
+const detailDialogs = [
+  {
+    id: 'about', file: 'ABOUT_NOAH.TXT', icon: 'NX',
+    enTitle: 'Hello, I’m Noah Xu.', zhTitle: '你好，我是 Noah Xu。',
+    enBody: 'A Macau-born student at Hou Kong Middle School — developer, OI / AI competitor, tennis player, Go 3-dan, violinist and a person who genuinely enjoys meeting people.',
+    zhBody: '土生土長的澳門濠江中學生：開發者、OI / AI 競賽選手、網球玩家、圍棋三段、小提琴手，也是一個真心喜歡認識新朋友的人。',
+    chips: ['MACAU · MO', 'HOU KONG', '180 CM', 'PKU · NORTH STAR']
+  },
+  {
+    id: 'houkong', file: 'HOUKONG.APP', icon: '⌘',
+    enTitle: 'Hou Kong Pass', zhTitle: '濠江通',
+    enBody: 'A school sports-day management assistant designed around real coordination work. The goal: turn a complicated event flow into a clearer digital process.',
+    zhBody: '圍繞校運會真實協調流程設計的管理助手，目標是把複雜活動整理成更清晰的數字化操作。',
+    chips: ['PRODUCT', 'SCHOOL OPS', 'WEB'],
+    link: 'https://houkong.up.railway.app', linkEn: 'Open deployment', linkZh: '查看部署'
+  },
+  {
+    id: 'ai-hub', file: 'AI_RELAY.WIP', icon: 'AI',
+    enTitle: 'AI Relay Hub', zhTitle: 'AI 中轉站',
+    enBody: 'A work-in-progress place for connecting useful AI capabilities. Less wandering between tools; more time making useful things.',
+    zhBody: '一個正在完善的 AI 能力中轉站：少一點在工具之間繞路，多一點真正有用的創作。',
+    chips: ['AI', 'BUILDING', 'COMING SOON']
+  },
+  {
+    id: 'tennis', file: 'TENNIS.LOG', icon: '◎',
+    enTitle: 'One more ball.', zhTitle: '再多救一球。',
+    enBody: 'I like Djokovic because the point is never over until it is over. Tennis teaches patient feet, a stubborn mind and how to reset after every mistake.',
+    zhBody: '我喜歡德約科維奇，因為在最後一刻之前，每一分都還沒有結束。網球教我耐心移動、保持韌性，以及犯錯後重新開始。',
+    chips: ['TENNIS', 'DJOKOVIC', 'LONG RALLY']
+  },
+  {
+    id: 'go', file: 'GO_BOARD.SGF', icon: '●',
+    enTitle: 'Go · 3 Dan', zhTitle: '圍棋三段',
+    enBody: 'A board can look quiet while a hundred possibilities are moving underneath. See the whole board, then place one stone well.',
+    zhBody: '棋盤表面很安靜，底下卻同時流動着上百種可能。先看全局，再把一顆棋下好。',
+    chips: ['3 DAN', 'STRATEGY', 'PATIENCE']
+  },
+  {
+    id: 'music', file: 'OFF_SCREEN.PLAY', icon: '♪',
+    enTitle: 'Music, violin and new maps.', zhTitle: '音樂、琴弦與新地圖。',
+    enBody: 'Violin reminds me that not everything should be rushed. Travel reminds me that every map becomes more interesting once there are people and stories on it.',
+    zhBody: '小提琴提醒我，不是所有事情都需要趕。旅行則提醒我：地圖上有了人與故事，才真正變得有趣。',
+    chips: ['VIOLIN', 'MUSIC', 'TRAVEL', 'PEOPLE']
+  },
+  {
+    id: 'notes', file: 'NOTES.MD', icon: '▤',
+    enTitle: 'Learning notes are loading…', zhTitle: '學習筆記正在載入……',
+    enBody: 'This branch will collect small discoveries from web development, algorithms, AI competitions and everything learned by building in public.',
+    zhBody: '這個分支將記錄 Web 開發、演算法、AI 競賽，以及公開做項目過程中的小發現。',
+    chips: ['WEB', 'OI', 'AI', 'LEARNING IN PUBLIC']
+  },
+  {
+    id: 'projects-index', file: 'PROJECTS.MAP', icon: '▰',
+    enTitle: 'Projects live on the build map.', zhTitle: '作品在建造地圖裡。',
+    enBody: 'Use the wooden “Let’s build!” sign on the right side of the home scene to enter the project world. The map keeps this profile feeling like one interactive page, not a normal website menu.',
+    zhBody: '點主畫面右側的「Let’s build!」木牌進入作品世界。這樣整個 profile 會更像一個互動單頁，而不是普通網站選單。',
+    chips: ['ONE PAGE', 'PROJECT MAP', 'PIXEL PROFILE']
+  }
 ];
 ---
 
-<Layout title="Noah_Xu — Interactive Pixel Profile" description={description} image={avatar.src}>
-  <div class="profile-app">
-    <a class="skip-link" href="#room-title">Skip to profile / 跳至主頁</a>
-
-    <header class="app-bar" aria-label="Profile controls">
-      <a class="pixel-brand" href="#home" aria-label="Noah Xu home">
-        <span class="brand-led" aria-hidden="true"></span>
-        <span>NOAH_XU.EXE</span>
-      </a>
-
-      <div class="app-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span class="lang-en">ONLINE · MACAU</span>
-        <span class="lang-zh">在線 · 澳門</span>
-      </div>
-
-      <div class="bar-actions">
-        <a class="bar-button" href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <button class="bar-button language-switch" type="button" aria-label="Switch language">
-          <span class="lang-en">中文</span><span class="lang-zh">EN</span>
-        </button>
-      </div>
-    </header>
-
-    <main class="room-shell" id="home">
-      <section class="pixel-room" aria-labelledby="room-title">
-        <div class="wall-grid" aria-hidden="true"></div>
-        <div class="window-scene" aria-hidden="true">
-          <span class="moon"></span>
-          <span class="building building-one"></span>
-          <span class="building building-two"></span>
-          <span class="building building-three"></span>
+<Layout title="Noah_Xu — Pixel World" description={description} image={pixelCover.src}>
+  <div class="world-app">
+    <main class="scene-viewport" aria-label="Noah Xu interactive pixel profile">
+      <section class="world-scene is-active" id="cover-scene" data-scene-panel="home" aria-label="Pixel world home">
+        <div class="scene-art">
+          <Image src={pixelCover} alt="A warm pixel-art landscape with a developer, cat, bench and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} loading="eager" />
         </div>
 
-        <div class="room-heading">
-          <p class="room-kicker">WELCOME TO MY ROOM</p>
-          <h1 id="room-title">NOAH_XU</h1>
-          <p class="room-subtitle lang-en">Student developer · competitor · player · musician</p>
-          <p class="room-subtitle lang-zh">學生開發者 · 競賽選手 · 運動玩家 · 音樂人</p>
-          <p class="room-hint lang-en">Click an object or use the dock to explore.</p>
-          <p class="room-hint lang-zh">點擊房間物件，或使用下方快捷列探索。</p>
+        <div class="cover-copy">
+          <p class="tiny-label">HELLO, WORLD!</p>
+          <h1><span class="lang-en">Hi, I’m Noah Xu 👋</span><span class="lang-zh">你好，我是 Noah Xu 👋</span></h1>
+          <p><span class="lang-en">I build, compete, play and keep exploring.</span><span class="lang-zh">我寫代碼、打競賽、運動，也一直探索。</span></p>
+          <nav class="cover-nav" aria-label="Main profile navigation">
+            <button type="button" data-open="about"><span>♙</span><b><span class="lang-en">About</span><span class="lang-zh">關於</span></b></button>
+            <button type="button" data-open="projects-index"><span>▰</span><b><span class="lang-en">Projects</span><span class="lang-zh">作品</span></b></button>
+            <button type="button" data-open="notes"><span>▤</span><b><span class="lang-en">Notes</span><span class="lang-zh">筆記</span></b></button>
+            <button type="button" data-open="contact"><span>✉</span><b><span class="lang-en">Contact</span><span class="lang-zh">聯絡</span></b></button>
+          </nav>
         </div>
 
-        <button class="scene-button portrait-object" type="button" data-open="about" aria-label="Open Noah profile">
-          <span class="picture-nail" aria-hidden="true"></span>
-          <span class="picture-frame">
-            <Image src={avatar} alt="Noah Xu as a child" widths={[180, 300]} sizes="150px" format="webp" loading="eager" />
-          </span>
-          <span class="object-label"><span class="lang-en">PROFILE</span><span class="lang-zh">關於我</span></span>
+        <button class="image-hotspot lets-build-hotspot" type="button" data-scene="build" aria-label="Enter the build scene">
+          <span><span class="lang-en">ENTER</span><span class="lang-zh">進入作品世界</span> →</span>
         </button>
+        <button class="image-hotspot character-hotspot" type="button" data-open="about" aria-label="Meet Noah"></button>
+        <button class="image-hotspot cat-hotspot" type="button" data-egg="cat" aria-label="Pet the pixel cat"></button>
+        <button class="image-hotspot tree-hotspot" type="button" data-egg="tree" aria-label="Inspect the pixel tree"></button>
+        <button class="image-hotspot lake-hotspot" type="button" data-egg="lake" aria-label="Inspect the lake"></button>
 
-        <button class="scene-button desk-object" type="button" data-open="projects" aria-label="Open projects">
-          <span class="computer">
-            <span class="monitor"><span class="screen"><b>NOAH</b><i>READY_</i></span></span>
-            <span class="computer-neck"></span>
-            <span class="keyboard"></span>
-          </span>
-          <span class="desk"><i></i><i></i></span>
-          <span class="object-label"><span class="lang-en">PROJECTS</span><span class="lang-zh">作品</span></span>
-        </button>
+        <a class="image-hotspot social-hotspot social-github" href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer" aria-label="Open GitHub"></a>
+        <a class="image-hotspot social-hotspot social-instagram" href="https://www.instagram.com/noah_chanwa/" target="_blank" rel="noreferrer" aria-label="Open Instagram"></a>
+        <button class="image-hotspot social-hotspot social-wechat copy-handle" type="button" data-copy="Noah107" aria-label="Copy WeChat"></button>
+        <button class="image-hotspot social-hotspot social-discord copy-handle" type="button" data-copy="noah_xu_50118" aria-label="Copy Discord"></button>
 
-        <button class="scene-button imsc-object" type="button" data-open="imsc" aria-label="Open IMSC experience">
-          <span class="clipboard"><i></i><b>Σ</b><em>2026</em></span>
-          <span class="object-label">IMSC</span>
-        </button>
-
-        <button class="scene-button lamp-object" type="button" data-open="contact" aria-label="Open contact information">
-          <span class="lamp-shade"></span>
-          <span class="lamp-light"></span>
-          <span class="lamp-stem"></span>
-          <span class="lamp-base"></span>
-          <span class="object-label"><span class="lang-en">SAY HI</span><span class="lang-zh">來聊聊</span></span>
-        </button>
-
-        <button class="scene-button shelf-object" type="button" data-open="life" aria-label="Open life outside code">
-          <span class="shelf-top"></span>
-          <span class="shelf-row row-one"><i></i><i></i><i></i><i></i></span>
-          <span class="shelf-row row-two"><i></i><i></i><i></i><i></i><i></i></span>
-          <span class="shelf-row row-three"><i></i><i></i><i></i></span>
-          <span class="object-label"><span class="lang-en">OFF-SCREEN</span><span class="lang-zh">屏幕之外</span></span>
-        </button>
-
-        <div class="cat-object" aria-hidden="true">
-          <span class="cat-tail"></span><span class="cat-body"></span><span class="cat-head"><i></i><i></i></span>
-        </div>
-
-        <button class="scene-button hobby-object tennis-object" type="button" data-open="life" aria-label="Open tennis profile">
-          <span class="racket"><i></i></span><span class="ball"></span>
-          <span class="object-label">TENNIS</span>
-        </button>
-
-        <button class="scene-button hobby-object go-object" type="button" data-open="life" aria-label="Open Go profile">
-          <span class="go-board"><i></i><i></i><i></i><i></i><b></b><em></em></span>
-          <span class="object-label"><span class="lang-en">GO 3-DAN</span><span class="lang-zh">圍棋三段</span></span>
-        </button>
-
-        <button class="scene-button hobby-object violin-object" type="button" data-open="life" aria-label="Open music profile">
-          <span class="violin-case"><i></i><b>♪</b></span>
-          <span class="object-label"><span class="lang-en">MUSIC</span><span class="lang-zh">音樂</span></span>
-        </button>
-
-        <div class="floor" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-
-        <nav class="quick-dock" aria-label="Profile branches">
-          {dockItems.map((item) => (
-            <button class="dock-item" type="button" data-open={item.id} aria-label={`Open ${item.en}`}>
-              <span class="dock-icon">{item.icon}</span>
-              <span class="dock-label lang-en">{item.en}</span>
-              <span class="dock-label lang-zh">{item.zh}</span>
-            </button>
-          ))}
-        </nav>
+        <div class="cover-signature">© 2026 NOAH_XU · MACAU</div>
       </section>
+
+      <section class="world-scene" id="build-scene" data-scene-panel="build" aria-label="Project landscape" aria-hidden="true">
+        <div class="scene-art">
+          <Image src={pixelBuild} alt="A pixel-art mountain landscape with project signboards, a developer, cat and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} />
+        </div>
+
+        <button class="image-hotspot back-home-hotspot" type="button" data-scene="home" aria-label="Back to home"></button>
+
+        {buildCards.map((card) => (
+          <button class={`build-card ${card.pos}`} type="button" data-open={card.id} aria-label={`Open ${card.en}`}>
+            <span class="board-face">
+              <i>{card.icon}</i>
+              <span><b class="lang-en">{card.en}</b><b class="lang-zh">{card.zh}</b><small class="lang-en">{card.enNote}</small><small class="lang-zh">{card.zhNote}</small></span>
+            </span>
+          </button>
+        ))}
+
+        <button class="image-hotspot build-tree-hotspot" type="button" data-egg="treehouse" aria-label="Inspect the treehouse"></button>
+        <button class="image-hotspot orange-bird-hotspot" type="button" data-egg="orange-bird" aria-label="Spot the orange bird"></button>
+        <button class="image-hotspot white-bird-hotspot" type="button" data-egg="white-bird" aria-label="Spot the white bird"></button>
+        <button class="image-hotspot mushroom-hotspot" type="button" data-egg="mushroom" aria-label="Inspect the mushroom"></button>
+        <button class="image-hotspot deer-hotspot" type="button" data-egg="deer" aria-label="Spot the deer"></button>
+        <button class="image-hotspot build-cat-hotspot" type="button" data-egg="build-cat" aria-label="Pet the hiking cat"></button>
+
+        <div class="build-signature">© 2026 NOAH_XU · BUILD TOGETHER</div>
+      </section>
+
+      <div class="mobile-scene-nav cover-mobile-nav" data-mobile-nav="home">
+        <strong>NOAH_XU · MACAU</strong>
+        <button type="button" data-open="about">ABOUT</button>
+        <button type="button" data-scene="build">LET’S BUILD →</button>
+        <button type="button" data-open="contact">CONTACT</button>
+      </div>
+      <div class="mobile-scene-nav build-mobile-nav" data-mobile-nav="build" hidden>
+        <button type="button" data-scene="home">← HOME</button>
+        {buildCards.map((card) => <button type="button" data-open={card.id}><span class="lang-en">{card.en}</span><span class="lang-zh">{card.zh}</span></button>)}
+      </div>
+
+      <button class="language-switch" type="button" aria-label="Switch language"><span class="lang-en">中文</span><span class="lang-zh">EN</span></button>
     </main>
 
-    <footer class="room-footer">
-      <p><span class="lang-en">桃李春风一杯酒，江湖夜雨十年灯。</span><span class="lang-zh">WHAT DOESN’T KILL YOU MAKES YOU STRONGER.</span></p>
-      <p>© {year} · <span class="lang-en">MADE IN MACAU</span><span class="lang-zh">澳門製造</span></p>
-    </footer>
-
-    <dialog class="pixel-dialog" id="about">
-      <article class="dialog-window">
-        <header class="window-bar">
-          <span>PROFILE.TXT</span>
-          <button type="button" data-close aria-label="Close profile">×</button>
-        </header>
-        <div class="window-content about-layout">
-          <figure class="dialog-photo">
-            <Image src={avatar} alt="Noah Xu childhood portrait" widths={[360, 600]} sizes="280px" format="webp" />
-            <figcaption>ORIGINAL BETA BUILD · 180 CM OF CURIOSITY</figcaption>
-          </figure>
-          <div>
-            <p class="terminal-line">C:\USERS\NOAH&gt; WHOAMI</p>
-            <h2>NOAH_XU</h2>
-            <p class="lead lang-en">Macau-born student at Hou Kong Middle School. Developer, OI / AI competitor, social human and professional tab-opener.</p>
-            <p class="lead lang-zh">土生土長的澳門濠江中學生。開發者、OI / AI 競賽選手、喜歡交流的人，以及專業分頁開啟者。</p>
-            <div class="data-grid">
-              <span><small>HOME</small><b>Macau · MO</b></span>
-              <span><small>SCHOOL</small><b><span class="lang-en">Hou Kong</span><span class="lang-zh">濠江中學</span></b></span>
-              <span><small>ARENA</small><b>OI · AI · Math</b></span>
-              <span><small>NORTH STAR</small><b><span class="lang-en">Peking University</span><span class="lang-zh">北京大學</span></b></span>
-            </div>
-            <blockquote>桃李春风一杯酒，江湖夜雨十年灯。</blockquote>
-          </div>
-        </div>
-      </article>
-    </dialog>
-
-    <dialog class="pixel-dialog" id="projects">
-      <article class="dialog-window">
-        <header class="window-bar">
-          <span>PROJECTS.APP</span>
-          <button type="button" data-close aria-label="Close projects">×</button>
-        </header>
-        <div class="window-content">
-          <p class="terminal-line">C:\NOAH\BUILD&gt; DIR</p>
-          <h2><span class="lang-en">Things I build</span><span class="lang-zh">我做的東西</span></h2>
-          <div class="project-list">
-            <a class="project-row featured" href="https://houkong.up.railway.app" target="_blank" rel="noreferrer">
-              <span class="project-number">01</span>
-              <span><b>濠江通</b><small><span class="lang-en">Sports Day Management Assistant</span><span class="lang-zh">校運會管理助手</span></small></span>
-              <em>OPEN ↗</em>
-            </a>
-            <div class="project-row">
-              <span class="project-number">02</span>
-              <span><b><span class="lang-en">AI Relay Station</span><span class="lang-zh">AI 中轉站</span></b><small><span class="lang-en">Useful AI capabilities, connected</span><span class="lang-zh">連接實用的 AI 能力</span></small></span>
-              <em>WIP···</em>
+    {detailDialogs.map((item) => (
+      <dialog class="pixel-dialog" id={item.id}>
+        <article class="dialog-window">
+          <header class="window-bar"><span>{item.file}</span><button type="button" data-close aria-label={`Close ${item.id}`}>×</button></header>
+          <div class="window-content detail-layout">
+            <div class="detail-icon">{item.icon}</div>
+            <div>
+              <p class="terminal-line">C:\NOAH\PROFILE&gt; OPEN {item.id.toUpperCase()}</p>
+              <h2 class="lang-en">{item.enTitle}</h2><h2 class="lang-zh">{item.zhTitle}</h2>
+              <p class="lead lang-en">{item.enBody}</p><p class="lead lang-zh">{item.zhBody}</p>
+              <div class="chip-row">{item.chips.map((chip) => <span>{chip}</span>)}</div>
+              {item.link && <a class="pixel-link" href={item.link} target="_blank" rel="noreferrer"><span class="lang-en">{item.linkEn}</span><span class="lang-zh">{item.linkZh}</span> ↗</a>}
             </div>
           </div>
-          <p class="window-note lang-en">Real projects first. Fancy descriptions later.</p>
-          <p class="window-note lang-zh">先做真正有用的項目，華麗描述可以晚一點。</p>
-        </div>
-      </article>
-    </dialog>
+        </article>
+      </dialog>
+    ))}
 
-    <dialog class="pixel-dialog" id="imsc">
-      <article class="dialog-window wide-window">
-        <header class="window-bar">
-          <span>IMSC_2026.JPG</span>
-          <button type="button" data-close aria-label="Close IMSC experience">×</button>
-        </header>
+    <dialog class="pixel-dialog wide-dialog" id="imsc">
+      <article class="dialog-window">
+        <header class="window-bar"><span>IMSC_2026.JPG</span><button type="button" data-close aria-label="Close IMSC">×</button></header>
         <div class="window-content imsc-layout">
-          <figure class="imsc-photo">
-            <Image src={imscPhoto} alt="Macau delegation at the fourth International Mathematics Summer Camp" widths={[620, 1000, 1400]} sizes="(max-width: 700px) 90vw, 55vw" format="webp" />
-          </figure>
-          <div>
-            <p class="terminal-line">EVENT LOG · 2026</p>
-            <h2>IMSC</h2>
-            <h3 class="lang-en">Math, teamwork and a bigger map.</h3>
-            <h3 class="lang-zh">數學、同行，與更大的世界。</h3>
-            <p class="lang-en">Represented Macau at the 4th International Mathematics Summer Camp.</p>
-            <p class="lang-zh">代表澳門參與第四屆國際數學夏令營。</p>
-            <span class="achievement-chip">MACAU DELEGATION · 2026</span>
-          </div>
-        </div>
-      </article>
-    </dialog>
-
-    <dialog class="pixel-dialog" id="life">
-      <article class="dialog-window wide-window">
-        <header class="window-bar">
-          <span>OFF_SCREEN.EXE</span>
-          <button type="button" data-close aria-label="Close life profile">×</button>
-        </header>
-        <div class="window-content">
-          <p class="terminal-line">C:\NOAH\LIFE&gt; LIST --ALL</p>
-          <h2><span class="lang-en">More than code</span><span class="lang-zh">代碼之外</span></h2>
-          <div class="hobby-grid">
-            <article><span>◎</span><small>TENNIS</small><b><span class="lang-en">One more ball.</span><span class="lang-zh">再多救一球。</span></b><p><span class="lang-en">Djokovic energy: patient feet, stubborn mind.</span><span class="lang-zh">德約科維奇式能量：耐心腳步，倔強意志。</span></p></article>
-            <article><span>●</span><small>GO</small><b><span class="lang-en">3-dan player</span><span class="lang-zh">圍棋三段</span></b><p><span class="lang-en">See the whole board. Place one stone.</span><span class="lang-zh">看全局，落一子。</span></p></article>
-            <article><span>♪</span><small>VIOLIN</small><b><span class="lang-en">Strings & patience</span><span class="lang-zh">琴弦與耐心</span></b><p><span class="lang-en">Not everything needs to be rushed.</span><span class="lang-zh">不是所有事情都需要趕。</span></p></article>
-            <article><span>↗</span><small>TRAVEL</small><b><span class="lang-en">New maps, new people</span><span class="lang-zh">新地圖，新朋友</span></b><p><span class="lang-en">Curiosity works better outside the room too.</span><span class="lang-zh">走出房間，好奇心依然有效。</span></p></article>
-          </div>
+          <figure class="imsc-photo"><Image src={imscPhoto} alt="Macau delegation at the fourth International Mathematics Summer Camp" widths={[620, 1000, 1400]} sizes="(max-width: 700px) 90vw, 55vw" format="webp" /></figure>
+          <div><p class="terminal-line">EVENT LOG · 2026</p><h2>IMSC</h2><h3 class="lang-en">Math, teamwork and a bigger map.</h3><h3 class="lang-zh">數學、同行，與更大的世界。</h3><p class="lead lang-en">Represented Macau at the 4th International Mathematics Summer Camp.</p><p class="lead lang-zh">代表澳門參與第四屆國際數學夏令營。</p><div class="chip-row"><span>MACAU</span><span>MATH</span><span>2026</span></div></div>
         </div>
       </article>
     </dialog>
 
     <dialog class="pixel-dialog" id="contact">
       <article class="dialog-window">
-        <header class="window-bar">
-          <span>CONTACTS.LNK</span>
-          <button type="button" data-close aria-label="Close contacts">×</button>
-        </header>
-        <div class="window-content">
-          <p class="terminal-line">PING NOAH_XU</p>
-          <h2><span class="lang-en">Let’s connect.</span><span class="lang-zh">來聊聊。</span></h2>
-          <p class="lead lang-en">Code, competitions, tennis, music, travel — or something not on the menu yet.</p>
-          <p class="lead lang-zh">代碼、競賽、網球、音樂、旅行，或任何還沒出現在選單裡的新話題。</p>
-          <div class="contact-list">
-            <a href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer"><span>GitHub</span><b>noah200910070082-dotcom</b><em>↗</em></a>
-            <a href="https://www.instagram.com/noah_chanwa/" target="_blank" rel="noreferrer"><span>Instagram</span><b>@noah_chanwa</b><em>↗</em></a>
-            <button class="copy-handle" type="button" data-copy="Noah107"><span>WeChat</span><b>Noah107</b><em>COPY</em></button>
-            <button class="copy-handle" type="button" data-copy="noah_xu_50118"><span>Discord</span><b>noah_xu_50118</b><em>COPY</em></button>
-          </div>
-        </div>
+        <header class="window-bar"><span>CONTACTS.LNK</span><button type="button" data-close aria-label="Close contact">×</button></header>
+        <div class="window-content"><p class="terminal-line">PING NOAH_XU</p><h2><span class="lang-en">Let’s connect.</span><span class="lang-zh">來聊聊。</span></h2><div class="contact-list"><a href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer"><span>GitHub</span><b>noah200910070082-dotcom</b><em>↗</em></a><a href="https://www.instagram.com/noah_chanwa/" target="_blank" rel="noreferrer"><span>Instagram</span><b>@noah_chanwa</b><em>↗</em></a><button class="copy-handle" type="button" data-copy="Noah107"><span>WeChat</span><b>Noah107</b><em>COPY</em></button><button class="copy-handle" type="button" data-copy="noah_xu_50118"><span>Discord</span><b>noah_xu_50118</b><em>COPY</em></button></div></div>
       </article>
     </dialog>
 
-    <div class="toast" role="status" aria-live="polite">
-      <span class="lang-en">Copied to clipboard.</span><span class="lang-zh">已複製到剪貼板。</span>
-    </div>
+    <div class="toast" role="status" aria-live="polite"></div>
   </div>
 
   <script>
     const html = document.documentElement;
+    const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene-panel]'));
+    const mobileNavs = Array.from(document.querySelectorAll<HTMLElement>('[data-mobile-nav]'));
+    const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>('.pixel-dialog'));
     const languageButton = document.querySelector<HTMLButtonElement>('.language-switch');
     const toast = document.querySelector<HTMLElement>('.toast');
-    const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>('.pixel-dialog'));
+    const buildDialogIds = new Set(['houkong', 'ai-hub', 'imsc', 'tennis', 'go', 'music']);
+    let currentScene = 'home';
 
-    const updateLanguageLabel = () => {
-      const isChinese = html.dataset.language === 'zh';
-      languageButton?.setAttribute('aria-label', isChinese ? 'Switch to English' : '切換至中文');
+    const showToast = (message: string) => {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      window.setTimeout(() => toast.classList.remove('is-visible'), 2100);
     };
 
-    languageButton?.addEventListener('click', () => {
-      const next = html.dataset.language === 'zh' ? 'en' : 'zh';
-      html.dataset.language = next;
-      html.lang = next === 'zh' ? 'zh-Hant' : 'en';
-      localStorage.setItem('noah-language', next);
-      updateLanguageLabel();
-    });
+    const switchScene = (scene: string, updateHash = true) => {
+      currentScene = scene === 'build' ? 'build' : 'home';
+      scenes.forEach((panel) => {
+        const active = panel.dataset.scenePanel === currentScene;
+        panel.classList.toggle('is-active', active);
+        panel.setAttribute('aria-hidden', String(!active));
+      });
+      mobileNavs.forEach((nav) => nav.toggleAttribute('hidden', nav.dataset.mobileNav !== currentScene));
+      if (updateHash) history.replaceState(null, '', currentScene === 'build' ? '#build' : '#home');
+    };
 
     const openDialog = (id: string, updateHash = true) => {
       const dialog = document.getElementById(id) as HTMLDialogElement | null;
       if (!dialog) return;
-      dialogs.forEach((item) => {
-        if (item !== dialog && item.open) item.close();
-      });
+      if (buildDialogIds.has(id)) switchScene('build', false);
+      dialogs.forEach((item) => { if (item !== dialog && item.open) item.close(); });
       if (!dialog.open) dialog.showModal();
       if (updateHash) history.replaceState(null, '', `#${id}`);
     };
 
-    const closeDialog = (dialog: HTMLDialogElement) => {
-      dialog.close();
-      history.replaceState(null, '', '#home');
+    document.querySelectorAll<HTMLElement>('[data-scene]').forEach((button) => button.addEventListener('click', () => switchScene(button.dataset.scene || 'home')));
+    document.querySelectorAll<HTMLElement>('[data-open]').forEach((button) => button.addEventListener('click', () => openDialog(button.dataset.open || '')));
+    document.querySelectorAll<HTMLButtonElement>('[data-close]').forEach((button) => button.addEventListener('click', () => { const dialog = button.closest<HTMLDialogElement>('dialog'); if (dialog) dialog.close(); }));
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('close', () => history.replaceState(null, '', currentScene === 'build' ? '#build' : '#home'));
+    });
+
+    const eggMessages: Record<string, { en: string; zh: string }> = {
+      cat: { en: 'Achievement unlocked: the cat approves your click.', zh: '彩蛋解鎖：小貓批准了這次點擊。' },
+      tree: { en: 'Growth is a feature, not a deadline.', zh: '成長是一項長期功能，不是一個截止日期。' },
+      lake: { en: 'Travel mode: ON. New maps are waiting.', zh: '旅行模式：已開啟。新地圖正在等待。' },
+      treehouse: { en: 'Secret workspace found in the treehouse.', zh: '你在樹屋裡發現了一個秘密工作室。' },
+      'orange-bird': { en: 'Bird watcher badge: orange edition.', zh: '觀鳥徽章解鎖：橙色版本。' },
+      'white-bird': { en: 'This bird has reviewed the pull request.', zh: '這隻鳥已經審閱了 Pull Request。' },
+      mushroom: { en: 'Small discoveries still count.', zh: '再小的發現，也值得記錄。' },
+      deer: { en: 'Quiet visitor detected at the edge of the map.', zh: '地圖邊緣發現一位安靜的訪客。' },
+      'build-cat': { en: 'The hiking cat says: ship it.', zh: '登山小貓說：可以發佈了。' }
     };
 
-    document.querySelectorAll<HTMLElement>('[data-open]').forEach((button) => {
-      button.addEventListener('click', () => openDialog(button.dataset.open || ''));
-    });
-
-    document.querySelectorAll<HTMLButtonElement>('[data-close]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dialog = button.closest<HTMLDialogElement>('dialog');
-        if (dialog) closeDialog(dialog);
-      });
-    });
-
-    dialogs.forEach((dialog) => {
-      dialog.addEventListener('click', (event) => {
-        if (event.target === dialog) closeDialog(dialog);
-      });
-      dialog.addEventListener('close', () => {
-        if (location.hash === `#${dialog.id}`) history.replaceState(null, '', '#home');
-      });
-    });
+    document.querySelectorAll<HTMLElement>('[data-egg]').forEach((button) => button.addEventListener('click', () => { const egg = eggMessages[button.dataset.egg || '']; if (egg) showToast(html.dataset.language === 'zh' ? egg.zh : egg.en); }));
 
     const copyText = async (value: string) => {
-      try {
-        await navigator.clipboard.writeText(value);
-        return true;
-      } catch {
-        const temporary = document.createElement('textarea');
-        temporary.value = value;
-        temporary.setAttribute('readonly', '');
-        temporary.style.position = 'fixed';
-        temporary.style.opacity = '0';
-        document.body.appendChild(temporary);
-        temporary.select();
-        const legacyCopy = (document as unknown as { execCommand: (command: string) => boolean }).execCommand;
-        const copied = legacyCopy.call(document, 'copy');
-        temporary.remove();
-        return copied;
+      try { await navigator.clipboard.writeText(value); return true; }
+      catch {
+        const temporary = document.createElement('textarea'); temporary.value = value; temporary.style.position = 'fixed'; temporary.style.opacity = '0'; document.body.appendChild(temporary); temporary.select();
+        const legacyCopy = (document as unknown as { execCommand: (command: string) => boolean }).execCommand; const copied = legacyCopy.call(document, 'copy'); temporary.remove(); return copied;
       }
     };
+    document.querySelectorAll<HTMLButtonElement>('.copy-handle').forEach((button) => button.addEventListener('click', async () => { const value = button.dataset.copy; if (value && await copyText(value)) showToast(html.dataset.language === 'zh' ? '已複製到剪貼板。' : 'Copied to clipboard.'); }));
 
-    document.querySelectorAll<HTMLButtonElement>('.copy-handle').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const value = button.dataset.copy;
-        if (!value || !(await copyText(value))) return;
-        toast?.classList.add('is-visible');
-        window.setTimeout(() => toast?.classList.remove('is-visible'), 1600);
-      });
-    });
+    languageButton?.addEventListener('click', () => { const next = html.dataset.language === 'zh' ? 'en' : 'zh'; html.dataset.language = next; html.lang = next === 'zh' ? 'zh-Hant' : 'en'; localStorage.setItem('noah-language', next); languageButton.setAttribute('aria-label', next === 'zh' ? 'Switch to English' : '切換至中文'); });
 
-    const initialBranch = location.hash.slice(1);
-    if (initialBranch && initialBranch !== 'home') openDialog(initialBranch, false);
-    updateLanguageLabel();
+    const initial = location.hash.slice(1);
+    if (initial === 'build') {
+      switchScene('home', false);
+      history.replaceState(null, '', '#home');
+    } else if (document.getElementById(initial)?.matches('dialog')) openDialog(initial, false);
+    else switchScene('home', false);
   </script>
-
-  <script is:inline type="application/ld+json" set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Noah Xu',
-    url: 'https://noahxu.org',
-    homeLocation: { '@type': 'Place', name: 'Macau' },
-    affiliation: { '@type': 'EducationalOrganization', name: 'Hou Kong Middle School' },
-    sameAs: ['https://github.com/noah200910070082-dotcom', 'https://www.instagram.com/noah_chanwa/'],
-    knowsAbout: ['Software development', 'Artificial intelligence', 'Olympiad in Informatics', 'Go', 'Violin', 'Tennis']
-  })} />
 </Layout>
