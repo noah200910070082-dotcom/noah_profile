@@ -93,14 +93,11 @@
   .cover-signature, .build-signature { position: absolute; bottom: 5.2%; left: 27.2%; z-index: 7; min-width: 255px; padding: 9px 8px 7px; background: #282c2f; color: #aaa; font-size: clamp(0.48rem, 0.86vw, 0.9rem); letter-spacing: 0.04em; }
   .build-signature { left: 25.5%; }
 
-  .language-switch { position: fixed; top: 14px; right: 15px; z-index: 120; padding: 8px 11px; border: 4px solid var(--ink); background: var(--paper); box-shadow: 4px 4px 0 var(--ink); font-size: 0.72rem; }
-  .language-switch:hover { background: var(--yellow); transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
-
   .mobile-scene-nav { display: none; }
 
   @keyframes scene-breathe {
-    0% { transform: scale(1.002) translate3d(0, 0, 0); filter: saturate(1); }
-    100% { transform: scale(1.012) translate3d(-0.18%, -0.12%, 0); filter: saturate(1.035); }
+    0% { filter: saturate(1); }
+    100% { filter: saturate(1.035); }
   }
 
   @keyframes pixel-dust {
@@ -111,33 +108,65 @@
 }
 
 @layer hotspots {
-  .image-hotspot { position: absolute; z-index: 14; padding: 0; border: 0; background: transparent; transform-origin: center bottom; transition: transform 150ms steps(3), filter 150ms steps(3); }
-  .image-hotspot:hover, .image-hotspot:focus-visible { outline: 0; background: transparent; box-shadow: none; filter: drop-shadow(0 0 10px rgba(255,209,94,0.62)); transform: scale(1.045) translateY(-4px); backdrop-filter: brightness(1.16) saturate(1.18); }
-  .image-hotspot::after { position: absolute; top: 5px; right: 5px; width: 7px; height: 7px; background: var(--yellow); box-shadow: -12px 12px 0 rgba(255,209,94,0.82), 10px 22px 0 rgba(255,236,152,0.74), -18px -3px 0 rgba(255,128,97,0.64); content: ""; opacity: 0; transform: scale(0); pointer-events: none; }
-  .image-hotspot:hover::after, .image-hotspot:focus-visible::after { opacity: 1; animation: hotspot-spark 620ms steps(4) infinite alternate; }
+  .image-hotspot {
+    position: absolute;
+    z-index: 14;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    box-shadow: none;
+    perspective: 520px;
+  }
 
-  .lets-build-hotspot { top: 62%; left: 87.4%; z-index: 32; width: 11.3%; height: 8.3%; }
-  .lets-build-hotspot { animation: sign-nudge 2.8s steps(2) infinite; }
+  .image-hotspot::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: var(--hotspot-scene);
+    background-repeat: no-repeat;
+    background-size: var(--crop-size);
+    background-position: var(--crop-position);
+    content: "";
+    opacity: 0;
+    transform: translateY(0) scale(1) rotateX(0);
+    transform-origin: center bottom;
+    transition: opacity 70ms linear, transform 180ms cubic-bezier(.2,.8,.25,1), filter 180ms ease;
+    clip-path: var(--hotspot-shape, inset(0));
+    image-rendering: pixelated;
+    pointer-events: none;
+  }
+
+  .image-hotspot:hover::after,
+  .image-hotspot:focus-visible::after {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.045) rotateX(5deg);
+    filter: drop-shadow(0 5px 0 rgba(25,25,21,0.34));
+  }
+
+  .image-hotspot:active::after,
+  .image-hotspot.is-popped::after {
+    opacity: 1;
+    animation: object-pop 340ms cubic-bezier(.2,.8,.25,1);
+  }
+
+  .lets-build-hotspot { top: 62%; left: 87.4%; z-index: 32; width: 11.3%; height: 8.3%; --crop-size: 884.956% 1204.819%; --crop-position: 98.534% 67.612%; --hotspot-shape: polygon(3% 8%, 98% 0, 95% 90%, 0 100%); animation: sign-nudge 2.8s steps(2) infinite; }
   .lets-build-hotspot span { position: absolute; right: 3px; bottom: -33px; padding: 4px 7px; border: 3px solid var(--ink); background: var(--yellow); box-shadow: 3px 3px 0 var(--ink); font-size: clamp(0.45rem, 0.72vw, 0.76rem); white-space: nowrap; opacity: 0; }
   .lets-build-hotspot:hover span, .lets-build-hotspot:focus-visible span { opacity: 1; }
 
-  .character-hotspot { top: 44%; left: 56%; width: 14%; height: 30%; }
-  .cat-hotspot { top: 59%; left: 70.5%; width: 8%; height: 15%; }
-  .tree-hotspot { top: 21%; left: 79%; width: 19%; height: 48%; }
-  .lake-hotspot { top: 70%; left: 0; width: 14%; height: 13%; }
-  .cat-hotspot:hover, .build-cat-hotspot:hover { animation: cat-hop 520ms steps(4) infinite alternate; }
-  .tree-hotspot::before, .build-tree-hotspot::before { position: absolute; inset: 5% 3% 18%; background: radial-gradient(circle at 20% 30%, rgba(221,255,98,0.28) 0 5%, transparent 6%), radial-gradient(circle at 70% 20%, rgba(255,237,92,0.25) 0 4%, transparent 5%), radial-gradient(circle at 57% 65%, rgba(211,255,85,0.22) 0 4%, transparent 5%); content: ""; opacity: 0.35; animation: leaf-flicker 3.2s steps(4) infinite alternate; pointer-events: none; }
-  .lake-hotspot::before { position: absolute; inset: 28% 0; background: repeating-linear-gradient(0deg, transparent 0 8px, rgba(125,230,255,0.42) 8px 11px, transparent 11px 17px); content: ""; opacity: 0.3; animation: water-shift 2.4s steps(6) infinite; pointer-events: none; }
+  .character-hotspot { top: 44%; left: 56%; width: 14%; height: 30%; --crop-size: 714.286% 333.333%; --crop-position: 65.116% 62.857%; --hotspot-shape: polygon(30% 0, 70% 0, 78% 27%, 100% 100%, 0 100%, 22% 27%); }
+  .cat-hotspot { top: 59%; left: 70.5%; width: 8%; height: 15%; --crop-size: 1250% 666.667%; --crop-position: 76.630% 69.412%; --hotspot-shape: ellipse(47% 48% at 51% 52%); }
+  .tree-hotspot { top: 21%; left: 79%; width: 19%; height: 48%; --crop-size: 526.316% 208.333%; --crop-position: 97.531% 40.385%; --hotspot-shape: polygon(23% 0, 73% 0, 100% 38%, 85% 67%, 67% 68%, 65% 100%, 37% 100%, 36% 68%, 0 58%, 5% 27%); }
+  .lake-hotspot { top: 70%; left: 0; width: 14%; height: 13%; --crop-size: 714.286% 769.231%; --crop-position: 0 80.460%; --hotspot-shape: ellipse(50% 42% at 48% 54%); }
 
-  .social-hotspot { bottom: 3.3%; width: 3.5%; height: 7.5%; }
-  .social-github { left: 6.7%; } .social-instagram { left: 12%; } .social-wechat { left: 17%; } .social-discord { left: 21.4%; }
+  .social-hotspot { bottom: 3.3%; width: 3.5%; height: 7.5%; --crop-size: 2857.143% 1333.333%; --hotspot-shape: inset(8% round 10%); }
+  .social-github { left: 6.7%; --crop-position: 6.943% 96.432%; } .social-instagram { left: 12%; --crop-position: 12.435% 96.432%; } .social-wechat { left: 17%; --crop-position: 17.617% 96.432%; } .social-discord { left: 21.4%; --crop-position: 22.176% 96.432%; }
 
-  .back-home-hotspot { top: 4.1%; left: 4%; width: 14.7%; height: 6.8%; }
+  .back-home-hotspot { top: 4.1%; left: 4%; width: 14.7%; height: 6.8%; --crop-size: 680.272% 1470.588%; --crop-position: 4.689% 4.399%; --hotspot-shape: polygon(0 8%, 96% 0, 100% 91%, 4% 100%); }
 
   .build-card { position: absolute; z-index: 18; width: 14.2%; height: 17.5%; padding: 0; outline: 0; transition: transform 140ms steps(3), filter 140ms steps(3); }
-  .build-card::after { position: absolute; top: -5px; right: -5px; width: 8px; height: 8px; background: var(--yellow); box-shadow: -14px 8px 0 rgba(255,209,94,0.78), 8px 18px 0 rgba(255,128,97,0.68); content: ""; opacity: 0; pointer-events: none; }
-  .build-card:focus-visible { outline: 0; filter: brightness(1.12) saturate(1.12) drop-shadow(0 0 10px rgba(255,209,94,0.55)); transform: scale(1.04) translateY(-5px); }
-  .build-card:hover::after, .build-card:focus-visible::after { opacity: 1; animation: hotspot-spark 620ms steps(4) infinite alternate; }
+  .build-card:focus-visible { outline: 0; transform: perspective(520px) translateY(-5px) scale(1.035) rotateX(3deg); }
+  .build-card.is-popped { animation: card-pop 340ms cubic-bezier(.2,.8,.25,1); }
   .board-one { top: 31.4%; left: 8.2%; } .board-two { top: 31.4%; left: 25.6%; } .board-three { top: 31.4%; left: 42.6%; }
   .board-four { top: 52%; left: 8.4%; } .board-five { top: 52%; left: 25.7%; } .board-six { top: 52%; left: 42.7%; }
 
@@ -161,26 +190,21 @@
   .board-face > span { display: grid; gap: 4%; }
   .board-face b { font-size: clamp(0.48rem, 0.92vw, 0.96rem); line-height: 1.05; }
   .board-face small { font-size: clamp(0.35rem, 0.62vw, 0.66rem); line-height: 1.15; }
-  .build-card:hover .board-face { background: #e0b477; transform: translateY(-4px); box-shadow: 0 4px 0 var(--ink); }
-  .build-card:hover { filter: brightness(1.08) saturate(1.08) drop-shadow(0 0 10px rgba(255,209,94,0.55)); transform: scale(1.04) translateY(-5px); }
+  .build-card:hover .board-face,
+  .build-card:focus-visible .board-face { transform: translateY(-4px); box-shadow: 0 5px 0 rgba(25,25,21,0.55); }
+  .build-card:hover { transform: perspective(520px) translateY(-5px) scale(1.035) rotateX(3deg); }
 
-  .build-tree-hotspot { top: 0; right: 0; width: 35%; height: 56%; z-index: 12; }
-  .orange-bird-hotspot { top: 24%; left: 76.3%; width: 3.2%; height: 5%; z-index: 24; }
-  .white-bird-hotspot { top: 27%; left: 92%; width: 3.1%; height: 5.5%; z-index: 24; }
-  .mushroom-hotspot { top: 72%; left: 18.4%; width: 3.4%; height: 5.6%; z-index: 24; }
-  .deer-hotspot { top: 66%; left: 94.2%; width: 3.8%; height: 10%; z-index: 24; }
-  .build-cat-hotspot { top: 62%; left: 69.7%; width: 6.4%; height: 16%; z-index: 24; }
+  .build-tree-hotspot { top: 0; right: 0; width: 35%; height: 56%; z-index: 12; --crop-size: 285.714% 178.571%; --crop-position: 100% 0; --hotspot-shape: polygon(24% 0, 100% 0, 100% 100%, 49% 100%, 47% 72%, 8% 68%, 0 33%); }
+  .orange-bird-hotspot { top: 24%; left: 76.3%; width: 3.2%; height: 5%; z-index: 24; --crop-size: 3125% 2000%; --crop-position: 78.822% 25.263%; --hotspot-shape: ellipse(49% 45% at 50% 50%); }
+  .white-bird-hotspot { top: 27%; left: 92%; width: 3.1%; height: 5.5%; z-index: 24; --crop-size: 3225.806% 1818.182%; --crop-position: 94.943% 28.571%; --hotspot-shape: ellipse(49% 45% at 50% 50%); }
+  .mushroom-hotspot { top: 72%; left: 18.4%; width: 3.4%; height: 5.6%; z-index: 24; --crop-size: 2941.176% 1785.714%; --crop-position: 19.048% 76.271%; --hotspot-shape: ellipse(48% 49% at 50% 52%); }
+  .deer-hotspot { top: 66%; left: 94.2%; width: 3.8%; height: 10%; z-index: 24; --crop-size: 2631.579% 1000%; --crop-position: 97.921% 73.333%; --hotspot-shape: polygon(16% 0, 84% 0, 100% 100%, 0 100%); }
+  .build-cat-hotspot { top: 62%; left: 69.7%; width: 6.4%; height: 16%; z-index: 24; --crop-size: 1562.5% 625%; --crop-position: 74.466% 73.810%; --hotspot-shape: ellipse(48% 48% at 50% 52%); }
   .orange-bird-hotspot, .white-bird-hotspot { animation: bird-bob 1.7s steps(3) infinite alternate; }
-  .mushroom-hotspot:hover { animation: mushroom-pop 420ms steps(3) infinite alternate; }
-  .deer-hotspot:hover { transform: scale(1.08) translate(-3px, -3px); }
-
-  @keyframes hotspot-spark { from { transform: scale(0.6) rotate(0); } to { transform: scale(1.25) rotate(90deg); } }
+  @keyframes object-pop { 0% { transform: translateY(0) scale(1) rotateX(0); filter: none; } 48% { transform: translateY(-8px) scale(1.065) rotateX(7deg); filter: drop-shadow(0 6px 0 rgba(25,25,21,0.4)); } 100% { transform: translateY(-4px) scale(1.04) rotateX(3deg); filter: drop-shadow(0 4px 0 rgba(25,25,21,0.3)); } }
+  @keyframes card-pop { 0% { transform: translateY(0) scale(1); } 48% { transform: perspective(520px) translateY(-8px) scale(1.055) rotateX(5deg); } 100% { transform: perspective(520px) translateY(-4px) scale(1.03) rotateX(2deg); } }
   @keyframes sign-nudge { 0%, 78%, 100% { transform: translateY(0); } 84% { transform: translateY(-3px) rotate(-1deg); } 91% { transform: translateY(1px) rotate(1deg); } }
-  @keyframes cat-hop { from { transform: translateY(0) scale(1.03); } to { transform: translateY(-7px) scale(1.07); } }
-  @keyframes leaf-flicker { from { opacity: 0.18; transform: translateX(-2px); } to { opacity: 0.58; transform: translateX(3px); } }
-  @keyframes water-shift { from { transform: translateX(-9px); } to { transform: translateX(12px); } }
   @keyframes bird-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
-  @keyframes mushroom-pop { from { transform: scale(1.03); } to { transform: scale(1.13) translateY(-4px); } }
 }
 
 @layer dialogs {
@@ -228,7 +252,6 @@
     .cover-copy { display: none; }
     .cover-signature, .build-signature { display: none; }
     .image-hotspot { display: none; }
-    .language-switch { top: 9px; right: 9px; padding: 6px 8px; border-width: 3px; }
 
     .mobile-scene-nav { position: fixed; right: 9px; bottom: 10px; left: 9px; z-index: 80; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; border: 4px solid var(--ink); background: rgba(255,241,200,0.96); box-shadow: 5px 5px 0 var(--ink); }
     .mobile-scene-nav[hidden] { display: none; }
@@ -249,7 +272,6 @@
 
   @media (max-height: 520px) and (orientation: landscape) {
     .cover-copy { top: 16%; transform: scale(0.88); transform-origin: top left; }
-    .language-switch { top: 7px; right: 7px; padding: 5px 8px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

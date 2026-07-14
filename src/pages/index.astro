@@ -80,7 +80,7 @@ const detailDialogs = [
 <Layout title="Noah_Xu — Pixel World" description={description} image={pixelCover.src}>
   <div class="world-app">
     <main class="scene-viewport" aria-label="Noah Xu interactive pixel profile">
-      <section class="world-scene is-active" id="cover-scene" data-scene-panel="home" aria-label="Pixel world home">
+      <section class="world-scene is-active" id="cover-scene" data-scene-panel="home" aria-label="Pixel world home" style={`--hotspot-scene: url('${pixelCover.src}')`}>
         <div class="scene-art">
           <Image src={pixelCover} alt="A warm pixel-art landscape with a developer, cat, bench and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} loading="eager" />
         </div>
@@ -113,7 +113,7 @@ const detailDialogs = [
         <div class="cover-signature">© 2026 NOAH_XU · MACAU</div>
       </section>
 
-      <section class="world-scene" id="build-scene" data-scene-panel="build" aria-label="Project landscape" aria-hidden="true">
+      <section class="world-scene" id="build-scene" data-scene-panel="build" aria-label="Project landscape" aria-hidden="true" style={`--hotspot-scene: url('${pixelBuild.src}')`}>
         <div class="scene-art">
           <Image src={pixelBuild} alt="A pixel-art mountain landscape with project signboards, a developer, cat and large tree" widths={[900, 1400, 1746]} sizes="100vw" format="webp" quality={95} />
         </div>
@@ -150,7 +150,6 @@ const detailDialogs = [
         {buildCards.map((card) => <button type="button" data-open={card.id}><span class="lang-en">{card.en}</span><span class="lang-zh">{card.zh}</span></button>)}
       </div>
 
-      <button class="language-switch" type="button" aria-label="Switch language"><span class="lang-en">中文</span><span class="lang-zh">EN</span></button>
     </main>
 
     {detailDialogs.map((item) => (
@@ -192,11 +191,9 @@ const detailDialogs = [
   </div>
 
   <script>
-    const html = document.documentElement;
     const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene-panel]'));
     const mobileNavs = Array.from(document.querySelectorAll<HTMLElement>('[data-mobile-nav]'));
     const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>('.pixel-dialog'));
-    const languageButton = document.querySelector<HTMLButtonElement>('.language-switch');
     const toast = document.querySelector<HTMLElement>('.toast');
     const buildDialogIds = new Set(['houkong', 'ai-hub', 'imsc', 'tennis', 'go', 'music']);
     let currentScene = 'home';
@@ -248,7 +245,15 @@ const detailDialogs = [
       'build-cat': { en: 'The hiking cat says: ship it.', zh: '登山小貓說：可以發佈了。' }
     };
 
-    document.querySelectorAll<HTMLElement>('[data-egg]').forEach((button) => button.addEventListener('click', () => { const egg = eggMessages[button.dataset.egg || '']; if (egg) showToast(html.dataset.language === 'zh' ? egg.zh : egg.en); }));
+    document.querySelectorAll<HTMLElement>('[data-egg]').forEach((button) => button.addEventListener('click', () => { const egg = eggMessages[button.dataset.egg || '']; if (egg) showToast(egg.en); }));
+
+    document.querySelectorAll<HTMLElement>('.image-hotspot, .build-card').forEach((item) => {
+      item.addEventListener('pointerdown', () => {
+        item.classList.remove('is-popped');
+        requestAnimationFrame(() => item.classList.add('is-popped'));
+        window.setTimeout(() => item.classList.remove('is-popped'), 360);
+      });
+    });
 
     const copyText = async (value: string) => {
       try { await navigator.clipboard.writeText(value); return true; }
@@ -257,9 +262,7 @@ const detailDialogs = [
         const legacyCopy = (document as unknown as { execCommand: (command: string) => boolean }).execCommand; const copied = legacyCopy.call(document, 'copy'); temporary.remove(); return copied;
       }
     };
-    document.querySelectorAll<HTMLButtonElement>('.copy-handle').forEach((button) => button.addEventListener('click', async () => { const value = button.dataset.copy; if (value && await copyText(value)) showToast(html.dataset.language === 'zh' ? '已複製到剪貼板。' : 'Copied to clipboard.'); }));
-
-    languageButton?.addEventListener('click', () => { const next = html.dataset.language === 'zh' ? 'en' : 'zh'; html.dataset.language = next; html.lang = next === 'zh' ? 'zh-Hant' : 'en'; localStorage.setItem('noah-language', next); languageButton.setAttribute('aria-label', next === 'zh' ? 'Switch to English' : '切換至中文'); });
+    document.querySelectorAll<HTMLButtonElement>('.copy-handle').forEach((button) => button.addEventListener('click', async () => { const value = button.dataset.copy; if (value && await copyText(value)) showToast('Copied to clipboard.'); }));
 
     const initial = location.hash.slice(1);
     if (initial === 'build') {
