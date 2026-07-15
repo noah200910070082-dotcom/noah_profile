@@ -19,6 +19,12 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
   <div class="site-shell">
     <a class="skip-link" href="#main">Skip to content / 跳至內容</a>
 
+    <div class="ambient-layer" aria-hidden="true">
+      <span class="ambient-orb ambient-orb-one"></span>
+      <span class="ambient-orb ambient-orb-two"></span>
+      <span class="ambient-orb ambient-orb-three"></span>
+    </div>
+
     <header class="site-header">
       <nav class="nav-bar container" aria-label="Main navigation">
         <a class="brand" href="#top" aria-label="Noah Xu home">
@@ -83,8 +89,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
           <div class="portrait-wrap reveal">
             <span class="sticker sticker-top">
-              <span class="lang-en">Official<br />Edition</span>
-              <span class="lang-zh">正式<br />版本</span>
+              <span class="lang-en">Always<br />Evolving</span>
+              <span class="lang-zh">持續<br />進化</span>
             </span>
             <figure class="portrait-card">
               <div class="portrait-frame">
@@ -408,6 +414,67 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const ambientLayer = document.querySelector<HTMLElement>('.ambient-layer');
+
+    if (!reducedMotion && finePointer) {
+      const interactiveCards = document.querySelectorAll<HTMLElement>('.portrait-card, .about-panel, .work-card, .life-card, .contact-card');
+      let activeCard: HTMLElement | null = null;
+
+      const resetCard = (card: HTMLElement) => {
+        card.classList.remove('is-interacting');
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+        card.style.setProperty('--glow-x', '50%');
+        card.style.setProperty('--glow-y', '50%');
+        if (activeCard === card) activeCard = null;
+      };
+
+      interactiveCards.forEach((card) => {
+        card.classList.add('interactive-card');
+        const light = document.createElement('span');
+        light.className = 'interaction-light';
+        light.setAttribute('aria-hidden', 'true');
+        card.append(light);
+
+        const strength = card.classList.contains('portrait-card') ? 7 : card.classList.contains('work-card') ? 5 : card.classList.contains('life-card') ? 4 : 2.2;
+
+        card.addEventListener('pointermove', (event) => {
+          if (activeCard && activeCard !== card) resetCard(activeCard);
+          activeCard = card;
+          card.classList.add('is-interacting');
+          const bounds = card.getBoundingClientRect();
+          const x = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+          const y = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+          card.style.setProperty('--tilt-x', `${(0.5 - y) * strength}deg`);
+          card.style.setProperty('--tilt-y', `${(x - 0.5) * strength}deg`);
+          card.style.setProperty('--glow-x', `${x * 100}%`);
+          card.style.setProperty('--glow-y', `${y * 100}%`);
+        });
+
+        card.addEventListener('pointerleave', () => resetCard(card));
+      });
+
+      let ambientFrame = 0;
+      let pointerX = 0;
+      let pointerY = 0;
+      window.addEventListener('pointermove', (event) => {
+        const eventTarget = event.target;
+        if (activeCard && eventTarget instanceof Node && !activeCard.contains(eventTarget)) resetCard(activeCard);
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (ambientFrame) return;
+        ambientFrame = requestAnimationFrame(() => {
+          ambientFrame = 0;
+          const shiftX = (pointerX / window.innerWidth - 0.5) * -18;
+          const shiftY = (pointerY / window.innerHeight - 0.5) * -14;
+          ambientLayer?.style.setProperty('--ambient-x', `${shiftX}px`);
+          ambientLayer?.style.setProperty('--ambient-y', `${shiftY}px`);
+        });
+      }, { passive: true });
+    }
 
     const copyText = async (value: string) => {
       try {
