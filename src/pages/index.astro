@@ -3,6 +3,14 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import avatar from '../assets/noah-avatar.jpg';
 import imscPhoto from '../assets/imsc-macau-2026.jpg';
+import techGalaPhoto from '../assets/journey/tech-gala-2025.jpg';
+import roboticsSchoolPhoto from '../assets/journey/robotics-school-floor.jpg';
+import hengqinPhoto from '../assets/journey/hengqin-study-tour.jpg';
+import traditionalPortrait from '../assets/journey/traditional-style-portrait.jpg';
+import pekingUniversityPhoto from '../assets/journey/peking-university-visit.jpg';
+import shanghaiPhoto from '../assets/journey/shanghai-skyline.jpg';
+import graduationPhoto from '../assets/journey/graduation-friends.jpg';
+import roboticsDebugPhoto from '../assets/journey/robotics-event-debug.jpg';
 
 const quotes = [
   { en: '桃李春风一杯酒，江湖夜雨十年灯。', hans: '桃李春风一杯酒，江湖夜雨十年灯。', hant: '桃李春風一杯酒，江湖夜雨十年燈。' },
@@ -41,6 +49,9 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           </a>
           <a class="nav-link" href="#life">
             <span class="lang-en">Off-screen</span><span class="lang-zh-hant">屏幕之外</span><span class="lang-zh-hans">屏幕之外</span>
+          </a>
+          <a class="nav-link" href="#explore">
+            <span class="lang-en">Explore</span><span class="lang-zh-hant">探索</span><span class="lang-zh-hans">探索</span>
           </a>
           <a class="nav-link" href="#contact">
             <span class="lang-en">Say hi</span><span class="lang-zh-hant">來聊聊</span><span class="lang-zh-hans">来聊聊</span>
@@ -334,13 +345,14 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
               <span class="life-symbol" aria-hidden="true">♪</span>
             </article>
 
-            <article class="life-card life-travel reveal">
+            <a class="life-card life-travel reveal" href="#travel-atlas" aria-label="Open travel and campus atlas">
               <div>
                 <p>04 · TRAVEL</p>
                 <h3><span class="lang-en">New maps, new people</span><span class="lang-zh-hant">新地圖，新朋友</span><span class="lang-zh-hans">新地图，新朋友</span></h3>
               </div>
+              <p class="life-card-cta"><span class="lang-en">Open atlas</span><span class="lang-zh-hant">打開圖集</span><span class="lang-zh-hans">打开图集</span> ↘</p>
               <span class="life-symbol" aria-hidden="true">↗</span>
-            </article>
+            </a>
 
             <article class="life-card life-music reveal">
               <div>
@@ -360,6 +372,160 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         </div>
       </div>
 
+      <section class="section explore-section" id="explore">
+        <div class="section-scene scene-explore" aria-hidden="true">
+          <span class="scene-route scene-route-one"></span>
+          <span class="scene-route scene-route-two"></span>
+          <span class="scene-compass">N</span>
+          <span class="scene-map-dot scene-map-dot-one"></span>
+          <span class="scene-map-dot scene-map-dot-two"></span>
+        </div>
+
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-kicker">04 / Explore more</p>
+              <h2 class="section-title lang-en">More chapters.<br />More coordinates.</h2>
+              <h2 class="section-title lang-zh-hant">更多章節，<br />更多座標。</h2><h2 class="section-title lang-zh-hans">更多章节，<br />更多坐标。</h2>
+            </div>
+            <p class="section-intro lang-en">Robots, milestones and places that turned curiosity into something I could build, remember or walk through.</p>
+            <p class="section-intro lang-zh-hant">機器人、成長節點與旅途，把好奇心變成可以搭建、記住和親自走過的事物。</p><p class="section-intro lang-zh-hans">机器人、成长节点与旅途，把好奇心变成可以搭建、记住和亲自走过的事物。</p>
+          </div>
+
+          <nav class="chapter-nav reveal" aria-label="Explore chapter navigation">
+            <a href="#robotics-lab"><span>01</span><span class="lang-en">Robotics lab</span><span class="lang-zh-hant">機器人實驗室</span><span class="lang-zh-hans">机器人实验室</span></a>
+            <a href="#life-timeline"><span>02</span><span class="lang-en">Life timeline</span><span class="lang-zh-hant">人生歷程</span><span class="lang-zh-hans">人生历程</span></a>
+            <a href="#travel-atlas"><span>03</span><span class="lang-en">Travel atlas</span><span class="lang-zh-hant">旅行圖集</span><span class="lang-zh-hans">旅行图集</span></a>
+          </nav>
+
+          <section class="explore-chapter robotics-chapter" id="robotics-lab">
+            <div class="chapter-heading reveal">
+              <div>
+                <p class="chapter-index">01 / BUILD · TEST · DEBUG</p>
+                <h3><span class="lang-en">Robotics is teamwork<br />with moving parts.</span><span class="lang-zh-hant">機器人，是會動的<br />團隊協作。</span><span class="lang-zh-hans">机器人，是会动的<br />团队协作。</span></h3>
+              </div>
+              <p class="lang-en">The machine only works when mechanics, code, observation and communication agree.</p>
+              <p class="lang-zh-hant">機械、代碼、觀察與溝通達成一致時，機器才真正開始運轉。</p><p class="lang-zh-hans">机械、代码、观察与沟通达成一致时，机器才真正开始运转。</p>
+            </div>
+
+            <div class="robotics-grid">
+              <figure class="explore-card robotics-card robotics-card-wide reveal">
+                <div class="explore-media landscape-media">
+                  <Image src={roboticsSchoolPhoto} alt="Noah and a teammate observing robots on a school competition floor" widths={[640, 960, 1440]} sizes="(max-width: 900px) 100vw, 64vw" format="webp" />
+                </div>
+                <figcaption>
+                  <span class="story-label">Competition floor · Macau</span>
+                  <strong><span class="lang-en">Read the field before changing the machine.</span><span class="lang-zh-hant">先讀懂賽場，再改動機器。</span><span class="lang-zh-hans">先读懂赛场，再改动机器。</span></strong>
+                </figcaption>
+              </figure>
+
+              <aside class="explore-card robot-loop-card reveal">
+                <p class="story-label">NOAH’S DEBUG LOOP</p>
+                <ol class="robot-loop">
+                  <li><span>01</span><b><span class="lang-en">Observe</span><span class="lang-zh-hant">觀察</span><span class="lang-zh-hans">观察</span></b></li>
+                  <li><span>02</span><b><span class="lang-en">Build</span><span class="lang-zh-hant">搭建</span><span class="lang-zh-hans">搭建</span></b></li>
+                  <li><span>03</span><b><span class="lang-en">Test</span><span class="lang-zh-hant">測試</span><span class="lang-zh-hans">测试</span></b></li>
+                  <li><span>04</span><b><span class="lang-en">Improve</span><span class="lang-zh-hant">改進</span><span class="lang-zh-hans">改进</span></b></li>
+                </ol>
+                <p class="lang-en">Repeat until “almost” becomes reliable.</p>
+                <p class="lang-zh-hant">重複，直到「差不多」變成可靠。</p><p class="lang-zh-hans">重复，直到“差不多”变成可靠。</p>
+              </aside>
+
+              <figure class="explore-card robotics-card robotics-card-debug reveal">
+                <div class="explore-media portrait-media">
+                  <Image src={roboticsDebugPhoto} alt="Noah and a teammate debugging a competition robot beside a laptop" widths={[480, 720, 960]} sizes="(max-width: 900px) 100vw, 34vw" format="webp" />
+                </div>
+                <figcaption>
+                  <span class="story-label">Live debugging</span>
+                  <strong><span class="lang-en">Two minds, one stubborn robot.</span><span class="lang-zh-hant">兩個大腦，一台倔強的機器人。</span><span class="lang-zh-hans">两个大脑，一台倔强的机器人。</span></strong>
+                </figcaption>
+              </figure>
+
+              <figure class="explore-card robotics-card robotics-card-team reveal">
+                <div class="explore-media landscape-media">
+                  <Image src={techGalaPhoto} alt="Student delegation at the 2025 Global Youth Science and Technology Elite Gala" widths={[640, 960, 1440]} sizes="(max-width: 900px) 100vw, 60vw" format="webp" />
+                </div>
+                <figcaption>
+                  <span class="story-label">2025 · Global youth technology gathering</span>
+                  <strong><span class="lang-en">Technology gets bigger when the room gets bigger.</span><span class="lang-zh-hant">走進更大的場域，科技也有了更大的尺度。</span><span class="lang-zh-hans">走进更大的场域，科技也有了更大的尺度。</span></strong>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="explore-chapter timeline-chapter" id="life-timeline">
+            <div class="chapter-heading reveal">
+              <div>
+                <p class="chapter-index">02 / MILESTONES</p>
+                <h3><span class="lang-en">A timeline still<br />being written.</span><span class="lang-zh-hant">仍在書寫的<br />人生時間線。</span><span class="lang-zh-hans">仍在书写的<br />人生时间线。</span></h3>
+              </div>
+              <p class="lang-en">Not a résumé — a trail of rooms entered, people met and versions of myself left behind.</p>
+              <p class="lang-zh-hant">這不是履歷，而是走進過的房間、遇見過的人，以及一路更新的自己。</p><p class="lang-zh-hans">这不是履历，而是走进过的房间、遇见过的人，以及一路更新的自己。</p>
+            </div>
+
+            <div class="timeline-grid">
+              <article class="explore-card timeline-card reveal">
+                <span class="timeline-dot"></span>
+                <div class="explore-media timeline-media"><Image src={techGalaPhoto} alt="Group photograph at a youth science and technology event" widths={[420, 720, 960]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /></div>
+                <p class="story-label">2025 · TECHNOLOGY</p>
+                <h4><span class="lang-en">See a wider arena.</span><span class="lang-zh-hant">看見更大的賽場。</span><span class="lang-zh-hans">看见更大的赛场。</span></h4>
+              </article>
+              <article class="explore-card timeline-card reveal">
+                <span class="timeline-dot"></span>
+                <div class="explore-media timeline-media"><Image src={hengqinPhoto} alt="Hou Kong Middle School students on a Hengqin cooperation zone study visit" widths={[420, 720, 960]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /></div>
+                <p class="story-label">HENGQIN · FIELD STUDY</p>
+                <h4><span class="lang-en">Learn beyond the classroom.</span><span class="lang-zh-hant">把課堂延伸到城市。</span><span class="lang-zh-hans">把课堂延伸到城市。</span></h4>
+              </article>
+              <article class="explore-card timeline-card reveal">
+                <span class="timeline-dot"></span>
+                <div class="explore-media timeline-media"><Image src={graduationPhoto} alt="Noah with school friends at a graduation celebration" widths={[420, 720, 960]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /></div>
+                <p class="story-label">FRIENDS · NEXT CHAPTER</p>
+                <h4><span class="lang-en">Keep the people, turn the page.</span><span class="lang-zh-hant">留住同行的人，翻開下一頁。</span><span class="lang-zh-hans">留住同行的人，翻开下一页。</span></h4>
+              </article>
+            </div>
+          </section>
+
+          <section class="explore-chapter atlas-chapter" id="travel-atlas">
+            <div class="chapter-heading reveal">
+              <div>
+                <p class="chapter-index">03 / TRAVEL · CAMPUS ATLAS</p>
+                <h3><span class="lang-en">Places become<br />personal.</span><span class="lang-zh-hant">走過之後，<br />地名有了故事。</span><span class="lang-zh-hans">走过之后，<br />地名有了故事。</span></h3>
+              </div>
+              <p class="lang-en">Cities, campuses and cultural detours — a collection designed to keep growing.</p>
+              <p class="lang-zh-hant">城市、大學與文化岔路——這是一份會一直生長的旅行圖集。</p><p class="lang-zh-hans">城市、大学与文化岔路——这是一份会一直生长的旅行图集。</p>
+            </div>
+
+            <div class="atlas-grid">
+              <figure class="explore-card atlas-card atlas-tradition reveal">
+                <div class="explore-media atlas-media"><Image src={traditionalPortrait} alt="Noah wearing traditional Chinese clothing in a moon gate setting" widths={[480, 720, 960]} sizes="(max-width: 800px) 100vw, 37vw" format="webp" /></div>
+                <figcaption><span class="atlas-code">CULTURE / 01</span><strong><span class="lang-en">Borrow another century for one evening.</span><span class="lang-zh-hant">借另一個時代，過一個夜晚。</span><span class="lang-zh-hans">借另一个时代，过一个夜晚。</span></strong></figcaption>
+              </figure>
+
+              <figure class="explore-card atlas-card atlas-pku reveal">
+                <div class="explore-media atlas-media"><Image src={pekingUniversityPhoto} alt="Noah visiting the west gate of Peking University" widths={[640, 960, 1440]} sizes="(max-width: 800px) 100vw, 58vw" format="webp" /></div>
+                <figcaption><span class="atlas-code">BEIJING / PKU</span><strong><span class="lang-en">A north star you can walk through.</span><span class="lang-zh-hant">可以親自走進的北極星。</span><span class="lang-zh-hans">可以亲自走进的北极星。</span></strong></figcaption>
+              </figure>
+
+              <figure class="explore-card atlas-card atlas-shanghai reveal">
+                <div class="explore-media atlas-media"><Image src={shanghaiPhoto} alt="Noah standing near the Oriental Pearl Tower in Shanghai" widths={[480, 720, 960]} sizes="(max-width: 800px) 100vw, 37vw" format="webp" /></div>
+                <figcaption><span class="atlas-code">SHANGHAI / SKYLINE</span><strong><span class="lang-en">Scale check: dream bigger.</span><span class="lang-zh-hant">與天際線比尺度，也把夢想放大。</span><span class="lang-zh-hans">与天际线比尺度，也把梦想放大。</span></strong></figcaption>
+              </figure>
+            </div>
+
+            <div class="atlas-footer reveal">
+              <span>MO</span><i></i><span>BEIJING</span><i></i><span>SHANGHAI</span><i></i><span>…</span>
+              <p><span class="lang-en">Next coordinates loading.</span><span class="lang-zh-hant">下一組座標，載入中。</span><span class="lang-zh-hans">下一组坐标，载入中。</span></p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div class="quote-strip" aria-label="Explore section divider">
+        <div class="quote-track quote-track-delayed">
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
+        </div>
+      </div>
+
       <section class="section" id="contact">
         <div class="section-scene scene-contact" aria-hidden="true">
           <span class="scene-moon"></span>
@@ -369,7 +535,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         </div>
         <div class="container">
           <div class="contact-card reveal">
-            <p class="section-kicker">04 / Find me online</p>
+            <p class="section-kicker">05 / Find me online</p>
             <h2 class="contact-title lang-en">Good ideas like good company.</h2>
             <h2 class="contact-title lang-zh-hant">好點子，也喜歡好朋友。</h2><h2 class="contact-title lang-zh-hans">好点子，也喜欢好朋友。</h2>
             <p class="contact-note lang-en">Talk to me about code, competitions, tennis, music, travel — or the strange overlap between all five.</p>
@@ -460,7 +626,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     const ambientLayer = document.querySelector<HTMLElement>('.ambient-layer');
 
     if (!reducedMotion && finePointer) {
-      const interactiveCards = document.querySelectorAll<HTMLElement>('.portrait-card, .about-panel, .work-card, .life-card, .contact-card');
+      const interactiveCards = document.querySelectorAll<HTMLElement>('.portrait-card, .about-panel, .work-card, .life-card, .explore-card, .contact-card');
       let activeCard: HTMLElement | null = null;
 
       const resetCard = (card: HTMLElement) => {
@@ -479,7 +645,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         light.setAttribute('aria-hidden', 'true');
         card.append(light);
 
-        const strength = card.classList.contains('portrait-card') ? 16 : card.classList.contains('work-card') ? 12 : card.classList.contains('life-card') ? 10 : 6.5;
+        const strength = card.classList.contains('portrait-card') ? 16 : card.classList.contains('work-card') ? 12 : card.classList.contains('life-card') ? 10 : card.classList.contains('explore-card') ? 9 : 6.5;
 
         card.addEventListener('pointermove', (event) => {
           if (activeCard && activeCard !== card) resetCard(activeCard);
