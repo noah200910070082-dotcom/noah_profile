@@ -34,10 +34,15 @@ const socialImage = new URL(image, Astro.site);
     <title>{title}</title>
     <script is:inline>
       (() => {
-        const saved = localStorage.getItem('noah-language');
-        const preferred = navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
-        document.documentElement.dataset.language = saved || preferred;
-        document.documentElement.lang = saved === 'zh' || (!saved && preferred === 'zh') ? 'zh-Hant' : 'en';
+        const supported = ['en', 'zh-hans', 'zh-hant'];
+        const savedValue = localStorage.getItem('noah-language');
+        const saved = savedValue === 'zh' ? 'zh-hant' : savedValue;
+        const browserLanguage = (navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
+        const prefersTraditional = /(^zh-(tw|hk|mo)|^zh-hant)/.test(browserLanguage);
+        const preferred = browserLanguage.startsWith('zh') ? (prefersTraditional ? 'zh-hant' : 'zh-hans') : 'en';
+        const language = saved && supported.includes(saved) ? saved : preferred;
+        document.documentElement.dataset.language = language;
+        document.documentElement.lang = language === 'zh-hans' ? 'zh-Hans' : language === 'zh-hant' ? 'zh-Hant' : 'en';
       })();
     </script>
   </head>

@@ -5,10 +5,10 @@ import avatar from '../assets/noah-avatar.jpg';
 import imscPhoto from '../assets/imsc-macau-2026.jpg';
 
 const quotes = [
-  '桃李春风一杯酒，江湖夜雨十年灯。',
-  'What doesn’t kill you makes you stronger.',
-  'Macau born · curiosity powered',
-  'Code · Compete · Play · Repeat'
+  { en: '桃李春风一杯酒，江湖夜雨十年灯。', hans: '桃李春风一杯酒，江湖夜雨十年灯。', hant: '桃李春風一杯酒，江湖夜雨十年燈。' },
+  { en: 'What doesn’t kill you makes you stronger.', hans: 'What doesn’t kill you makes you stronger.', hant: 'What doesn’t kill you makes you stronger.' },
+  { en: 'Macau born · curiosity powered', hans: '生于澳门 · 好奇心驱动', hant: '生於澳門 · 好奇心驅動' },
+  { en: 'Code · Compete · Play · Repeat', hans: '代码 · 竞赛 · 运动 · 再来一次', hant: '代碼 · 競賽 · 運動 · 再來一次' }
 ];
 
 const year = new Date().getFullYear();
@@ -17,7 +17,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
 <Layout title="Noah_Xu — Student, Developer & More" description={description} image={avatar.src}>
   <div class="site-shell">
-    <a class="skip-link" href="#main">Skip to content / 跳至內容</a>
+    <a class="skip-link" href="#main"><span class="lang-en">Skip to content</span><span class="lang-zh-hans">跳至内容</span><span class="lang-zh-hant">跳至內容</span></a>
 
     <div class="ambient-layer" aria-hidden="true">
       <span class="ambient-orb ambient-orb-one"></span>
@@ -34,22 +34,24 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
         <div class="nav-links" id="nav-links">
           <a class="nav-link" href="#about">
-            <span class="lang-en">About</span><span class="lang-zh">關於</span>
+            <span class="lang-en">About</span><span class="lang-zh-hant">關於</span><span class="lang-zh-hans">关于</span>
           </a>
           <a class="nav-link" href="#work">
-            <span class="lang-en">Work</span><span class="lang-zh">作品</span>
+            <span class="lang-en">Work</span><span class="lang-zh-hant">作品</span><span class="lang-zh-hans">作品</span>
           </a>
           <a class="nav-link" href="#life">
-            <span class="lang-en">Off-screen</span><span class="lang-zh">屏幕之外</span>
+            <span class="lang-en">Off-screen</span><span class="lang-zh-hant">屏幕之外</span><span class="lang-zh-hans">屏幕之外</span>
           </a>
           <a class="nav-link" href="#contact">
-            <span class="lang-en">Say hi</span><span class="lang-zh">來聊聊</span>
+            <span class="lang-en">Say hi</span><span class="lang-zh-hant">來聊聊</span><span class="lang-zh-hans">来聊聊</span>
           </a>
         </div>
 
-        <button class="language-switch" type="button" aria-label="Switch language">
-          <span class="lang-en">中文</span><span class="lang-zh">EN</span>
-        </button>
+        <div class="language-switch" role="group" aria-label="Language / 語言 / 语言">
+          <button class="language-option" type="button" data-language-option="zh-hans" aria-label="切换至简体中文">简</button>
+          <button class="language-option" type="button" data-language-option="zh-hant" aria-label="切換至繁體中文">繁</button>
+          <button class="language-option" type="button" data-language-option="en" aria-label="Switch to English">EN</button>
+        </div>
         <button class="menu-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation">
           <span></span>
         </button>
@@ -62,18 +64,20 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           <div class="hero-copy reveal">
             <p class="eyebrow">
               <span class="lang-en">Macau → wherever curiosity goes</span>
-              <span class="lang-zh">澳門出發 → 好奇心所至</span>
+              <span class="lang-zh-hant">澳門出發 → 好奇心所至</span><span class="lang-zh-hans">澳门出发 → 好奇心所至</span>
             </p>
             <h1 class="hero-title">NOAH<br />XU<span class="underscore" aria-hidden="true"></span></h1>
             <p class="hero-subtitle lang-en">
               A 00s Macau student who codes, competes, plays the long rally and occasionally remembers to practise violin.
             </p>
-            <p class="hero-subtitle lang-zh">
+            <p class="hero-subtitle lang-zh-hant">
               一名在澳門長大的 00 後學生：寫代碼、打競賽、守住每一個長回合，也會偶爾記得練小提琴。
+            </p><p class="hero-subtitle lang-zh-hans">
+              一名在澳门长大的 00 后学生：写代码、打竞赛、守住每一个长回合，也会偶尔记得练小提琴。
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#work">
-                <span class="lang-en">Enter my orbit</span><span class="lang-zh">進入我的軌道</span>
+                <span class="lang-en">Enter my orbit</span><span class="lang-zh-hant">進入我的軌道</span><span class="lang-zh-hans">进入我的轨道</span>
                 <span aria-hidden="true">↘</span>
               </a>
               <a class="button button-secondary" href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer">
@@ -83,14 +87,14 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <p class="north-star">
               <span aria-hidden="true">✦</span>
               <span class="lang-en">North star: Peking University</span>
-              <span class="lang-zh">北極星座標：北京大學</span>
+              <span class="lang-zh-hant">北極星座標：北京大學</span><span class="lang-zh-hans">北极星座标：北京大学</span>
             </p>
           </div>
 
           <div class="portrait-wrap reveal">
             <span class="sticker sticker-top">
               <span class="lang-en">Always<br />Evolving</span>
-              <span class="lang-zh">持續<br />進化</span>
+              <span class="lang-zh-hant">持續<br />進化</span><span class="lang-zh-hans">持续<br />进化</span>
             </span>
             <figure class="portrait-card">
               <div class="portrait-frame">
@@ -105,13 +109,13 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
               </div>
               <figcaption class="portrait-caption">
                 <span class="lang-en">Debug face: day one</span>
-                <span class="lang-zh">除錯表情：從小練起</span>
+                <span class="lang-zh-hant">除錯表情：從小練起</span><span class="lang-zh-hans">除错表情：从小练起</span>
                 <span>2000s ↗</span>
               </figcaption>
             </figure>
             <span class="sticker sticker-bottom">
               <span class="lang-en">180 cm of<br />curiosity</span>
-              <span class="lang-zh">180 cm<br />好奇心</span>
+              <span class="lang-zh-hant">180 cm<br />好奇心</span><span class="lang-zh-hans">180 cm<br />好奇心</span>
             </span>
           </div>
         </div>
@@ -119,7 +123,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
       <div class="quote-strip" aria-label="Favorite quotes">
         <div class="quote-track">
-          {[...quotes, ...quotes].map((quote) => <span class="quote-item">{quote}</span>)}
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
         </div>
       </div>
 
@@ -129,10 +133,10 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <div>
               <p class="section-kicker">01 / Profile</p>
               <h2 class="section-title lang-en">One person.<br />Many tabs open.</h2>
-              <h2 class="section-title lang-zh">一個人，<br />很多分頁。</h2>
+              <h2 class="section-title lang-zh-hant">一個人，<br />很多分頁。</h2><h2 class="section-title lang-zh-hans">一个人，<br />很多分页。</h2>
             </div>
             <p class="section-intro lang-en">I do not believe curiosity needs to stay in one lane.</p>
-            <p class="section-intro lang-zh">我不相信好奇心只能沿着一條賽道前進。</p>
+            <p class="section-intro lang-zh-hant">我不相信好奇心只能沿着一條賽道前進。</p><p class="section-intro lang-zh-hans">我不相信好奇心只能沿着一条赛道前进。</p>
           </div>
 
           <div class="about-panel reveal">
@@ -140,14 +144,18 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
               <p class="about-lead lang-en">
                 I’m Noah, a Macau-born student at Hou Kong Middle School. I move between OI and AI competitions, product ideas, tennis courts, Go boards and violin strings.
               </p>
-              <p class="about-lead lang-zh">
+              <p class="about-lead lang-zh-hant">
                 我是 Noah，土生土長的澳門學生，現就讀濠江中學。在 OI、AI 競賽、產品創意、網球場、棋盤與琴弦之間來回穿梭。
+              </p><p class="about-lead lang-zh-hans">
+                我是 Noah，土生土长的澳门学生，现就读濠江中学。在 OI、AI 竞赛、产品创意、网球场、棋盘与琴弦之间来回穿梭。
               </p>
               <p class="about-note lang-en">
                 I like ambitious goals, kind conversations and building useful things. Djokovic teaches me to stay in the point; music reminds me that not everything needs to be rushed.
               </p>
-              <p class="about-note lang-zh">
+              <p class="about-note lang-zh-hant">
                 我喜歡有野心的目標、真誠溫和的交流，以及真正有用的作品。德約科維奇教我留在每一分裡，音樂則提醒我：不是所有事情都需要趕。
+              </p><p class="about-note lang-zh-hans">
+                我喜欢有野心的目标、真诚温和的交流，以及真正有用的作品。德约科维奇教我留在每一分里，音乐则提醒我：不是所有事情都需要赶。
               </p>
             </div>
 
@@ -156,16 +164,16 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
                 <span class="coordinate-key">Home</span><span class="coordinate-value">Macau · MO</span>
               </div>
               <div class="coordinate">
-                <span class="coordinate-key">School</span><span class="coordinate-value"><span class="lang-en">Hou Kong</span><span class="lang-zh">濠江中學</span></span>
+                <span class="coordinate-key">School</span><span class="coordinate-value"><span class="lang-en">Hou Kong</span><span class="lang-zh-hant">濠江中學</span><span class="lang-zh-hans">濠江中学</span></span>
               </div>
               <div class="coordinate">
                 <span class="coordinate-key">Arena</span><span class="coordinate-value">OI · AI · Math</span>
               </div>
               <div class="coordinate">
-                <span class="coordinate-key">Rank</span><span class="coordinate-value"><span class="lang-en">Go 3-dan</span><span class="lang-zh">圍棋三段</span></span>
+                <span class="coordinate-key">Rank</span><span class="coordinate-value"><span class="lang-en">Go 3-dan</span><span class="lang-zh-hant">圍棋三段</span><span class="lang-zh-hans">围棋三段</span></span>
               </div>
               <div class="coordinate">
-                <span class="coordinate-key">Mode</span><span class="coordinate-value"><span class="lang-en">Curious, always</span><span class="lang-zh">永遠好奇</span></span>
+                <span class="coordinate-key">Mode</span><span class="coordinate-value"><span class="lang-en">Curious, always</span><span class="lang-zh-hant">永遠好奇</span><span class="lang-zh-hans">永远好奇</span></span>
               </div>
             </div>
           </div>
@@ -174,7 +182,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
       <div class="quote-strip" aria-label="Profile section divider">
         <div class="quote-track">
-          {[...quotes, ...quotes].map((quote) => <span class="quote-item">{quote}</span>)}
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
         </div>
       </div>
 
@@ -184,20 +192,20 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <div>
               <p class="section-kicker">02 / Selected work</p>
               <h2 class="section-title lang-en">Built, joined<br />& becoming.</h2>
-              <h2 class="section-title lang-zh">做過、參與，<br />也正在成為。</h2>
+              <h2 class="section-title lang-zh-hant">做過、參與，<br />也正在成為。</h2><h2 class="section-title lang-zh-hans">做过、参与，<br />也正在成为。</h2>
             </div>
             <p class="section-intro lang-en">Projects are more interesting when they solve a real problem or change the person making them.</p>
-            <p class="section-intro lang-zh">一個項目若能解決真問題，或改變做項目的人，就會格外有趣。</p>
+            <p class="section-intro lang-zh-hant">一個項目若能解決真問題，或改變做項目的人，就會格外有趣。</p><p class="section-intro lang-zh-hans">一个项目若能解决真问题，或改变做项目的人，就会格外有趣。</p>
           </div>
 
           <div class="work-grid">
             <article class="work-card work-primary reveal">
-              <span class="card-label"><span class="lang-en">Product · School ops</span><span class="lang-zh">產品 · 校園管理</span></span>
-              <h3>濠江通<br /><span class="lang-en">Sports Day Assistant</span><span class="lang-zh">校運會管理助手</span></h3>
+              <span class="card-label"><span class="lang-en">Product · School ops</span><span class="lang-zh-hant">產品 · 校園管理</span><span class="lang-zh-hans">产品 · 校园管理</span></span>
+              <h3>濠江通<br /><span class="lang-en">Sports Day Assistant</span><span class="lang-zh-hant">校運會管理助手</span><span class="lang-zh-hans">校运会管理助手</span></h3>
               <p class="lang-en">A practical tool designed around the moving parts of a school sports day — turning coordination into a clearer digital flow.</p>
-              <p class="lang-zh">圍繞校運會的真實流程設計，把繁瑣的協調工作整理成更清晰的數字化操作。</p>
+              <p class="lang-zh-hant">圍繞校運會的真實流程設計，把繁瑣的協調工作整理成更清晰的數字化操作。</p><p class="lang-zh-hans">围绕校运会的真实流程设计，把繁琐的协调工作整理成更清晰的数字化操作。</p>
               <a class="project-link" href="https://houkong.up.railway.app" target="_blank" rel="noreferrer">
-                <span class="lang-en">Check deployment</span><span class="lang-zh">查看部署</span> ↗
+                <span class="lang-en">Check deployment</span><span class="lang-zh-hant">查看部署</span><span class="lang-zh-hans">查看部署</span> ↗
               </a>
               <div class="mini-browser" aria-hidden="true">
                 <div class="browser-dots"><i></i><i></i><i></i></div>
@@ -223,28 +231,28 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
               <div class="imsc-content">
                 <span class="card-label">IMSC 2026 · Macau</span>
                 <h3 class="lang-en">Math, teamwork and a bigger map.</h3>
-                <h3 class="lang-zh">數學、同行，與更大的世界。</h3>
+                <h3 class="lang-zh-hant">數學、同行，與更大的世界。</h3><h3 class="lang-zh-hans">数学、同行，与更大的世界。</h3>
                 <p class="lang-en">Represented Macau at the 4th International Mathematics Summer Camp.</p>
-                <p class="lang-zh">代表澳門參與第四屆國際數學夏令營。</p>
+                <p class="lang-zh-hant">代表澳門參與第四屆國際數學夏令營。</p><p class="lang-zh-hans">代表澳门参与第四届国际数学夏令营。</p>
               </div>
             </article>
 
             <article class="work-card work-ai reveal">
-              <span class="card-label"><span class="lang-en">Building · AI</span><span class="lang-zh">正在構建 · AI</span></span>
+              <span class="card-label"><span class="lang-en">Building · AI</span><span class="lang-zh-hant">正在構建 · AI</span><span class="lang-zh-hans">正在构建 · AI</span></span>
               <h3 class="lang-en">AI Relay<br />Station</h3>
-              <h3 class="lang-zh">AI<br />中轉站</h3>
+              <h3 class="lang-zh-hant">AI<br />中轉站</h3><h3 class="lang-zh-hans">AI<br />中转站</h3>
               <p class="lang-en">A work-in-progress hub for connecting useful AI capabilities. More signal, less wandering.</p>
-              <p class="lang-zh">一個正在完善的 AI 能力中轉站：少一點繞路，多一點有效連接。</p>
-              <span class="project-link"><span class="lang-en">In progress</span><span class="lang-zh">開發中</span> ···</span>
+              <p class="lang-zh-hant">一個正在完善的 AI 能力中轉站：少一點繞路，多一點有效連接。</p><p class="lang-zh-hans">一个正在完善的 AI 能力中转站：少一点绕路，多一点有效连接。</p>
+              <span class="project-link"><span class="lang-en">In progress</span><span class="lang-zh-hant">開發中</span><span class="lang-zh-hans">开发中</span> ···</span>
               <div class="ai-orbit" aria-hidden="true"></div>
             </article>
 
             <article class="work-card work-target reveal">
-              <span class="card-label"><span class="lang-en">Long game · Education</span><span class="lang-zh">長線目標 · 求學</span></span>
+              <span class="card-label"><span class="lang-en">Long game · Education</span><span class="lang-zh-hant">長線目標 · 求學</span><span class="lang-zh-hans">长线目标 · 求学</span></span>
               <h3 class="lang-en">Macau now.<br />Peking University ahead.</h3>
-              <h3 class="lang-zh">此刻澳門，<br />下一站北大。</h3>
+              <h3 class="lang-zh-hant">此刻澳門，<br />下一站北大。</h3><h3 class="lang-zh-hans">此刻澳门，<br />下一站北大。</h3>
               <p class="lang-en">The destination matters. So does the person I become on the way there.</p>
-              <p class="lang-zh">目的地很重要，前往目的地的途中成為怎樣的人，同樣重要。</p>
+              <p class="lang-zh-hant">目的地很重要，前往目的地的途中成為怎樣的人，同樣重要。</p><p class="lang-zh-hans">目的地很重要，前往目的地的途中成为怎样的人，同样重要。</p>
               <div class="target-route" aria-hidden="true">
                 <span class="route-point">MO</span><span class="route-line"></span><span class="route-point">PKU</span>
               </div>
@@ -255,7 +263,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
       <div class="quote-strip" aria-label="Work section divider">
         <div class="quote-track quote-track-delayed">
-          {[...quotes, ...quotes].map((quote) => <span class="quote-item">{quote}</span>)}
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
         </div>
       </div>
 
@@ -265,10 +273,10 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <div>
               <p class="section-kicker">03 / Off-screen</p>
               <h2 class="section-title lang-en">A life larger<br />than the viewport.</h2>
-              <h2 class="section-title lang-zh">屏幕裝不下的<br />生活。</h2>
+              <h2 class="section-title lang-zh-hant">屏幕裝不下的<br />生活。</h2><h2 class="section-title lang-zh-hans">屏幕装不下的<br />生活。</h2>
             </div>
             <p class="section-intro lang-en">Code is one language. Sport, music, travel and people are the others.</p>
-            <p class="section-intro lang-zh">代碼是一種語言，運動、音樂、旅行與人也是。</p>
+            <p class="section-intro lang-zh-hant">代碼是一種語言，運動、音樂、旅行與人也是。</p><p class="section-intro lang-zh-hans">代码是一种语言，运动、音乐、旅行与人也是。</p>
           </div>
 
           <div class="life-grid">
@@ -276,27 +284,27 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
               <div>
                 <p>01 · TENNIS</p>
                 <h3 class="lang-en">One more ball.</h3>
-                <h3 class="lang-zh">再多救一球。</h3>
+                <h3 class="lang-zh-hant">再多救一球。</h3><h3 class="lang-zh-hans">再多救一球。</h3>
               </div>
               <p class="lang-en">Djokovic fan. Patient feet, stubborn mind, long rallies.</p>
-              <p class="lang-zh">喜歡德約科維奇：耐心的腳步、倔強的意志，以及漫長的回合。</p>
+              <p class="lang-zh-hant">喜歡德約科維奇：耐心的腳步、倔強的意志，以及漫長的回合。</p><p class="lang-zh-hans">喜欢德约科维奇：耐心的脚步、倔强的意志，以及漫长的回合。</p>
               <span class="life-symbol" aria-hidden="true">◎</span>
             </article>
 
             <article class="life-card life-go reveal">
               <div>
                 <p>02 · GO</p>
-                <h3><span class="lang-en">3-dan player</span><span class="lang-zh">圍棋三段</span></h3>
+                <h3><span class="lang-en">3-dan player</span><span class="lang-zh-hant">圍棋三段</span><span class="lang-zh-hans">围棋三段</span></h3>
               </div>
               <p class="lang-en">Think globally. Place one stone.</p>
-              <p class="lang-zh">看全局，落一子。</p>
+              <p class="lang-zh-hant">看全局，落一子。</p><p class="lang-zh-hans">看全局，落一子。</p>
               <span class="life-symbol" aria-hidden="true">●</span>
             </article>
 
             <article class="life-card life-violin reveal">
               <div>
                 <p>03 · VIOLIN</p>
-                <h3><span class="lang-en">Strings & patience</span><span class="lang-zh">琴弦與耐心</span></h3>
+                <h3><span class="lang-en">Strings & patience</span><span class="lang-zh-hant">琴弦與耐心</span><span class="lang-zh-hans">琴弦与耐心</span></h3>
               </div>
               <span class="life-symbol" aria-hidden="true">♪</span>
             </article>
@@ -304,7 +312,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <article class="life-card life-travel reveal">
               <div>
                 <p>04 · TRAVEL</p>
-                <h3><span class="lang-en">New maps, new people</span><span class="lang-zh">新地圖，新朋友</span></h3>
+                <h3><span class="lang-en">New maps, new people</span><span class="lang-zh-hant">新地圖，新朋友</span><span class="lang-zh-hans">新地图，新朋友</span></h3>
               </div>
               <span class="life-symbol" aria-hidden="true">↗</span>
             </article>
@@ -312,10 +320,10 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             <article class="life-card life-music reveal">
               <div>
                 <p>05 · MUSIC</p>
-                <h3><span class="lang-en">Always listening</span><span class="lang-zh">一直在聽</span></h3>
+                <h3><span class="lang-en">Always listening</span><span class="lang-zh-hant">一直在聽</span><span class="lang-zh-hans">一直在听</span></h3>
               </div>
               <p class="lang-en">A soundtrack makes almost any journey better.</p>
-              <p class="lang-zh">幾乎每段旅程，都值得一份自己的歌單。</p>
+              <p class="lang-zh-hant">幾乎每段旅程，都值得一份自己的歌單。</p><p class="lang-zh-hans">几乎每段旅程，都值得一份自己的歌单。</p>
             </article>
           </div>
         </div>
@@ -323,7 +331,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
       <div class="quote-strip" aria-label="Off-screen section divider">
         <div class="quote-track">
-          {[...quotes, ...quotes].map((quote) => <span class="quote-item">{quote}</span>)}
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
         </div>
       </div>
 
@@ -332,9 +340,9 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           <div class="contact-card reveal">
             <p class="section-kicker">04 / Find me online</p>
             <h2 class="contact-title lang-en">Good ideas like good company.</h2>
-            <h2 class="contact-title lang-zh">好點子，也喜歡好朋友。</h2>
+            <h2 class="contact-title lang-zh-hant">好點子，也喜歡好朋友。</h2><h2 class="contact-title lang-zh-hans">好点子，也喜欢好朋友。</h2>
             <p class="contact-note lang-en">Talk to me about code, competitions, tennis, music, travel — or the strange overlap between all five.</p>
-            <p class="contact-note lang-zh">歡迎來聊代碼、競賽、網球、音樂、旅行，或這幾件事之間奇妙的交集。</p>
+            <p class="contact-note lang-zh-hant">歡迎來聊代碼、競賽、網球、音樂、旅行，或這幾件事之間奇妙的交集。</p><p class="contact-note lang-zh-hans">欢迎来聊代码、竞赛、网球、音乐、旅行，或这几件事之间奇妙的交集。</p>
 
             <div class="social-grid">
               <a class="social-link" href="https://github.com/noah200910070082-dotcom" target="_blank" rel="noreferrer">
@@ -344,52 +352,53 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
                 <span class="social-name">Instagram</span><span class="social-handle">@noah_chanwa ↗</span>
               </a>
               <button class="social-link copy-handle" type="button" data-copy="Noah107">
-                <span class="social-name">WeChat · <span class="lang-en">copy</span><span class="lang-zh">複製</span></span><span class="social-handle">Noah107</span>
+                <span class="social-name">WeChat · <span class="lang-en">copy</span><span class="lang-zh-hant">複製</span><span class="lang-zh-hans">复制</span></span><span class="social-handle">Noah107</span>
               </button>
               <button class="social-link copy-handle" type="button" data-copy="noah_xu_50118">
-                <span class="social-name">Discord · <span class="lang-en">copy</span><span class="lang-zh">複製</span></span><span class="social-handle">noah_xu_50118</span>
+                <span class="social-name">Discord · <span class="lang-en">copy</span><span class="lang-zh-hant">複製</span><span class="lang-zh-hans">复制</span></span><span class="social-handle">noah_xu_50118</span>
               </button>
             </div>
           </div>
 
           <footer class="site-footer">
             <p>© {year} Noah Xu · Built with curiosity in Macau.</p>
-            <p><span class="lang-en">桃李春风一杯酒，江湖夜雨十年灯。</span><span class="lang-zh">What doesn’t kill you makes you stronger.</span></p>
+            <p><span class="lang-en">桃李春风一杯酒，江湖夜雨十年灯。</span><span class="lang-zh-hant">What doesn’t kill you makes you stronger.</span><span class="lang-zh-hans">What doesn’t kill you makes you stronger.</span></p>
           </footer>
         </div>
       </section>
 
       <div class="quote-strip" aria-label="Contact section divider">
         <div class="quote-track quote-track-delayed">
-          {[...quotes, ...quotes].map((quote) => <span class="quote-item">{quote}</span>)}
+          {[...quotes, ...quotes].map((quote) => <span class="quote-item"><span class="lang-en">{quote.en}</span><span class="lang-zh-hans">{quote.hans}</span><span class="lang-zh-hant">{quote.hant}</span></span>)}
         </div>
       </div>
     </main>
 
     <div class="toast" role="status" aria-live="polite">
-      <span class="lang-en">Copied — see you there.</span><span class="lang-zh">已複製，等你來聊。</span>
+      <span class="lang-en">Copied — see you there.</span><span class="lang-zh-hant">已複製，等你來聊。</span><span class="lang-zh-hans">已复制，等你来聊。</span>
     </div>
   </div>
 
   <script>
     const html = document.documentElement;
-    const languageButton = document.querySelector<HTMLButtonElement>('.language-switch');
+    const languageButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-language-option]'));
     const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
     const navLinks = document.querySelector<HTMLElement>('.nav-links');
     const toast = document.querySelector<HTMLElement>('.toast');
 
-    const updateLanguageLabel = () => {
-      const isChinese = html.dataset.language === 'zh';
-      languageButton?.setAttribute('aria-label', isChinese ? 'Switch to English' : '切換至中文');
+    const setLanguage = (language: string, persist = true) => {
+      const next = language === 'zh-hans' || language === 'zh-hant' ? language : 'en';
+      html.dataset.language = next;
+      html.lang = next === 'zh-hans' ? 'zh-Hans' : next === 'zh-hant' ? 'zh-Hant' : 'en';
+      languageButtons.forEach((button) => {
+        const active = button.dataset.languageOption === next;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      if (persist) localStorage.setItem('noah-language', next);
     };
 
-    languageButton?.addEventListener('click', () => {
-      const next = html.dataset.language === 'zh' ? 'en' : 'zh';
-      html.dataset.language = next;
-      html.lang = next === 'zh' ? 'zh-Hant' : 'en';
-      localStorage.setItem('noah-language', next);
-      updateLanguageLabel();
-    });
+    languageButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.languageOption || 'en')));
 
     menuButton?.addEventListener('click', () => {
       const open = navLinks?.classList.toggle('is-open') ?? false;
@@ -507,7 +516,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       });
     });
 
-    updateLanguageLabel();
+    setLanguage(html.dataset.language || 'en', false);
   </script>
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify({
