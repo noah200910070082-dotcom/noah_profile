@@ -60,6 +60,13 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     <main id="main">
       <section class="hero" id="top">
+        <div class="section-scene scene-hero" aria-hidden="true">
+          <span class="scene-sun"></span>
+          <span class="scene-cloud scene-cloud-one"></span>
+          <span class="scene-cloud scene-cloud-two"></span>
+          <span class="scene-hill scene-hill-one"></span>
+          <span class="scene-hill scene-hill-two"></span>
+        </div>
         <div class="hero-grid container">
           <div class="hero-copy reveal">
             <p class="eyebrow">
@@ -128,6 +135,12 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
 
       <section class="section" id="about">
+        <div class="section-scene scene-about" aria-hidden="true">
+          <span class="scene-mountain scene-mountain-one"></span>
+          <span class="scene-mountain scene-mountain-two"></span>
+          <span class="scene-flight scene-flight-one">⌁</span>
+          <span class="scene-flight scene-flight-two">⌁</span>
+        </div>
         <div class="container">
           <div class="section-head reveal">
             <div>
@@ -187,6 +200,12 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
 
       <section class="section" id="work">
+        <div class="section-scene scene-work" aria-hidden="true">
+          <span class="scene-grid"></span>
+          <span class="scene-orbit scene-orbit-one"></span>
+          <span class="scene-orbit scene-orbit-two"></span>
+          <span class="scene-signal"></span>
+        </div>
         <div class="container">
           <div class="section-head reveal">
             <div>
@@ -268,6 +287,12 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
 
       <section class="section" id="life">
+        <div class="section-scene scene-life" aria-hidden="true">
+          <span class="scene-life-sun"></span>
+          <span class="scene-cloud scene-cloud-three"></span>
+          <span class="scene-wave scene-wave-one"></span>
+          <span class="scene-wave scene-wave-two"></span>
+        </div>
         <div class="container">
           <div class="section-head reveal">
             <div>
@@ -336,6 +361,12 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
 
       <section class="section" id="contact">
+        <div class="section-scene scene-contact" aria-hidden="true">
+          <span class="scene-moon"></span>
+          <span class="scene-stars scene-stars-one"></span>
+          <span class="scene-stars scene-stars-two"></span>
+          <span class="scene-comet"></span>
+        </div>
         <div class="container">
           <div class="contact-card reveal">
             <p class="section-kicker">04 / Find me online</p>
@@ -481,6 +512,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           const shiftY = (pointerY / window.innerHeight - 0.5) * -24;
           ambientLayer?.style.setProperty('--ambient-x', `${shiftX}px`);
           ambientLayer?.style.setProperty('--ambient-y', `${shiftY}px`);
+          html.style.setProperty('--scene-x', `${shiftX * 0.38}px`);
+          html.style.setProperty('--scene-y', `${shiftY * 0.32}px`);
         });
       }, { passive: true });
     }
