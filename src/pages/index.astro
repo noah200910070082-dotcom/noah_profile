@@ -448,7 +448,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         light.setAttribute('aria-hidden', 'true');
         card.append(light);
 
-        const strength = card.classList.contains('portrait-card') ? 7 : card.classList.contains('work-card') ? 5 : card.classList.contains('life-card') ? 4 : 2.2;
+        const strength = card.classList.contains('portrait-card') ? 16 : card.classList.contains('work-card') ? 12 : card.classList.contains('life-card') ? 10 : 6.5;
 
         card.addEventListener('pointermove', (event) => {
           if (activeCard && activeCard !== card) resetCard(activeCard);
@@ -477,8 +477,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         if (ambientFrame) return;
         ambientFrame = requestAnimationFrame(() => {
           ambientFrame = 0;
-          const shiftX = (pointerX / window.innerWidth - 0.5) * -18;
-          const shiftY = (pointerY / window.innerHeight - 0.5) * -14;
+          const shiftX = (pointerX / window.innerWidth - 0.5) * -32;
+          const shiftY = (pointerY / window.innerHeight - 0.5) * -24;
           ambientLayer?.style.setProperty('--ambient-x', `${shiftX}px`);
           ambientLayer?.style.setProperty('--ambient-y', `${shiftY}px`);
         });
