@@ -571,6 +571,26 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
     </main>
 
+    <div class="story-viewer" hidden aria-hidden="true">
+      <button class="story-viewer-backdrop" type="button" data-viewer-close aria-label="Close image viewer"></button>
+      <div class="story-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="story-viewer-caption" tabindex="-1">
+        <div class="story-viewer-topbar">
+          <span class="story-viewer-counter">01 / 01</span>
+          <span class="story-viewer-hint">← → · ESC</span>
+          <button class="story-viewer-close" type="button" data-viewer-close aria-label="Close image viewer">×</button>
+        </div>
+        <figure class="story-viewer-figure">
+          <img class="story-viewer-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+          <figcaption>
+            <span class="story-viewer-meta"></span>
+            <strong id="story-viewer-caption"></strong>
+          </figcaption>
+        </figure>
+        <button class="story-viewer-nav story-viewer-prev" type="button" data-viewer-prev aria-label="Previous image">←</button>
+        <button class="story-viewer-nav story-viewer-next" type="button" data-viewer-next aria-label="Next image">→</button>
+      </div>
+    </div>
+
     <div class="toast" role="status" aria-live="polite">
       <span class="lang-en">Copied — see you there.</span><span class="lang-zh-hant">已複製，等你來聊。</span><span class="lang-zh-hans">已复制，等你来聊。</span>
     </div>
@@ -683,6 +703,99 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         });
       }, { passive: true });
     }
+
+    const storyViewer = document.querySelector<HTMLElement>('.story-viewer');
+    const storyViewerDialog = document.querySelector<HTMLElement>('.story-viewer-dialog');
+    const storyViewerImage = document.querySelector<HTMLImageElement>('.story-viewer-image');
+    const storyViewerCaption = document.querySelector<HTMLElement>('#story-viewer-caption');
+    const storyViewerMeta = document.querySelector<HTMLElement>('.story-viewer-meta');
+    const storyViewerCounter = document.querySelector<HTMLElement>('.story-viewer-counter');
+    const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.explore-card')).filter((card) => card.querySelector('img'));
+    let activeGalleryIndex = 0;
+    let viewerReturnFocus: HTMLElement | null = null;
+    let viewerCloseTimer = 0;
+
+    const largestImageSource = (image: HTMLImageElement) => {
+      const candidates = image.srcset
+        .split(',')
+        .map((candidate) => {
+          const parts = candidate.trim().split(/\s+/);
+          return { source: parts[0], width: Number.parseFloat(parts[1]) || 0 };
+        })
+        .filter((candidate) => candidate.source)
+        .sort((a, b) => b.width - a.width);
+      return candidates[0]?.source || image.currentSrc || image.src;
+    };
+
+    const renderStoryViewer = (index: number) => {
+      if (!galleryCards.length || !storyViewerImage || !storyViewerCaption || !storyViewerMeta || !storyViewerCounter) return;
+      activeGalleryIndex = (index + galleryCards.length) % galleryCards.length;
+      const card = galleryCards[activeGalleryIndex];
+      const image = card.querySelector<HTMLImageElement>('img');
+      if (!image) return;
+      const caption = card.querySelector<HTMLElement>('figcaption strong, h4');
+      const meta = card.querySelector<HTMLElement>('.story-label, .atlas-code');
+      storyViewerImage.src = largestImageSource(image);
+      storyViewerImage.alt = image.alt;
+      storyViewerCaption.textContent = caption?.innerText.trim() || image.alt;
+      storyViewerMeta.textContent = meta?.innerText.trim() || 'NOAH_XU · STORY';
+      storyViewerCounter.textContent = `${String(activeGalleryIndex + 1).padStart(2, '0')} / ${String(galleryCards.length).padStart(2, '0')}`;
+    };
+
+    const openStoryViewer = (index: number, trigger: HTMLElement) => {
+      if (!storyViewer || !storyViewerDialog) return;
+      if (viewerCloseTimer) window.clearTimeout(viewerCloseTimer);
+      viewerReturnFocus = trigger;
+      renderStoryViewer(index);
+      storyViewer.hidden = false;
+      storyViewer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('viewer-open');
+      window.requestAnimationFrame(() => {
+        storyViewer.classList.add('is-open');
+        storyViewerDialog.focus({ preventScroll: true });
+      });
+    };
+
+    const closeStoryViewer = () => {
+      if (!storyViewer || storyViewer.hidden) return;
+      storyViewer.classList.remove('is-open');
+      storyViewer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('viewer-open');
+      viewerCloseTimer = window.setTimeout(() => {
+        storyViewer.hidden = true;
+        viewerReturnFocus?.focus({ preventScroll: true });
+      }, reducedMotion ? 0 : 240);
+    };
+
+    galleryCards.forEach((card, index) => {
+      const image = card.querySelector<HTMLImageElement>('img');
+      card.classList.add('is-viewable');
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-haspopup', 'dialog');
+      card.setAttribute('aria-label', `Open image: ${image?.alt || 'Noah Xu story'}`);
+      card.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target instanceof Element && target.closest('a, button')) return;
+        openStoryViewer(index, card);
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openStoryViewer(index, card);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-viewer-close]').forEach((button) => button.addEventListener('click', closeStoryViewer));
+    document.querySelector<HTMLButtonElement>('[data-viewer-prev]')?.addEventListener('click', () => renderStoryViewer(activeGalleryIndex - 1));
+    document.querySelector<HTMLButtonElement>('[data-viewer-next]')?.addEventListener('click', () => renderStoryViewer(activeGalleryIndex + 1));
+
+    window.addEventListener('keydown', (event) => {
+      if (!storyViewer || storyViewer.hidden) return;
+      if (event.key === 'Escape') closeStoryViewer();
+      if (event.key === 'ArrowLeft') renderStoryViewer(activeGalleryIndex - 1);
+      if (event.key === 'ArrowRight') renderStoryViewer(activeGalleryIndex + 1);
+    });
 
     const copyText = async (value: string) => {
       try {
