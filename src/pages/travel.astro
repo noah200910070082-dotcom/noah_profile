@@ -1,0 +1,244 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+
+import abroadTokyo from '../assets/travel/abroad-tokyo-shibuya.jpg';
+import abroadSensoji from '../assets/travel/abroad-tokyo-sensoji.jpg';
+import abroadOsaka from '../assets/travel/abroad-osaka-universal.jpg';
+import abroadLegoland from '../assets/travel/abroad-japan-legoland.jpg';
+import abroadNewYork from '../assets/travel/abroad-new-york-liberty.jpg';
+import abroadBoston from '../assets/travel/abroad-boston.jpg';
+import abroadNiagara from '../assets/travel/abroad-niagara.jpg';
+import chinaLuoyang from '../assets/travel/china-luoyang-longmen.jpg';
+import chinaGreatWall from '../assets/travel/china-great-wall.jpg';
+import chinaShanghai from '../assets/travel/china-shanghai.jpg';
+import chinaJiangnan from '../assets/travel/china-jiangnan-water-town.jpg';
+import chinaRv from '../assets/travel/china-rv-roadtrip.jpg';
+import campusPeking from '../assets/travel/campus-peking-university.jpg';
+import campusJiaotong from '../assets/travel/campus-jiaotong-university.jpg';
+
+const description = 'Noah Xu travel atlas — abroad, China and university chapters from Macau.';
+
+const abroadCards = [
+  { image: abroadTokyo, meta: 'JAPAN / TOKYO', en: 'Shibuya at full speed.', hant: '澀谷，城市全速運轉。', hans: '涩谷，城市全速运转。', alt: 'Tokyo Shibuya crossing' },
+  { image: abroadSensoji, meta: 'JAPAN / TOKYO', en: 'A quiet turn at Senso-ji.', hant: '淺草寺，轉身就安靜下來。', hans: '浅草寺，转身就安静下来。', alt: 'Senso-ji temple in Tokyo' },
+  { image: abroadOsaka, meta: 'JAPAN / OSAKA', en: 'Make room for wonder.', hant: '大阪，把驚喜留在行程裡。', hans: '大阪，把惊喜留在行程里。', alt: 'Universal Studios Japan in Osaka' },
+  { image: abroadLegoland, meta: 'JAPAN / LEGO', en: 'Small bricks, huge worlds.', hant: '小小積木，拼出大世界。', hans: '小小积木，拼出大世界。', alt: 'Japan Legoland' },
+  { image: abroadNewYork, meta: 'USA / NEW YORK', en: 'A city with its own orbit.', hant: '紐約，有自己的運行軌道。', hans: '纽约，有自己的运行轨道。', alt: 'Statue of Liberty in New York' },
+  { image: abroadBoston, meta: 'USA / BOSTON', en: 'Walk into a different chapter.', hant: '波士頓，走進另一章。', hans: '波士顿，走进另一章。', alt: 'Boston city view' },
+  { image: abroadNiagara, meta: 'CANADA / NIAGARA', en: 'Let the scale reset you.', hant: '尼亞加拉，重新校準尺度。', hans: '尼亚加拉，重新校准尺度。', alt: 'Niagara Falls' },
+];
+
+const chinaCards = [
+  { image: chinaLuoyang, meta: 'CHINA / LUOYANG', en: 'History, carved into the cliff.', hant: '洛陽，把歷史刻進山崖。', hans: '洛阳，把历史刻进山崖。', alt: 'Longmen Grottoes in Luoyang' },
+  { image: chinaGreatWall, meta: 'CHINA / GREAT WALL', en: 'One more ridge, then another.', hant: '再過一個山脊，還有下一個。', hans: '再过一个山脊，还有下一个。', alt: 'The Great Wall of China' },
+  { image: chinaShanghai, meta: 'CHINA / SHANGHAI', en: 'Dreams look different from here.', hant: '站在上海，夢想換一個尺度。', hans: '站在上海，梦想换一个尺度。', alt: 'Shanghai skyline and Oriental Pearl Tower' },
+  { image: chinaJiangnan, meta: 'CHINA / JIANGNAN', en: 'Slow water, long conversations.', hant: '江南水鄉，慢水與長談。', hans: '江南水乡，慢水与长谈。', alt: 'Jiangnan water town' },
+  { image: chinaRv, meta: 'ROAD / OUTDOORS', en: 'Take the long way home.', hant: '房車上路，把回程拉長。', hans: '房车上路，把回程拉长。', alt: 'RV road trip and camping' },
+];
+
+const campusCards = [
+  { image: campusPeking, meta: 'UNIVERSITY / PKU', en: 'A north star you can walk through.', hant: '可以親自走進的北極星。', hans: '可以亲自走进的北极星。', alt: 'Peking University campus visit' },
+  { image: campusJiaotong, meta: 'UNIVERSITY / JIAOTONG', en: 'Keep collecting possible futures.', hant: '把可能的未來，一站站收集起來。', hans: '把可能的未来，一站站收集起来。', alt: 'Jiaotong University campus' },
+];
+---
+
+<Layout title="Noah Xu — Travel Atlas" description={description} image={campusPeking.src}>
+  <div class="travel-shell">
+    <div class="travel-ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+
+    <header class="site-header">
+      <nav class="nav-bar container" aria-label="Travel navigation">
+        <a class="brand" href="/" aria-label="Back to Noah Xu home"><span class="brand-mark">NX</span><span>NOAH_XU</span></a>
+        <div class="nav-links" id="travel-nav-links">
+          <a class="nav-link" href="/"><span class="lang-en">Home</span><span class="lang-zh-hant">首頁</span><span class="lang-zh-hans">首页</span></a>
+          <a class="nav-link" href="/#about"><span class="lang-en">About</span><span class="lang-zh-hant">關於</span><span class="lang-zh-hans">关于</span></a>
+          <a class="nav-link" href="/#work"><span class="lang-en">Projects</span><span class="lang-zh-hant">項目</span><span class="lang-zh-hans">项目</span></a>
+          <a class="nav-link" href="/#life"><span class="lang-en">Skills</span><span class="lang-zh-hant">技能</span><span class="lang-zh-hans">技能</span></a>
+          <a class="nav-link is-current" href="/travel"><span class="lang-en">Travel</span><span class="lang-zh-hant">旅行</span><span class="lang-zh-hans">旅行</span></a>
+          <a class="nav-link" href="/#contact"><span class="lang-en">Say hi</span><span class="lang-zh-hant">來聊聊</span><span class="lang-zh-hans">来聊聊</span></a>
+        </div>
+        <div class="language-switch" role="group" aria-label="Language / 語言 / 语言">
+          <button class="language-option" type="button" data-language-option="zh-hans" aria-label="切换至简体中文">简</button>
+          <button class="language-option" type="button" data-language-option="zh-hant" aria-label="切換至繁體中文">繁</button>
+          <button class="language-option" type="button" data-language-option="en" aria-label="Switch to English">EN</button>
+        </div>
+        <button class="menu-toggle" type="button" aria-controls="travel-nav-links" aria-expanded="false" aria-label="Open navigation"><span></span></button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="travel-hero" id="travel-top">
+        <div class="travel-hero-scene" aria-hidden="true"><span class="travel-sun"></span><span class="travel-route-line"></span><span class="travel-compass">N</span><span class="travel-bird">⌁</span></div>
+        <div class="container travel-hero-grid">
+          <div class="travel-hero-copy travel-reveal">
+            <p class="section-kicker">NOAH_XU / TRAVEL FILE</p>
+            <h1><span class="lang-en">Where the map<br />gets personal.</span><span class="lang-zh-hant">走過之後，<br />地圖有了溫度。</span><span class="lang-zh-hans">走过之后，<br />地图有了温度。</span></h1>
+            <p class="travel-lead lang-en">Three doors from Macau: the world outside, the places close to home, and the universities that pull the future closer.</p>
+            <p class="travel-lead lang-zh-hant">從澳門出發的三扇門：遠方的世界、身邊的土地，以及把未來拉近的大學。</p>
+            <p class="travel-lead lang-zh-hans">从澳门出发的三扇门：远方的世界、身边的土地，以及把未来拉近的大学。</p>
+            <a class="button button-primary travel-back" href="/"><span class="lang-en">Back to my orbit</span><span class="lang-zh-hant">回到我的軌道</span><span class="lang-zh-hans">回到我的轨道</span> ↗</a>
+          </div>
+          <div class="travel-hero-art travel-tilt travel-reveal" data-tilt-strength="9">
+            <div class="hero-art-map"><span class="map-dot dot-one"></span><span class="map-dot dot-two"></span><span class="map-dot dot-three"></span><span class="map-route"></span></div>
+            <div class="hero-art-stamp"><span>MO</span><strong>03</strong><small>CHAPTERS</small></div>
+            <div class="hero-art-caption"><span>CURIOUS BY NATURE</span><span>↘ SCROLL TO EXPLORE</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="travel-portals container" aria-label="Travel chapters">
+        <a class="travel-portal portal-abroad travel-tilt travel-reveal" href="#abroad" data-tilt-strength="13">
+          <div class="portal-media"><Image src={abroadTokyo} alt="Tokyo Shibuya" widths={[520, 900, 1280]} sizes="(max-width: 900px) 100vw, 33vw" loading="eager" format="webp" /></div>
+          <div class="portal-overlay"></div><div class="portal-copy"><span>01 / ABROAD</span><h2><span class="lang-en">Outside the frame.</span><span class="lang-zh-hant">走出畫框之外。</span><span class="lang-zh-hans">走出画框之外。</span></h2><strong>↘</strong></div>
+        </a>
+        <a class="travel-portal portal-china travel-tilt travel-reveal" href="#domestic" data-tilt-strength="13">
+          <div class="portal-media"><Image src={chinaLuoyang} alt="Longmen Grottoes in Luoyang" widths={[520, 900, 1280]} sizes="(max-width: 900px) 100vw, 33vw" format="webp" /></div>
+          <div class="portal-overlay"></div><div class="portal-copy"><span>02 / CHINA</span><h2><span class="lang-en">The long way home.</span><span class="lang-zh-hant">把家鄉走深一點。</span><span class="lang-zh-hans">把家乡走深一点。</span></h2><strong>↘</strong></div>
+        </a>
+        <a class="travel-portal portal-campus travel-tilt travel-reveal" href="#universities" data-tilt-strength="13">
+          <div class="portal-media"><Image src={campusPeking} alt="Peking University campus" widths={[520, 900, 1280]} sizes="(max-width: 900px) 100vw, 33vw" format="webp" /></div>
+          <div class="portal-overlay"></div><div class="portal-copy"><span>03 / UNIVERSITIES</span><h2><span class="lang-en">Future has an address.</span><span class="lang-zh-hant">未來，有一個地址。</span><span class="lang-zh-hans">未来，有一个地址。</span></h2><strong>↘</strong></div>
+        </a>
+      </section>
+
+      <div class="travel-route container" aria-hidden="true"><span>MACAU</span><i></i><span>WORLD</span><i></i><span>HOME</span><i></i><span>FUTURE</span></div>
+
+      <section class="travel-chapter chapter-abroad" id="abroad">
+        <div class="container">
+          <div class="travel-heading travel-reveal"><div><p class="section-kicker">01 / ABROAD</p><h2><span class="lang-en">Outside the frame.</span><span class="lang-zh-hant">走出畫框之外。</span><span class="lang-zh-hans">走出画框之外。</span></h2></div><p><span class="lang-en">Tokyo, Osaka, New York, Boston and Niagara — places that changed the scale of the world.</span><span class="lang-zh-hant">東京、大阪、紐約、波士頓與尼亞加拉：把世界的尺度重新放大。</span><span class="lang-zh-hans">东京、大阪、纽约、波士顿与尼亚加拉：把世界的尺度重新放大。</span></p></div>
+          <div class="travel-gallery gallery-abroad">
+            {abroadCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+          </div>
+        </div>
+      </section>
+
+      <section class="travel-chapter chapter-domestic" id="domestic">
+        <div class="container">
+          <div class="travel-heading travel-reveal"><div><p class="section-kicker">02 / CHINA + OUTDOORS</p><h2><span class="lang-en">The long way home.</span><span class="lang-zh-hant">把家鄉走深一點。</span><span class="lang-zh-hans">把家乡走深一点。</span></h2></div><p><span class="lang-en">A slower archive of cliffs, skylines, old towns and the road between them.</span><span class="lang-zh-hant">山崖、天際線、古鎮，以及把它們串起來的路：這一篇慢慢走。</span><span class="lang-zh-hans">山崖、天际线、古镇，以及把它们串起来的路：这一篇慢慢走。</span></p></div>
+          <div class="travel-gallery gallery-domestic">
+            {chinaCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+          </div>
+        </div>
+      </section>
+
+      <section class="travel-chapter chapter-campus" id="universities">
+        <div class="container">
+          <div class="travel-heading travel-reveal"><div><p class="section-kicker">03 / UNIVERSITIES</p><h2><span class="lang-en">Future has<br />an address.</span><span class="lang-zh-hant">未來，<br />有一個地址。</span><span class="lang-zh-hans">未来，<br />有一个地址。</span></h2></div><p><span class="lang-en">Campus gates turn a distant goal into a place you can actually walk towards.</span><span class="lang-zh-hant">大學的門，把遙遠的目標變成可以親自走近的地方。</span><span class="lang-zh-hans">大学的门，把遥远的目标变成可以亲自走近的地方。</span></p></div>
+          <div class="travel-gallery gallery-campus">
+            {campusCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="10" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[520, 900, 1280]} sizes="(max-width: 700px) 100vw, 48vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+            <aside class="campus-note travel-tilt travel-reveal" data-tilt-strength="7"><span class="section-kicker">NORTH STAR / MO → PKU</span><h3><span class="lang-en">Keep walking<br />towards the gate.</span><span class="lang-zh-hant">繼續走，<br />走向那扇門。</span><span class="lang-zh-hans">继续走，<br />走向那扇门。</span></h3><p><span class="lang-en">The campus archive will keep growing with every new city and every new question.</span><span class="lang-zh-hant">每一座新城市、每一個新問題，都會讓這份校園圖集繼續長大。</span><span class="lang-zh-hans">每一座新城市、每一个新问题，都会让这份校园图集继续长大。</span></p><span class="campus-arrow">↗</span></aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="travel-outro container travel-reveal"><p class="section-kicker">NEXT COORDINATE</p><h2><span class="lang-en">The map is not finished.</span><span class="lang-zh-hant">地圖還沒有完成。</span><span class="lang-zh-hans">地图还没有完成。</span></h2><a class="button button-primary" href="/"><span class="lang-en">Return to Noah's orbit</span><span class="lang-zh-hant">回到 Noah 的軌道</span><span class="lang-zh-hans">回到 Noah 的轨道</span> ↗</a></section>
+    </main>
+
+    <div class="travel-viewer" hidden aria-hidden="true">
+      <button class="travel-viewer-backdrop" type="button" data-travel-close aria-label="Close image viewer"></button>
+      <div class="travel-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="travel-viewer-caption" tabindex="-1">
+        <div class="travel-viewer-topbar"><span class="travel-viewer-counter">01 / 01</span><span>← → · ESC</span><button type="button" data-travel-close aria-label="Close image viewer">×</button></div>
+        <figure><img class="travel-viewer-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" /><figcaption><span class="travel-viewer-meta"></span><strong id="travel-viewer-caption"></strong></figcaption></figure>
+        <button class="travel-viewer-nav travel-viewer-prev" type="button" data-travel-prev aria-label="Previous image">←</button><button class="travel-viewer-nav travel-viewer-next" type="button" data-travel-next aria-label="Next image">→</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .travel-shell { position: relative; isolation: isolate; overflow: hidden; }
+  .travel-ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  .travel-ambient span { position: absolute; display: block; border-radius: 50%; filter: blur(2px); opacity: 0.42; animation: travel-float 12s ease-in-out infinite alternate; }
+  .travel-ambient span:nth-child(1) { top: 11%; right: -6rem; width: 22rem; height: 22rem; background: rgba(116,87,255,0.15); }
+  .travel-ambient span:nth-child(2) { top: 47%; left: -8rem; width: 20rem; height: 20rem; background: rgba(255,120,90,0.14); animation-delay: -4s; }
+  .travel-ambient span:nth-child(3) { bottom: 5%; right: 20%; width: 18rem; height: 18rem; background: rgba(216,255,79,0.13); animation-delay: -8s; }
+  .is-current { color: var(--violet); }
+  .travel-hero { position: relative; min-height: 780px; padding: 10rem 0 6rem; background: linear-gradient(135deg, rgba(228,226,255,0.72), rgba(255,250,243,0.3) 55%, rgba(255,224,206,0.42)); }
+  .travel-hero-grid { position: relative; display: grid; grid-template-columns: 1fr 0.9fr; align-items: center; gap: clamp(2rem, 7vw, 8rem); }
+  .travel-hero-copy h1 { max-width: 750px; margin-top: 0.85rem; font-family: var(--font-display); font-size: clamp(4.3rem, 9.8vw, 9.2rem); letter-spacing: -0.085em; line-height: 0.86; }
+  .travel-hero-copy h1 .lang-zh-hans, .travel-hero-copy h1 .lang-zh-hant { font-family: var(--font-story); font-size: clamp(4.2rem, 9vw, 8.5rem); font-weight: 400; letter-spacing: 0.02em; line-height: 1.02; }
+  .travel-lead { max-width: 570px; margin-top: 2rem; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+  .travel-back { margin-top: 2rem; }
+  .travel-hero-art { position: relative; min-height: 460px; overflow: hidden; border: 2px solid var(--ink); border-radius: 38px; background: linear-gradient(145deg, #19172a, #373b78 55%, #e16a50); box-shadow: 22px 26px 0 var(--ink); transform: perspective(950px) rotate(4deg); transition: transform 420ms cubic-bezier(.2,.8,.2,1), box-shadow 420ms ease; }
+  .travel-hero-art:hover, .travel-hero-art.is-interacting { box-shadow: 30px 34px 0 var(--ink); transform: perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotate(1deg) translateY(-12px) scale(1.02); }
+  .hero-art-map { position: absolute; inset: 16% 10%; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; transform: rotate(-16deg); background: radial-gradient(circle at 54% 47%, rgba(216,255,79,0.82) 0 3px, transparent 4px), repeating-radial-gradient(circle at 54% 47%, transparent 0 38px, rgba(255,255,255,0.12) 39px 40px); }
+  .hero-art-map::before, .hero-art-map::after { position: absolute; inset: 14%; border: 1px dashed rgba(255,255,255,0.22); border-radius: 48% 52% 44% 56%; content: ""; transform: rotate(34deg); }
+  .hero-art-map::after { inset: 26% 5%; transform: rotate(-22deg); }
+  .map-dot { position: absolute; z-index: 2; width: 17px; height: 17px; border: 3px solid var(--ink); border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 8px rgba(216,255,79,0.16); animation: travel-ping 2.6s ease-in-out infinite; }
+  .dot-one { top: 24%; left: 25%; }.dot-two { top: 54%; right: 22%; animation-delay: -0.8s; background: var(--coral); box-shadow: 0 0 0 8px rgba(255,120,90,0.16); }.dot-three { bottom: 20%; left: 45%; animation-delay: -1.6s; background: #a6a3ff; box-shadow: 0 0 0 8px rgba(166,163,255,0.16); }
+  .map-route { position: absolute; top: 30%; left: 26%; width: 48%; height: 36%; border-top: 2px dashed var(--lime); border-right: 2px dashed var(--lime); border-radius: 0 80% 0 0; transform: rotate(17deg); }
+  .hero-art-stamp { position: absolute; top: 1.6rem; right: 1.6rem; display: grid; width: 116px; height: 116px; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--lime); color: var(--ink); rotate: 9deg; }
+  .hero-art-stamp span { font-family: var(--font-display); font-size: 1.1rem; font-weight: 950; }.hero-art-stamp strong { font-family: var(--font-display); font-size: 2rem; line-height: 0.8; }.hero-art-stamp small { font-size: 0.55rem; font-weight: 900; letter-spacing: 0.16em; }
+  .hero-art-caption { position: absolute; right: 1.5rem; bottom: 1.25rem; left: 1.5rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(255,255,255,0.7); font-size: 0.65rem; font-weight: 900; letter-spacing: 0.11em; }
+  .travel-hero-scene { position: absolute; inset: 0; pointer-events: none; }.travel-sun { position: absolute; top: 11%; right: 9%; width: 12rem; height: 12rem; border-radius: 50%; background: rgba(255,207,124,0.54); filter: blur(2px); animation: travel-breathe 5s ease-in-out infinite alternate; }.travel-route-line { position: absolute; right: 1%; bottom: 17%; width: 40%; height: 20%; border-top: 1px dashed rgba(116,87,255,0.42); border-radius: 50%; rotate: -15deg; }.travel-compass { position: absolute; top: 40%; right: 5%; font-family: Georgia, serif; font-size: 6rem; opacity: 0.1; rotate: 23deg; }.travel-bird { position: absolute; top: 26%; left: 7%; font-size: 2.2rem; opacity: 0.3; animation: travel-cross 10s linear infinite alternate; }
+  .travel-portals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: -4rem; position: relative; z-index: 2; }
+  .travel-portal { position: relative; min-height: 420px; overflow: hidden; border: 1px solid var(--ink); border-radius: 30px; color: white; box-shadow: var(--shadow); transform: perspective(950px) translateY(0) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 360ms cubic-bezier(.2,.8,.2,1), box-shadow 360ms ease; }
+  .travel-portal:hover, .travel-portal.is-interacting { box-shadow: 0 34px 85px rgba(34,27,66,0.27); transform: perspective(950px) translateY(-15px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.015); }
+  .portal-media, .portal-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }.portal-media img { transition: transform 800ms cubic-bezier(.2,.8,.2,1); }.travel-portal:hover .portal-media img { transform: scale(1.09); }.portal-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,12,25,0.03) 20%, rgba(13,12,25,0.9)); }.portal-copy { position: absolute; right: 1.6rem; bottom: 1.5rem; left: 1.6rem; }.portal-copy > span { color: rgba(255,255,255,0.68); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.14em; }.portal-copy h2 { max-width: 330px; margin-top: 0.65rem; font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.5rem); letter-spacing: -0.055em; line-height: 0.98; }.portal-copy h2 .lang-zh-hans, .portal-copy h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.45em; font-weight: 400; letter-spacing: 0.03em; line-height: 1.08; }.portal-copy strong { position: absolute; right: 0; bottom: 0; display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; font-size: 1.25rem; transition: rotate 300ms ease, background 300ms ease; }.travel-portal:hover .portal-copy strong { rotate: -45deg; background: var(--lime); color: var(--ink); }
+  .portal-abroad { background: #30427a; }.portal-china { background: #a85b3e; }.portal-campus { background: #42675a; }
+  .travel-route { display: flex; align-items: center; gap: 1rem; padding: 4.5rem 0 2rem; color: var(--muted); font-family: var(--font-display); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.14em; }.travel-route i { height: 1px; flex: 1; background: var(--line); }
+  .travel-chapter { position: relative; padding: clamp(6rem, 10vw, 10rem) 0; }.chapter-abroad { background: linear-gradient(180deg, rgba(221,224,255,0.5), rgba(244,239,231,0.1)); }.chapter-domestic { background: linear-gradient(180deg, rgba(255,231,215,0.38), rgba(244,239,231,0.1)); }.chapter-campus { background: linear-gradient(180deg, rgba(219,242,231,0.48), rgba(244,239,231,0.1)); }
+  .travel-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.48fr); align-items: end; gap: 2rem; margin-bottom: 2.7rem; }.travel-heading h2 { margin-top: 0.6rem; font-family: var(--font-display); font-size: clamp(3rem, 7vw, 6.8rem); letter-spacing: -0.075em; line-height: 0.9; }.travel-heading h2 .lang-zh-hans, .travel-heading h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.03em; font-weight: 400; letter-spacing: 0.04em; line-height: 1.05; }.travel-heading > p { color: var(--muted); }
+  .travel-gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }.travel-card { position: relative; min-height: 360px; overflow: hidden; padding: 0; border: 1px solid var(--ink); border-radius: 24px; background: var(--ink); color: white; cursor: zoom-in; transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 340ms cubic-bezier(.2,.8,.2,1), box-shadow 340ms ease; }.travel-card:hover, .travel-card.is-interacting { box-shadow: 0 34px 80px rgba(34,27,66,0.22); }.travel-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.8,.2,1); }.travel-card:hover img { transform: scale(1.07); }.travel-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 22%, rgba(9,8,14,0.86)); pointer-events: none; }.travel-card-meta { position: absolute; right: 1.1rem; bottom: 4.4rem; left: 1.1rem; color: rgba(255,255,255,0.7); font-family: var(--font-display); font-size: 0.63rem; font-weight: 900; letter-spacing: 0.14em; text-align: left; }.travel-card strong { position: absolute; right: 1.1rem; bottom: 1.1rem; left: 1.1rem; font-family: var(--font-display); font-size: clamp(1.2rem, 2.1vw, 1.7rem); letter-spacing: -0.04em; line-height: 1.05; text-align: left; }.travel-card strong .lang-zh-hans, .travel-card strong .lang-zh-hant { font-family: var(--font-story); font-size: 1.25em; font-weight: 400; letter-spacing: 0.04em; }
+  .gallery-abroad .travel-card:nth-child(1) { grid-column: span 5; grid-row: span 2; min-height: 740px; }.gallery-abroad .travel-card:nth-child(2), .gallery-abroad .travel-card:nth-child(3), .gallery-abroad .travel-card:nth-child(4), .gallery-abroad .travel-card:nth-child(5), .gallery-abroad .travel-card:nth-child(6), .gallery-abroad .travel-card:nth-child(7) { grid-column: span 7; min-height: 350px; }.gallery-abroad .travel-card:nth-child(3), .gallery-abroad .travel-card:nth-child(5), .gallery-abroad .travel-card:nth-child(7) { grid-column: span 4; }.gallery-abroad .travel-card:nth-child(4), .gallery-abroad .travel-card:nth-child(6) { grid-column: span 3; }
+  .gallery-domestic .travel-card { grid-column: span 4; min-height: 390px; }.gallery-domestic .travel-card:nth-child(1) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(2) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(5) { background: var(--ink); }
+  .gallery-campus .travel-card { grid-column: span 6; min-height: 540px; }.campus-note { position: relative; display: flex; min-height: 540px; flex-direction: column; justify-content: space-between; grid-column: span 6; padding: clamp(2rem, 4vw, 3.5rem); overflow: hidden; border: 1px solid var(--ink); border-radius: 30px; background: var(--ink); color: white; transform: perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 340ms cubic-bezier(.2,.8,.2,1), box-shadow 340ms ease; }.campus-note:hover { box-shadow: 0 34px 80px rgba(34,27,66,0.25); }.campus-note h3 { position: relative; z-index: 1; margin-top: 2rem; font-family: var(--font-display); font-size: clamp(2.3rem, 5vw, 5rem); letter-spacing: -0.075em; line-height: 0.9; }.campus-note h3 .lang-zh-hans, .campus-note h3 .lang-zh-hant { font-family: var(--font-story); font-size: 1.15em; font-weight: 400; letter-spacing: 0.04em; line-height: 1.05; }.campus-note p { position: relative; z-index: 1; max-width: 420px; color: rgba(255,255,255,0.68); }.campus-note::after { position: absolute; right: -100px; bottom: -130px; width: 390px; height: 390px; border: 58px solid var(--violet); border-radius: 50%; content: ""; opacity: 0.75; }.campus-arrow { position: relative; z-index: 1; align-self: flex-end; font-size: 5rem; line-height: 0.7; color: var(--lime); }
+  .travel-outro { padding: 7rem 0 10rem; text-align: center; }.travel-outro h2 { margin: 1rem auto 2rem; font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.08em; line-height: 0.9; }.travel-outro h2 .lang-zh-hans, .travel-outro h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.1em; font-weight: 400; letter-spacing: 0.04em; }
+  .travel-viewer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity 220ms ease; }.travel-viewer[hidden] { display: none; }.travel-viewer.is-open { opacity: 1; pointer-events: auto; }.travel-viewer-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(8,7,13,0.84); backdrop-filter: blur(20px); }.travel-viewer-dialog { position: relative; z-index: 1; width: min(1180px, calc(100% - 70px)); height: min(850px, calc(100vh - 60px)); overflow: hidden; border: 1px solid rgba(255,255,255,0.2); border-radius: 28px; background: #111019; color: white; box-shadow: 0 45px 120px rgba(0,0,0,0.48); transform: perspective(950px) translateY(25px) rotateX(3deg) scale(0.96); transition: transform 280ms cubic-bezier(.2,.8,.2,1); }.travel-viewer.is-open .travel-viewer-dialog { transform: perspective(950px) translateY(0) rotateX(0) scale(1); }.travel-viewer-topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 58px; padding: 0.5rem 0.8rem 0.5rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.13); font-family: var(--font-display); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; }.travel-viewer-topbar button { justify-self: end; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.24); border-radius: 50%; color: white; font-size: 1.45rem; }.travel-viewer-dialog figure { display: grid; height: calc(100% - 58px); grid-template-rows: minmax(0, 1fr) auto; margin: 0; }.travel-viewer-image { width: 100%; height: 100%; min-height: 0; object-fit: contain; background: #0b0a10; }.travel-viewer-dialog figcaption { display: grid; gap: 0.35rem; min-height: 105px; align-content: center; padding: 1rem 6rem; border-top: 1px solid rgba(255,255,255,0.13); background: #17151f; }.travel-viewer-meta { color: var(--lime); font-family: var(--font-display); font-size: 0.64rem; font-weight: 900; letter-spacing: 0.13em; }.travel-viewer-dialog figcaption strong { font-family: var(--font-display); font-size: clamp(1.25rem, 2.6vw, 2.1rem); letter-spacing: -0.04em; line-height: 1.05; }.travel-viewer-nav { position: absolute; top: 50%; z-index: 2; display: grid; width: 50px; height: 50px; place-items: center; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; background: rgba(17,16,25,0.75); color: white; font-size: 1.2rem; transform: translateY(-50%); }.travel-viewer-prev { left: 1rem; }.travel-viewer-next { right: 1rem; }
+  .travel-reveal { opacity: 0; transform: translateY(24px); transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1); }.travel-reveal.is-visible { opacity: 1; transform: translateY(0) perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
+  @keyframes travel-float { from { translate: -10px 8px; scale: 0.98; } to { translate: 16px -12px; scale: 1.05; } } @keyframes travel-breathe { from { scale: 0.94; opacity: 0.38; } to { scale: 1.06; opacity: 0.62; } } @keyframes travel-cross { from { translate: -10px 6px; } to { translate: 60vw -30px; } } @keyframes travel-ping { 0%, 100% { scale: 0.9; } 50% { scale: 1.16; } }
+  @media (max-width: 900px) { .travel-hero { min-height: auto; padding-top: 8rem; }.travel-hero-grid { grid-template-columns: 1fr; }.travel-hero-art { min-height: 430px; width: min(620px, 92%); margin: 1rem auto 0; }.travel-portals { grid-template-columns: 1fr; margin-top: -2rem; }.travel-portal { min-height: 360px; }.travel-heading { grid-template-columns: 1fr; }.gallery-abroad .travel-card, .gallery-abroad .travel-card:nth-child(n), .gallery-domestic .travel-card, .gallery-domestic .travel-card:nth-child(n), .gallery-campus .travel-card, .gallery-campus .travel-card:nth-child(n), .campus-note { grid-column: span 6; min-height: 390px; }.gallery-abroad .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(2) { min-height: 480px; } }
+  @media (max-width: 590px) { .travel-hero { padding-top: 7rem; }.travel-hero-copy h1 { font-size: clamp(3.6rem, 18vw, 5.6rem); }.travel-hero-art { min-height: 340px; width: 94%; box-shadow: 12px 15px 0 var(--ink); }.hero-art-stamp { width: 88px; height: 88px; }.travel-portals { margin-top: -1.5rem; }.travel-portal { min-height: 300px; border-radius: 24px; }.travel-route { flex-wrap: wrap; gap: 0.55rem; padding: 3rem 1.2rem 1rem; }.travel-route i { min-width: 20px; }.travel-chapter { padding: 5rem 0; }.travel-heading h2 { font-size: clamp(3rem, 15vw, 5rem); }.travel-gallery { grid-template-columns: 1fr; }.gallery-abroad .travel-card, .gallery-abroad .travel-card:nth-child(n), .gallery-domestic .travel-card, .gallery-domestic .travel-card:nth-child(n), .gallery-campus .travel-card, .gallery-campus .travel-card:nth-child(n), .campus-note { grid-column: 1; min-height: 340px; }.gallery-abroad .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(2), .gallery-campus .travel-card, .campus-note { min-height: 430px; }.travel-viewer-dialog { width: calc(100% - 14px); height: calc(100vh - 14px); border-radius: 20px; }.travel-viewer-dialog figcaption { min-height: 125px; padding: 0.9rem 3.8rem; }.travel-viewer-nav { top: auto; bottom: 2rem; width: 42px; height: 42px; transform: none; }.travel-viewer-prev { left: 0.7rem; }.travel-viewer-next { right: 0.7rem; } }
+  @media (prefers-reduced-motion: reduce) { .travel-ambient, .travel-hero-scene { display: none; }.travel-reveal { opacity: 1; transform: none; }.travel-portal, .travel-card, .campus-note, .travel-hero-art { transform: none !important; transition: none; } }
+</style>
+
+<script>
+  const travelHtml = document.documentElement;
+  const travelLanguageButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-language-option]'));
+  const travelMenuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const travelNavLinks = document.querySelector<HTMLElement>('#travel-nav-links');
+  const setTravelLanguage = (language: string, persist = true) => {
+    const next = language === 'zh-hans' || language === 'zh-hant' ? language : 'en';
+    travelHtml.dataset.language = next;
+    travelHtml.lang = next === 'zh-hans' ? 'zh-Hans' : next === 'zh-hant' ? 'zh-Hant' : 'en';
+    travelLanguageButtons.forEach((button) => { const active = button.dataset.languageOption === next; button.classList.toggle('is-active', active); button.setAttribute('aria-pressed', String(active)); });
+    if (persist) localStorage.setItem('noah-language', next);
+  };
+  travelLanguageButtons.forEach((button) => button.addEventListener('click', () => setTravelLanguage(button.dataset.languageOption || 'en')));
+  travelMenuButton?.addEventListener('click', () => { const open = travelNavLinks?.classList.toggle('is-open') ?? false; travelMenuButton.setAttribute('aria-expanded', String(open)); travelMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); });
+  travelNavLinks?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { travelNavLinks.classList.remove('is-open'); travelMenuButton?.setAttribute('aria-expanded', 'false'); }));
+
+  const travelObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); travelObserver.unobserve(entry.target); } }), { threshold: 0.1 });
+  document.querySelectorAll('.travel-reveal').forEach((element) => travelObserver.observe(element));
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  if (!prefersReduced && finePointer) {
+    document.querySelectorAll<HTMLElement>('.travel-tilt').forEach((card) => {
+      const strength = Number(card.dataset.tiltStrength || 9);
+      card.addEventListener('pointermove', (event) => { const bounds = card.getBoundingClientRect(); const x = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width)); const y = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height)); card.classList.add('is-interacting'); card.style.setProperty('--tilt-x', `${(0.5 - y) * strength}deg`); card.style.setProperty('--tilt-y', `${(x - 0.5) * strength}deg`); });
+      card.addEventListener('pointerleave', () => { card.classList.remove('is-interacting'); card.style.setProperty('--tilt-x', '0deg'); card.style.setProperty('--tilt-y', '0deg'); });
+    });
+  }
+
+  const travelViewer = document.querySelector<HTMLElement>('.travel-viewer');
+  const travelViewerImage = document.querySelector<HTMLImageElement>('.travel-viewer-image');
+  const travelViewerCaption = document.querySelector<HTMLElement>('#travel-viewer-caption');
+  const travelViewerMeta = document.querySelector<HTMLElement>('.travel-viewer-meta');
+  const travelViewerCounter = document.querySelector<HTMLElement>('.travel-viewer-counter');
+  const travelCards = Array.from(document.querySelectorAll<HTMLButtonElement>('.travel-card'));
+  let travelIndex = 0;
+  const showTravelImage = (index: number) => { if (!travelViewer || !travelViewerImage || !travelViewerCaption || !travelViewerMeta || !travelViewerCounter || !travelCards.length) return; travelIndex = (index + travelCards.length) % travelCards.length; const card = travelCards[travelIndex]; const image = card.querySelector('img'); if (!image) return; travelViewerImage.src = image.currentSrc || image.src; travelViewerImage.alt = card.dataset.alt || ''; travelViewerCaption.textContent = card.dataset.caption || ''; travelViewerMeta.textContent = card.dataset.meta || ''; travelViewerCounter.textContent = `${String(travelIndex + 1).padStart(2, '0')} / ${String(travelCards.length).padStart(2, '0')}`; travelViewer.hidden = false; travelViewer.setAttribute('aria-hidden', 'false'); requestAnimationFrame(() => travelViewer.classList.add('is-open')); document.body.classList.add('viewer-open'); };
+  const closeTravelViewer = () => { if (!travelViewer) return; travelViewer.classList.remove('is-open'); travelViewer.setAttribute('aria-hidden', 'true'); document.body.classList.remove('viewer-open'); window.setTimeout(() => { travelViewer.hidden = true; }, 220); };
+  travelCards.forEach((card, index) => card.addEventListener('click', () => showTravelImage(index)));
+  document.querySelectorAll<HTMLElement>('[data-travel-close]').forEach((button) => button.addEventListener('click', closeTravelViewer));
+  document.querySelector<HTMLElement>('[data-travel-prev]')?.addEventListener('click', () => showTravelImage(travelIndex - 1));
+  document.querySelector<HTMLElement>('[data-travel-next]')?.addEventListener('click', () => showTravelImage(travelIndex + 1));
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeTravelViewer();
+    if (!travelViewer?.classList.contains('is-open')) return;
+    if (event.key === 'ArrowLeft') showTravelImage(travelIndex - 1);
+    if (event.key === 'ArrowRight') showTravelImage(travelIndex + 1);
+  });
+</script>

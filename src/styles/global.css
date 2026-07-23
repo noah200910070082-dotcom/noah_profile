@@ -1075,6 +1075,7 @@
 
   .atlas-footer i { height: 1px; flex: 1; background: var(--ink); opacity: 0.4; }
   .atlas-footer p { margin-left: auto; color: var(--muted); font-family: var(--font-body); font-weight: 600; letter-spacing: 0; }
+  .atlas-footer-link { display: inline-block; margin-left: 0.55rem; border-bottom: 1px solid currentColor; color: var(--ink); font-weight: 850; }
 
   .contact-card {
     position: relative;
