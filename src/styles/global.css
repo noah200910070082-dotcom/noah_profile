@@ -811,7 +811,7 @@
   .work-card:hover, .work-card.is-interacting { --interactive-transform: perspective(780px) translateY(-15px) scale(1.012) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); box-shadow: 0 38px 88px rgba(34, 27, 66, 0.23); }
   .work-primary { grid-column: span 7; background: var(--blue); color: white; }
   .work-imsc { grid-column: span 5; min-height: 570px; padding: 0; background: #15121d; color: white; }
-  .work-ai { grid-column: span 5; background: var(--lime); }
+  .work-ai { grid-column: span 12; min-height: 360px; background: var(--lime); }
   .work-target { grid-column: span 7; min-height: 360px; background: var(--paper-2); }
 
   .card-label {
@@ -903,6 +903,7 @@
   .life-go p { color: rgba(255,255,255,0.6); }
   .life-go .life-symbol { color: rgba(255,255,255,0.1); }
   .life-violin { grid-column: span 4; background: #ffd47a; }
+  .life-code { grid-column: span 4; background: #bfe5cf; }
   .life-travel { grid-column: span 4; background: #b7d2ff; }
   .life-music { grid-column: span 4; background: var(--violet); color: white; }
   .life-music p { color: rgba(255,255,255,0.7); }
@@ -1025,7 +1026,7 @@
   .timeline-grid {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     padding-top: 2.5rem;
   }
@@ -1035,11 +1036,15 @@
   .timeline-card .timeline-dot { position: absolute; top: -42px; left: 1.3rem; width: 17px; height: 17px; border: 3px solid var(--paper-2); border-radius: 50%; background: var(--violet); box-shadow: 0 0 0 2px var(--ink); }
   .timeline-card:nth-child(2) .timeline-dot { background: var(--coral); }
   .timeline-card:nth-child(3) .timeline-dot { background: var(--lime); }
+  .timeline-card:nth-child(4) .timeline-dot { background: var(--blue); }
   .timeline-media { aspect-ratio: 4 / 3; border-radius: 20px; }
   .timeline-card .story-label { display: block; margin: 1.1rem 0 0.55rem; }
   .timeline-card h4 { font-family: var(--font-display); font-size: clamp(1.25rem, 2.2vw, 1.8rem); letter-spacing: -0.035em; line-height: 1.15; }
 
   .atlas-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+  .atlas-categories { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: -0.8rem 0 1.2rem; }
+  .atlas-categories > span { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.75rem; border: 1px solid rgba(23,21,31,0.28); border-radius: 999px; background: rgba(255,250,243,0.72); color: var(--muted); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; }
+  .atlas-categories b { display: inline-grid; width: 22px; height: 22px; place-items: center; border-radius: 50%; background: var(--ink); color: white; font-size: 0.62rem; }
   .atlas-card { min-height: 350px; color: white; }
   .atlas-tradition { grid-column: span 5; grid-row: span 2; min-height: 770px; }
   .atlas-pku, .atlas-shanghai { grid-column: span 7; }
@@ -1341,7 +1346,7 @@
   .work-primary { min-height: 500px; }
   .work-imsc { min-height: 520px; }
   .life-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
-  .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; }
+  .life-tennis, .life-go, .life-violin, .life-code, .life-travel, .life-music { grid-column: span 1; }
   .life-music { grid-column: span 2; }
   .chapter-heading { grid-template-columns: 1fr; }
   .robotics-card-wide, .robot-loop-card, .robotics-card-debug, .robotics-card-team { grid-column: span 12; }
@@ -1383,7 +1388,7 @@
   .work-target { min-height: 330px; }
   .mini-browser { right: -3rem; width: 95%; }
   .life-grid { display: grid; grid-template-columns: 1fr; grid-auto-rows: 160px; }
-  .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; }
+  .life-tennis, .life-go, .life-violin, .life-code, .life-travel, .life-music { grid-column: span 1; grid-row: auto; }
   .life-tennis, .life-go { min-height: 260px; }
   .chapter-nav { grid-template-columns: 1fr; gap: 0.55rem; margin-bottom: 5rem; }
   .chapter-nav a { min-height: 64px; }
