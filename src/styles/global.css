@@ -871,6 +871,34 @@
   .ai-orbit::after { inset: 82px; background: var(--violet); }
   .work-ai:hover .ai-orbit, .work-ai.is-interacting .ai-orbit { transform: rotate(32deg) translate(-8px, -10px) scale(1.13); }
 
+  .project-showcase { grid-column: span 6; min-height: 430px; isolation: isolate; }
+  .project-showcase > .card-label, .project-showcase > h3, .project-showcase > p, .project-showcase > .project-link { position: relative; z-index: 2; }
+  .project-showcase > p { max-width: 52%; }
+  .project-showcase > .interaction-light { display: none; }
+  .project-fieldguard { background: linear-gradient(145deg, #d9f6c6, #87d49f); }
+  .project-transit { background: linear-gradient(145deg, #ded5ff, #8a72e8); }
+
+  .fieldguard-viz, .transit-viz { position: absolute; right: -3%; bottom: -8%; width: 49%; aspect-ratio: 1; border: 1px solid rgba(23,21,31,0.62); border-radius: 32px; transform: perspective(700px) rotateX(58deg) rotateZ(-18deg); transition: transform 620ms cubic-bezier(.2,.8,.2,1); }
+  .fieldguard-viz { overflow: hidden; background: repeating-linear-gradient(0deg, transparent 0 31px, rgba(23,21,31,0.16) 32px 33px), repeating-linear-gradient(90deg, transparent 0 31px, rgba(23,21,31,0.16) 32px 33px), rgba(255,255,255,0.25); }
+  .project-fieldguard:hover .fieldguard-viz, .project-fieldguard.is-interacting .fieldguard-viz { transform: perspective(700px) rotateX(48deg) rotateZ(-10deg) translate3d(-12px, -20px, 32px) scale(1.08); }
+  .field-scan { position: absolute; right: 0; left: 0; height: 3px; background: #1b772f; box-shadow: 0 0 18px rgba(27,119,47,0.5); animation: field-scan 3.2s ease-in-out infinite; }
+  .field-node, .field-pulse { position: absolute; width: 14px; height: 14px; border: 2px solid #174f25; border-radius: 50%; background: var(--lime); }
+  .field-node-a { top: 24%; left: 28%; }
+  .field-node-b { top: 52%; left: 64%; animation: node-breathe 1.9s ease-in-out infinite alternate; }
+  .field-node-c { top: 70%; left: 38%; animation: node-breathe 2.3s 0.5s ease-in-out infinite alternate; }
+  .field-pulse { top: 49%; left: 61%; width: 34px; height: 34px; background: transparent; opacity: 0; animation: field-pulse 2.1s ease-out infinite; }
+
+  .transit-viz { border-radius: 50%; background: radial-gradient(circle at center, rgba(255,255,255,0.46), rgba(255,255,255,0.08) 55%, transparent 56%); }
+  .project-transit:hover .transit-viz, .project-transit.is-interacting .transit-viz { transform: perspective(700px) rotateX(48deg) rotateZ(-25deg) translate3d(-12px, -20px, 34px) scale(1.1); }
+  .transit-line { position: absolute; top: 50%; left: 13%; width: 74%; height: 2px; background: rgba(23,21,31,0.72); transform-origin: center; }
+  .transit-line-b { transform: rotate(60deg); }
+  .transit-line-c { transform: rotate(-60deg); }
+  .transit-node { position: absolute; width: 17px; height: 17px; border: 2px solid var(--ink); border-radius: 50%; background: #f3efff; box-shadow: 0 0 0 6px rgba(255,255,255,0.18); }
+  .transit-node-a { top: 18%; left: 46%; }
+  .transit-node-b { right: 13%; bottom: 24%; }
+  .transit-node-c { bottom: 24%; left: 13%; }
+  .transit-signal { position: absolute; top: calc(50% - 6px); left: 14%; width: 12px; height: 12px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(209,255,84,0.22); animation: transit-signal 3s ease-in-out infinite; }
+
   .target-route { display: flex; align-items: center; gap: 1rem; margin-top: 2.2rem; }
   .route-point { display: grid; width: 52px; height: 52px; flex: 0 0 auto; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper); font-weight: 950; }
   .route-line { position: relative; width: min(300px, 40vw); height: 2px; background: var(--ink); }
@@ -1341,6 +1369,10 @@
   @keyframes comet-pass { 0%, 18% { translate: -120px 70px; opacity: 0; } 42%, 62% { opacity: 0.78; } 82%, 100% { translate: 280px -120px; opacity: 0; } }
   @keyframes route-drift { from { translate: -2% 4%; scale: 0.98; } to { translate: 3% -3%; scale: 1.04; } }
   @keyframes compass-turn { to { rotate: 360deg; } }
+  @keyframes field-scan { 0%, 100% { transform: translateY(30px); opacity: 0.35; } 50% { transform: translateY(245px); opacity: 1; } }
+  @keyframes node-breathe { from { transform: scale(0.82); opacity: 0.55; } to { transform: scale(1.25); opacity: 1; } }
+  @keyframes field-pulse { 0% { transform: scale(0.45); opacity: 0.8; } 85%, 100% { transform: scale(2.3); opacity: 0; } }
+  @keyframes transit-signal { 0%, 100% { transform: translateX(0) scale(0.8); opacity: 0.45; } 48%, 55% { transform: translateX(180px) scale(1.25); opacity: 1; } }
 }
 
 @media (max-width: 900px) {
@@ -1373,9 +1405,10 @@
   .hero-copy { position: relative; z-index: 3; }
   .portrait-wrap { width: min(490px, 92%); margin: 1rem auto 0; }
   .section-head, .about-panel { grid-template-columns: 1fr; }
-  .work-primary, .work-imsc, .work-ai, .work-target { grid-column: span 12; }
+  .work-primary, .work-imsc, .work-ai, .work-target, .project-showcase { grid-column: span 12; }
   .work-primary { min-height: 500px; }
   .work-imsc { min-height: 520px; }
+  .project-showcase > p { max-width: 64%; }
   .life-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
   .life-imsc-feature { grid-column: span 2; grid-row: span 2; }
   .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 220px; }
@@ -1419,6 +1452,9 @@
   .work-card { min-height: 430px; padding: 1.5rem; }
   .work-imsc { min-height: 480px; padding: 0; }
   .work-target { min-height: 330px; }
+  .project-showcase { min-height: 460px; }
+  .project-showcase > p { max-width: 100%; }
+  .fieldguard-viz, .transit-viz { right: -7%; bottom: -9%; width: 66%; opacity: 0.78; }
   .mini-browser { right: -3rem; width: 95%; }
   .life-grid { display: grid; grid-template-columns: 1fr; grid-auto-rows: 160px; }
   .life-imsc-feature, .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 260px; }
