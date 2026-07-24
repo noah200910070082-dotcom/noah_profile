@@ -18,6 +18,8 @@ const readme = await read('README.md');
   'https://github.com/noah200910070082-dotcom/fieldguard-ai',
   'https://github.com/noah200910070082-dotcom/ai-transit-station',
   'https://www.youtube.com/results?search_query=',
+  'getImage',
+  '.inert = true',
 ].forEach((value) => expectText(index, value, 'homepage'));
 
 ['travel-landscape-divider', 'WASHINGTON, D.C.', 'data-landscape-depth', '.landscape-copy.travel-reveal.is-visible'].forEach((value) =>

@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import avatar from '../assets/noah-avatar.jpg';
 import imscPhoto from '../assets/imsc-macau-2026.jpg';
@@ -16,6 +16,14 @@ import goRankingEvent from '../assets/skills/go-ranking-event.jpg';
 import violinPortrait from '../assets/skills/violin-portrait.jpg';
 import musicConcert from '../assets/skills/music-concert.jpg';
 
+const [tennisStoryImage, goStoryImage, violinStoryImage, imscStoryImage, musicStoryImage] = await Promise.all([
+  getImage({ src: tennisChampionship, format: 'webp', width: 1200, quality: 80 }),
+  getImage({ src: goRankingEvent, format: 'webp', width: 1200, quality: 80 }),
+  getImage({ src: violinPortrait, format: 'webp', width: 1200, quality: 80 }),
+  getImage({ src: imscPhoto, format: 'webp', width: 1200, quality: 80 }),
+  getImage({ src: musicConcert, format: 'webp', width: 1200, quality: 80 })
+]);
+
 const skillStories = {
   tennis: {
     meta: 'TENNIS · MATCH MINDSET',
@@ -25,7 +33,7 @@ const skillStories = {
       hant: '喜歡德約科維奇，也在球場上學習：耐心、腳步與不放棄，能改變一個漫長回合。',
       hans: '喜欢德约科维奇，也在球场上学习：耐心、脚步与不放弃，能改变一个漫长回合。'
     },
-    images: [{ src: tennisChampionship.src, alt: 'Noah at a tennis championship event' }]
+    images: [{ src: tennisStoryImage.src, alt: 'Noah at a tennis championship event' }]
   },
   go: {
     meta: 'GO · 3-DAN',
@@ -35,7 +43,7 @@ const skillStories = {
       hant: '圍棋教我閱讀形勢、尊重時機，然後一次只下好一手。',
       hans: '围棋教我阅读形势、尊重时机，然后一次只下好一手。'
     },
-    images: [{ src: goRankingEvent.src, alt: 'Noah taking part in a Go ranking event' }]
+    images: [{ src: goStoryImage.src, alt: 'Noah taking part in a Go ranking event' }]
   },
   violin: {
     meta: 'VIOLIN · PRACTICE',
@@ -45,7 +53,7 @@ const skillStories = {
       hant: '小提琴讓精準慢慢變成表達：一個樂句，再一個樂句。',
       hans: '小提琴让精准慢慢变成表达：一个乐句，再一个乐句。'
     },
-    images: [{ src: violinPortrait.src, alt: 'Noah holding a violin for a portrait' }]
+    images: [{ src: violinStoryImage.src, alt: 'Noah holding a violin for a portrait' }]
   },
   imsc: {
     meta: 'MO · IMSC 2026',
@@ -55,7 +63,7 @@ const skillStories = {
       hant: '代表澳門參與國際數學夏令營，讓解題、同行與更大的舞台連在一起。',
       hans: '代表澳门参与国际数学夏令营，让解题、同行与更大的舞台连在一起。'
     },
-    images: [{ src: imscPhoto.src, alt: 'The Macau delegation at IMSC 2026' }]
+    images: [{ src: imscStoryImage.src, alt: 'The Macau delegation at IMSC 2026' }]
   },
   music: {
     meta: 'MUSIC · JAY CHOU',
@@ -65,7 +73,7 @@ const skillStories = {
       hant: '音樂讓旅程留下記憶。這裡是我常常重播的四首周杰倫作品。',
       hans: '音乐让旅程留下记忆。这里是我常常重播的四首周杰伦作品。'
     },
-    images: [{ src: musicConcert.src, alt: 'A live music concert scene' }],
+    images: [{ src: musicStoryImage.src, alt: 'A live music concert scene' }],
     links: [
       { label: '晴天', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E6%99%B4%E5%A4%A9+%E5%AE%98%E6%96%B9' },
       { label: '稻香', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E7%A8%BB%E9%A6%99+%E5%AE%98%E6%96%B9' },
@@ -801,6 +809,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     const storyViewerCounter = document.querySelector<HTMLElement>('.story-viewer-counter');
     const viewerPrev = document.querySelector<HTMLButtonElement>('[data-viewer-prev]');
     const viewerNext = document.querySelector<HTMLButtonElement>('[data-viewer-next]');
+    const viewerBackgroundElements = Array.from(document.querySelectorAll<HTMLElement>('.site-header, main, .toast'));
     const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.explore-card')).filter((card) => card.querySelector('img'));
     type SkillStory = {
       meta: string;
@@ -896,6 +905,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       renderStoryViewer(index);
       storyViewer.hidden = false;
       storyViewer.setAttribute('aria-hidden', 'false');
+      viewerBackgroundElements.forEach((background) => { background.inert = true; });
       document.body.classList.add('viewer-open');
       window.requestAnimationFrame(() => {
         storyViewer.classList.add('is-open');
@@ -910,8 +920,28 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       document.body.classList.remove('viewer-open');
       viewerCloseTimer = window.setTimeout(() => {
         storyViewer.hidden = true;
+        viewerBackgroundElements.forEach((background) => { background.inert = false; });
         viewerReturnFocus?.focus({ preventScroll: true });
       }, reducedMotion ? 0 : 240);
+    };
+
+    const trapViewerFocus = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !storyViewerDialog || !storyViewer || storyViewer.hidden) return;
+      const focusable = Array.from(storyViewerDialog.querySelectorAll<HTMLElement>('button:not([disabled]):not([hidden]), a[href]'))
+        .filter((element) => element.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (document.activeElement === storyViewerDialog) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     galleryCards.forEach((card, index) => {
@@ -949,6 +979,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     window.addEventListener('keydown', (event) => {
       if (!storyViewer || storyViewer.hidden) return;
+      trapViewerFocus(event);
       if (event.key === 'Escape') closeStoryViewer();
       if (event.key === 'ArrowLeft') renderStoryViewer(activeViewerIndex - 1);
       if (event.key === 'ArrowRight') renderStoryViewer(activeViewerIndex + 1);
