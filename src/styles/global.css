@@ -877,7 +877,7 @@
   .route-line::after { position: absolute; top: 50%; left: 58%; width: 10px; height: 10px; border: 2px solid var(--ink); border-radius: 50%; background: var(--violet); content: ""; transform: translate(-50%, -50%); }
   .route-point:last-child { background: var(--violet); color: white; }
 
-  .life-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 165px; gap: 1rem; }
+  .life-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-flow: dense; grid-auto-rows: 190px; gap: 1rem; }
 
   .life-card {
     position: relative;
@@ -889,24 +889,33 @@
     border: 1px solid var(--ink);
     border-radius: 24px;
     background: var(--paper-2);
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
     transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease;
   }
 
-  .life-card:hover, .life-card.is-interacting { --interactive-transform: perspective(730px) translateY(-12px) scale(1.018) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); box-shadow: 0 30px 68px rgba(34, 27, 66, 0.2); }
-  .life-card h3 { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: -0.03em; }
+  .life-card:hover, .life-card.is-interacting { --interactive-transform: perspective(730px) translateY(-16px) scale(1.035) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); box-shadow: 0 34px 76px rgba(34, 27, 66, 0.24); }
+  .life-card:focus-visible { outline: 4px solid var(--lime); outline-offset: 4px; }
+  .life-card h3 { font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -0.03em; line-height: 1.05; }
   .life-card h3 .lang-zh-hans, .life-card h3 .lang-zh-hant, .life-card h3.lang-zh-hans, .life-card h3.lang-zh-hant { font-family: var(--font-story); font-size: 1.55rem; font-weight: 400; letter-spacing: 0.04em; }
   .life-card p { color: var(--muted); font-size: 0.88rem; }
+  .life-card-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 680ms cubic-bezier(.2,.8,.2,1), filter 420ms ease; }
+  .life-card:hover .life-card-image, .life-card.is-interacting .life-card-image { transform: scale(1.11); }
+  .life-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,18,0.08), rgba(11,10,18,0.78)); pointer-events: none; }
+  .life-card-content { position: relative; z-index: 2; display: flex; width: 100%; height: 100%; flex-direction: column; justify-content: flex-end; gap: 0.7rem; color: white; transform: translateZ(24px); }
+  .life-card-content p { color: rgba(255,255,255,0.72); font-family: var(--font-display); font-size: 0.67rem; font-weight: 850; letter-spacing: 0.12em; }
+  .life-open { width: max-content; padding-bottom: 0.12rem; border-bottom: 1px solid rgba(255,255,255,0.72); font-size: 0.7rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
+  .life-card > .interaction-light { display: none; }
   .life-symbol { position: absolute; right: 1.2rem; bottom: 0.2rem; color: rgba(23,21,31,0.1); font-family: Georgia, serif; font-size: 6.5rem; font-weight: 800; line-height: 1; transition: transform 420ms cubic-bezier(.2,.8,.2,1), color 420ms ease; }
   .life-card:hover .life-symbol, .life-card.is-interacting .life-symbol { color: rgba(23,21,31,0.22); transform: translate(-6px, -17px) rotate(15deg) scale(1.13); }
-  .life-tennis { grid-column: span 5; grid-row: span 2; background: var(--coral); }
-  .life-go { grid-column: span 3; grid-row: span 2; background: var(--ink); color: white; }
-  .life-go p { color: rgba(255,255,255,0.6); }
-  .life-go .life-symbol { color: rgba(255,255,255,0.1); }
-  .life-violin { grid-column: span 4; background: #ffd47a; }
-  .life-code { grid-column: span 4; background: #bfe5cf; }
-  .life-travel { grid-column: span 4; background: #b7d2ff; }
-  .life-music { grid-column: span 4; background: var(--violet); color: white; }
-  .life-music p { color: rgba(255,255,255,0.7); }
+  .life-imsc-feature { grid-column: span 8; grid-row: span 2; min-height: 396px; }
+  .life-imsc-feature h3 { max-width: 680px; font-size: clamp(2rem, 4vw, 4rem); }
+  .life-tennis { grid-column: span 4; grid-row: span 2; min-height: 396px; }
+  .life-go, .life-violin, .life-travel, .life-music { grid-column: span 3; }
+  .life-travel { background: linear-gradient(145deg, #b7d2ff, #d8f3df); }
+  .life-travel .life-card-content { color: var(--ink); justify-content: space-between; }
+  .life-travel .life-card-content p { color: rgba(23,21,31,0.62); }
 
   .life-card-cta {
     position: relative;
@@ -1238,6 +1247,26 @@
 
   .story-viewer-meta { color: var(--lime); font-family: var(--font-display); font-size: 0.64rem; font-weight: 900; letter-spacing: 0.13em; text-transform: uppercase; }
   .story-viewer-figure figcaption strong { max-width: 900px; font-family: var(--font-display); font-size: clamp(1.25rem, 2.7vw, 2.15rem); letter-spacing: -0.035em; line-height: 1.08; }
+  .story-viewer-description { max-width: 760px; color: rgba(255,255,255,0.66); font-size: 0.9rem; line-height: 1.65; }
+
+  .story-viewer-dialog.is-skill-story .story-viewer-figure {
+    grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.65fr);
+    grid-template-rows: 1fr;
+  }
+
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption {
+    min-height: 0;
+    align-content: end;
+    padding: clamp(2rem, 4vw, 4rem);
+    border-top: 0;
+    border-left: 1px solid rgba(255,255,255,0.13);
+    background: linear-gradient(160deg, #211d30, #111019 62%);
+  }
+
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { font-size: clamp(2rem, 4.2vw, 4.7rem); }
+  .skill-music-links { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.9rem; }
+  .skill-music-links a { padding: 0.55rem 0.75rem; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; background: rgba(255,255,255,0.07); font-family: var(--font-display); font-size: 0.66rem; font-weight: 850; letter-spacing: 0.06em; transition: background 180ms ease, transform 180ms ease; }
+  .skill-music-links a:hover { background: var(--violet); transform: translateY(-3px); }
 
   .story-viewer-nav {
     position: absolute;
@@ -1259,6 +1288,7 @@
   }
 
   .story-viewer-nav:hover { background: var(--violet); scale: 1.08; }
+  .story-viewer-nav[hidden] { display: none; }
   .story-viewer-prev { left: 1rem; }
   .story-viewer-next { right: 1rem; }
 
@@ -1347,8 +1377,9 @@
   .work-primary { min-height: 500px; }
   .work-imsc { min-height: 520px; }
   .life-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
-  .life-tennis, .life-go, .life-violin, .life-code, .life-travel, .life-music { grid-column: span 1; }
-  .life-music { grid-column: span 2; }
+  .life-imsc-feature { grid-column: span 2; grid-row: span 2; }
+  .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 220px; }
+  .life-tennis { grid-row: span 2; }
   .chapter-heading { grid-template-columns: 1fr; }
   .robotics-card-wide, .robot-loop-card, .robotics-card-debug, .robotics-card-team { grid-column: span 12; }
   .robot-loop-card { min-height: 470px; }
@@ -1357,6 +1388,7 @@
   .atlas-tradition { min-height: 640px; }
   .atlas-pku, .atlas-shanghai { min-height: 440px; }
   .story-viewer-dialog { width: calc(100% - 28px); height: calc(100vh - 28px); }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure { grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr); }
   .social-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -1389,8 +1421,8 @@
   .work-target { min-height: 330px; }
   .mini-browser { right: -3rem; width: 95%; }
   .life-grid { display: grid; grid-template-columns: 1fr; grid-auto-rows: 160px; }
-  .life-tennis, .life-go, .life-violin, .life-code, .life-travel, .life-music { grid-column: span 1; grid-row: auto; }
-  .life-tennis, .life-go { min-height: 260px; }
+  .life-imsc-feature, .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 260px; }
+  .life-imsc-feature { min-height: 420px; }
   .chapter-nav { grid-template-columns: 1fr; gap: 0.55rem; margin-bottom: 5rem; }
   .chapter-nav a { min-height: 64px; }
   .explore-chapter + .explore-chapter { margin-top: 7rem; }
@@ -1407,6 +1439,11 @@
   .atlas-footer { flex-wrap: wrap; }
   .atlas-footer p { width: 100%; margin-left: 0; }
   .story-viewer-dialog { width: calc(100% - 14px); height: calc(100vh - 14px); border-radius: 20px; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption { max-height: 42vh; padding: 1rem 1.1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.13); border-left: 0; overflow-y: auto; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { font-size: 1.65rem; }
+  .story-viewer-description { font-size: 0.78rem; line-height: 1.45; }
+  .skill-music-links { margin-top: 0.35rem; }
   .story-viewer-hint { visibility: hidden; }
   .story-viewer-topbar { padding-left: 0.85rem; }
   .story-viewer-figure figcaption { min-height: 126px; padding: 0.9rem 3.8rem; }

@@ -11,6 +11,69 @@ import pekingUniversityPhoto from '../assets/journey/peking-university-visit.jpg
 import shanghaiPhoto from '../assets/journey/shanghai-skyline.jpg';
 import graduationPhoto from '../assets/journey/graduation-friends.jpg';
 import roboticsDebugPhoto from '../assets/journey/robotics-event-debug.jpg';
+import tennisChampionship from '../assets/skills/tennis-championship.jpg';
+import goRankingEvent from '../assets/skills/go-ranking-event.jpg';
+import violinPortrait from '../assets/skills/violin-portrait.jpg';
+import musicConcert from '../assets/skills/music-concert.jpg';
+
+const skillStories = {
+  tennis: {
+    meta: 'TENNIS · MATCH MINDSET',
+    title: { en: 'One more ball.', hant: '再多救一球。', hans: '再多救一球。' },
+    description: {
+      en: 'A Djokovic fan learning that patience, footwork and a stubborn mind can turn a long rally around.',
+      hant: '喜歡德約科維奇，也在球場上學習：耐心、腳步與不放棄，能改變一個漫長回合。',
+      hans: '喜欢德约科维奇，也在球场上学习：耐心、脚步与不放弃，能改变一个漫长回合。'
+    },
+    images: [{ src: tennisChampionship.src, alt: 'Noah at a tennis championship event' }]
+  },
+  go: {
+    meta: 'GO · 3-DAN',
+    title: { en: 'See the whole board.', hant: '看全局，落一子。', hans: '看全局，落一子。' },
+    description: {
+      en: 'Go teaches me to read the shape, respect timing and make one clear move at a time.',
+      hant: '圍棋教我閱讀形勢、尊重時機，然後一次只下好一手。',
+      hans: '围棋教我阅读形势、尊重时机，然后一次只下好一手。'
+    },
+    images: [{ src: goRankingEvent.src, alt: 'Noah taking part in a Go ranking event' }]
+  },
+  violin: {
+    meta: 'VIOLIN · PRACTICE',
+    title: { en: 'Strings and patience.', hant: '琴弦與耐心。', hans: '琴弦与耐心。' },
+    description: {
+      en: 'Violin is where precision becomes expression — slowly, phrase by phrase.',
+      hant: '小提琴讓精準慢慢變成表達：一個樂句，再一個樂句。',
+      hans: '小提琴让精准慢慢变成表达：一个乐句，再一个乐句。'
+    },
+    images: [{ src: violinPortrait.src, alt: 'Noah holding a violin for a portrait' }]
+  },
+  imsc: {
+    meta: 'MO · IMSC 2026',
+    title: { en: 'A bigger mathematical world.', hant: '走進更大的數學世界。', hans: '走进更大的数学世界。' },
+    description: {
+      en: 'Representing Macau at the International Mathematics Summer Camp connected problem solving with friendship and a wider stage.',
+      hant: '代表澳門參與國際數學夏令營，讓解題、同行與更大的舞台連在一起。',
+      hans: '代表澳门参与国际数学夏令营，让解题、同行与更大的舞台连在一起。'
+    },
+    images: [{ src: imscPhoto.src, alt: 'The Macau delegation at IMSC 2026' }]
+  },
+  music: {
+    meta: 'MUSIC · JAY CHOU',
+    title: { en: 'Always listening.', hant: '一直在聽。', hans: '一直在听。' },
+    description: {
+      en: 'Music keeps journeys memorable. Here are four Jay Chou tracks I return to.',
+      hant: '音樂讓旅程留下記憶。這裡是我常常重播的四首周杰倫作品。',
+      hans: '音乐让旅程留下记忆。这里是我常常重播的四首周杰伦作品。'
+    },
+    images: [{ src: musicConcert.src, alt: 'A live music concert scene' }],
+    links: [
+      { label: '晴天', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E6%99%B4%E5%A4%A9+%E5%AE%98%E6%96%B9' },
+      { label: '稻香', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E7%A8%BB%E9%A6%99+%E5%AE%98%E6%96%B9' },
+      { label: '七里香', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E4%B8%83%E9%87%8C%E9%A6%99+%E5%AE%98%E6%96%B9' },
+      { label: '青花瓷', href: 'https://www.youtube.com/results?search_query=%E5%91%A8%E6%9D%B0%E4%BC%A6+%E9%9D%92%E8%8A%B1%E7%93%B7+%E5%AE%98%E6%96%B9' }
+    ]
+  }
+};
 
 const quotes = [
   { en: '桃李春风一杯酒，江湖夜雨十年灯。', hans: '桃李春风一杯酒，江湖夜雨十年灯。', hant: '桃李春風一杯酒，江湖夜雨十年燈。' },
@@ -300,62 +363,62 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           </div>
 
           <div class="life-grid">
-            <article class="life-card life-tennis reveal">
-              <div>
+            <button class="life-card life-tennis reveal" type="button" data-skill-story="tennis" aria-haspopup="dialog">
+              <Image class="life-card-image" src={tennisChampionship} alt="" widths={[420, 720, 960]} sizes="(max-width: 590px) 100vw, 34vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
+              <span class="life-card-content">
                 <p>01 · TENNIS</p>
                 <h3 class="lang-en">One more ball.</h3>
                 <h3 class="lang-zh-hant">再多救一球。</h3><h3 class="lang-zh-hans">再多救一球。</h3>
-              </div>
-              <p class="lang-en">Djokovic fan. Patient feet, stubborn mind, long rallies.</p>
-              <p class="lang-zh-hant">喜歡德約科維奇：耐心的腳步、倔強的意志，以及漫長的回合。</p><p class="lang-zh-hans">喜欢德约科维奇：耐心的脚步、倔强的意志，以及漫长的回合。</p>
-              <span class="life-symbol" aria-hidden="true">◎</span>
-            </article>
+                <span class="life-open"><span class="lang-en">Open story</span><span class="lang-zh-hant">打開故事</span><span class="lang-zh-hans">打开故事</span> ↗</span>
+              </span>
+            </button>
 
-            <article class="life-card life-go reveal">
-              <div>
+            <button class="life-card life-go reveal" type="button" data-skill-story="go" aria-haspopup="dialog">
+              <Image class="life-card-image" src={goRankingEvent} alt="" widths={[420, 720, 960]} sizes="(max-width: 590px) 100vw, 25vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
+              <span class="life-card-content">
                 <p>02 · GO</p>
                 <h3><span class="lang-en">3-dan player</span><span class="lang-zh-hant">圍棋三段</span><span class="lang-zh-hans">围棋三段</span></h3>
-              </div>
-              <p class="lang-en">Think globally. Place one stone.</p>
-              <p class="lang-zh-hant">看全局，落一子。</p><p class="lang-zh-hans">看全局，落一子。</p>
-              <span class="life-symbol" aria-hidden="true">●</span>
-            </article>
+              </span>
+            </button>
 
-            <article class="life-card life-violin reveal">
-              <div>
+            <button class="life-card life-violin reveal" type="button" data-skill-story="violin" aria-haspopup="dialog">
+              <Image class="life-card-image" src={violinPortrait} alt="" widths={[420, 720, 960]} sizes="(max-width: 590px) 100vw, 25vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
+              <span class="life-card-content">
                 <p>03 · VIOLIN</p>
                 <h3><span class="lang-en">Strings & patience</span><span class="lang-zh-hant">琴弦與耐心</span><span class="lang-zh-hans">琴弦与耐心</span></h3>
-              </div>
-              <span class="life-symbol" aria-hidden="true">♪</span>
-            </article>
+              </span>
+            </button>
 
-            <article class="life-card life-code reveal">
-              <div>
+            <button class="life-card life-imsc-feature reveal" type="button" data-skill-story="imsc" aria-haspopup="dialog">
+              <Image class="life-card-image" src={imscPhoto} alt="" widths={[640, 960, 1440]} sizes="(max-width: 590px) 100vw, 66vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
+              <span class="life-card-content">
                 <p>04 · MO / IMSC</p>
                 <h3><span class="lang-en">Math, teamwork & Macau.</span><span class="lang-zh-hant">數學、同行與澳門。</span><span class="lang-zh-hans">数学、同行与澳门。</span></h3>
-              </div>
-              <p class="lang-en">Represented Macau at IMSC 2026 — the MO side of my OI, AI and robotics practice.</p>
-              <p class="lang-zh-hant">代表澳門參與 IMSC 2026：這是我 OI、AI 與機器人訓練裡的 MO 一頁。</p><p class="lang-zh-hans">代表澳门参与 IMSC 2026：这是我 OI、AI 与机器人训练里的 MO 一页。</p>
-              <span class="life-symbol" aria-hidden="true">∆</span>
-            </article>
+                <span class="life-open"><span class="lang-en">Open the IMSC story</span><span class="lang-zh-hant">打開 IMSC 故事</span><span class="lang-zh-hans">打开 IMSC 故事</span> ↗</span>
+              </span>
+            </button>
 
             <a class="life-card life-travel reveal" href="/travel" aria-label="Open the dedicated travel atlas">
-              <div>
+              <span class="life-card-content">
                 <p>05 · TRAVEL</p>
                 <h3><span class="lang-en">New maps, new people</span><span class="lang-zh-hant">新地圖，新朋友</span><span class="lang-zh-hans">新地图，新朋友</span></h3>
-              </div>
-              <p class="life-card-cta"><span class="lang-en">Open travel page</span><span class="lang-zh-hant">打開旅行頁</span><span class="lang-zh-hans">打开旅行页</span> ↘</p>
+                <span class="life-card-cta"><span class="lang-en">Open travel page</span><span class="lang-zh-hant">打開旅行頁</span><span class="lang-zh-hans">打开旅行页</span> ↘</span>
+              </span>
               <span class="life-symbol" aria-hidden="true">↗</span>
             </a>
 
-            <article class="life-card life-music reveal">
-              <div>
+            <button class="life-card life-music reveal" type="button" data-skill-story="music" aria-haspopup="dialog">
+              <Image class="life-card-image" src={musicConcert} alt="" widths={[420, 720, 960]} sizes="(max-width: 590px) 100vw, 25vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
+              <span class="life-card-content">
                 <p>06 · MUSIC</p>
                 <h3><span class="lang-en">Always listening</span><span class="lang-zh-hant">一直在聽</span><span class="lang-zh-hans">一直在听</span></h3>
-              </div>
-              <p class="lang-en">A soundtrack makes almost any journey better.</p>
-              <p class="lang-zh-hant">幾乎每段旅程，都值得一份自己的歌單。</p><p class="lang-zh-hans">几乎每段旅程，都值得一份自己的歌单。</p>
-            </article>
+              </span>
+            </button>
           </div>
         </div>
       </section>
@@ -578,6 +641,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
     </main>
 
+    <script is:inline id="skill-story-data" type="application/json" set:html={JSON.stringify(skillStories)}></script>
+
     <div class="story-viewer" hidden aria-hidden="true">
       <button class="story-viewer-backdrop" type="button" data-viewer-close aria-label="Close image viewer"></button>
       <div class="story-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="story-viewer-caption" tabindex="-1">
@@ -591,6 +656,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           <figcaption>
             <span class="story-viewer-meta"></span>
             <strong id="story-viewer-caption"></strong>
+            <p class="story-viewer-description"></p>
+            <nav class="skill-music-links" aria-label="Jay Chou listening links"></nav>
           </figcaption>
         </figure>
         <button class="story-viewer-nav story-viewer-prev" type="button" data-viewer-prev aria-label="Previous image">←</button>
@@ -620,6 +687,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         button.setAttribute('aria-pressed', String(active));
       });
       if (persist) localStorage.setItem('noah-language', next);
+      document.dispatchEvent(new CustomEvent('noah:language-change'));
     };
 
     languageButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.languageOption || 'en')));
@@ -716,9 +784,26 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     const storyViewerImage = document.querySelector<HTMLImageElement>('.story-viewer-image');
     const storyViewerCaption = document.querySelector<HTMLElement>('#story-viewer-caption');
     const storyViewerMeta = document.querySelector<HTMLElement>('.story-viewer-meta');
+    const storyViewerDescription = document.querySelector<HTMLElement>('.story-viewer-description');
+    const skillMusicLinks = document.querySelector<HTMLElement>('.skill-music-links');
     const storyViewerCounter = document.querySelector<HTMLElement>('.story-viewer-counter');
+    const viewerPrev = document.querySelector<HTMLButtonElement>('[data-viewer-prev]');
+    const viewerNext = document.querySelector<HTMLButtonElement>('[data-viewer-next]');
     const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.explore-card')).filter((card) => card.querySelector('img'));
-    let activeGalleryIndex = 0;
+    type SkillStory = {
+      meta: string;
+      title: Record<'en' | 'hant' | 'hans', string>;
+      description: Record<'en' | 'hant' | 'hans', string>;
+      images: Array<{ src: string; alt: string }>;
+      links?: Array<{ label: string; href: string }>;
+    };
+    const skillStorySource = document.querySelector<HTMLScriptElement>('#skill-story-data');
+    const skillStoryData = skillStorySource?.textContent
+      ? JSON.parse(skillStorySource.textContent) as Record<string, SkillStory>
+      : {};
+    let activeViewerIndex = 0;
+    let activeViewerMode: 'gallery' | 'skill' = 'gallery';
+    let activeSkillStory: SkillStory | null = null;
     let viewerReturnFocus: HTMLElement | null = null;
     let viewerCloseTimer = 0;
 
@@ -734,10 +819,46 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       return candidates[0]?.source || image.currentSrc || image.src;
     };
 
+    const activeLanguage = () => html.dataset.language === 'zh-hans' ? 'hans' : html.dataset.language === 'zh-hant' ? 'hant' : 'en';
+
+    const renderMusicLinks = (links: SkillStory['links']) => {
+      if (!skillMusicLinks) return;
+      skillMusicLinks.replaceChildren();
+      links?.forEach(({ label, href }) => {
+        const link = document.createElement('a');
+        link.href = href;
+        link.target = '_blank';
+        link.rel = 'noreferrer';
+        link.textContent = `${label} ↗`;
+        skillMusicLinks.append(link);
+      });
+      skillMusicLinks.hidden = !links?.length;
+    };
+
     const renderStoryViewer = (index: number) => {
-      if (!galleryCards.length || !storyViewerImage || !storyViewerCaption || !storyViewerMeta || !storyViewerCounter) return;
-      activeGalleryIndex = (index + galleryCards.length) % galleryCards.length;
-      const card = galleryCards[activeGalleryIndex];
+      if (!storyViewerImage || !storyViewerCaption || !storyViewerMeta || !storyViewerCounter) return;
+
+      if (activeViewerMode === 'skill' && activeSkillStory) {
+        const count = activeSkillStory.images.length;
+        if (!count) return;
+        activeViewerIndex = (index + count) % count;
+        const image = activeSkillStory.images[activeViewerIndex];
+        const language = activeLanguage();
+        storyViewerImage.src = image.src;
+        storyViewerImage.alt = image.alt;
+        storyViewerCaption.textContent = activeSkillStory.title[language];
+        storyViewerMeta.textContent = activeSkillStory.meta;
+        if (storyViewerDescription) storyViewerDescription.textContent = activeSkillStory.description[language];
+        renderMusicLinks(activeSkillStory.links);
+        storyViewerCounter.textContent = `${String(activeViewerIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+        viewerPrev?.toggleAttribute('hidden', count < 2);
+        viewerNext?.toggleAttribute('hidden', count < 2);
+        return;
+      }
+
+      if (!galleryCards.length) return;
+      activeViewerIndex = (index + galleryCards.length) % galleryCards.length;
+      const card = galleryCards[activeViewerIndex];
       const image = card.querySelector<HTMLImageElement>('img');
       if (!image) return;
       const caption = card.querySelector<HTMLElement>('figcaption strong, h4');
@@ -746,13 +867,20 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       storyViewerImage.alt = image.alt;
       storyViewerCaption.textContent = caption?.innerText.trim() || image.alt;
       storyViewerMeta.textContent = meta?.innerText.trim() || 'NOAH_XU · STORY';
-      storyViewerCounter.textContent = `${String(activeGalleryIndex + 1).padStart(2, '0')} / ${String(galleryCards.length).padStart(2, '0')}`;
+      if (storyViewerDescription) storyViewerDescription.textContent = '';
+      renderMusicLinks(undefined);
+      storyViewerCounter.textContent = `${String(activeViewerIndex + 1).padStart(2, '0')} / ${String(galleryCards.length).padStart(2, '0')}`;
+      viewerPrev?.removeAttribute('hidden');
+      viewerNext?.removeAttribute('hidden');
     };
 
-    const openStoryViewer = (index: number, trigger: HTMLElement) => {
+    const openStoryViewer = (index: number, trigger: HTMLElement, story?: SkillStory) => {
       if (!storyViewer || !storyViewerDialog) return;
       if (viewerCloseTimer) window.clearTimeout(viewerCloseTimer);
       viewerReturnFocus = trigger;
+      activeViewerMode = story ? 'skill' : 'gallery';
+      activeSkillStory = story || null;
+      storyViewerDialog.classList.toggle('is-skill-story', Boolean(story));
       renderStoryViewer(index);
       storyViewer.hidden = false;
       storyViewer.setAttribute('aria-hidden', 'false');
@@ -793,15 +921,25 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       });
     });
 
+    document.querySelectorAll<HTMLButtonElement>('[data-skill-story]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const story = skillStoryData[button.dataset.skillStory || ''];
+        if (story) openStoryViewer(0, button, story);
+      });
+    });
+
     document.querySelectorAll<HTMLButtonElement>('[data-viewer-close]').forEach((button) => button.addEventListener('click', closeStoryViewer));
-    document.querySelector<HTMLButtonElement>('[data-viewer-prev]')?.addEventListener('click', () => renderStoryViewer(activeGalleryIndex - 1));
-    document.querySelector<HTMLButtonElement>('[data-viewer-next]')?.addEventListener('click', () => renderStoryViewer(activeGalleryIndex + 1));
+    viewerPrev?.addEventListener('click', () => renderStoryViewer(activeViewerIndex - 1));
+    viewerNext?.addEventListener('click', () => renderStoryViewer(activeViewerIndex + 1));
+    document.addEventListener('noah:language-change', () => {
+      if (storyViewer && !storyViewer.hidden && activeViewerMode === 'skill') renderStoryViewer(activeViewerIndex);
+    });
 
     window.addEventListener('keydown', (event) => {
       if (!storyViewer || storyViewer.hidden) return;
       if (event.key === 'Escape') closeStoryViewer();
-      if (event.key === 'ArrowLeft') renderStoryViewer(activeGalleryIndex - 1);
-      if (event.key === 'ArrowRight') renderStoryViewer(activeGalleryIndex + 1);
+      if (event.key === 'ArrowLeft') renderStoryViewer(activeViewerIndex - 1);
+      if (event.key === 'ArrowRight') renderStoryViewer(activeViewerIndex + 1);
     });
 
     const copyText = async (value: string) => {
