@@ -9,6 +9,8 @@ import abroadLegoland from '../assets/travel/abroad-japan-legoland.jpg';
 import abroadNewYork from '../assets/travel/abroad-new-york-liberty.jpg';
 import abroadBoston from '../assets/travel/abroad-boston.jpg';
 import abroadNiagara from '../assets/travel/abroad-niagara.jpg';
+import abroadWashingtonHotel from '../assets/travel/abroad-washington-hotel.jpg';
+import abroadWashingtonMonument from '../assets/travel/abroad-washington-monument.jpg';
 import chinaLuoyang from '../assets/travel/china-luoyang-longmen.jpg';
 import chinaGreatWall from '../assets/travel/china-great-wall.jpg';
 import chinaShanghai from '../assets/travel/china-shanghai.jpg';
@@ -27,6 +29,8 @@ const abroadCards = [
   { image: abroadNewYork, meta: 'USA / NEW YORK', en: 'A city with its own orbit.', hant: '紐約，有自己的運行軌道。', hans: '纽约，有自己的运行轨道。', alt: 'Statue of Liberty in New York' },
   { image: abroadBoston, meta: 'USA / BOSTON', en: 'Walk into a different chapter.', hant: '波士頓，走進另一章。', hans: '波士顿，走进另一章。', alt: 'Boston city view' },
   { image: abroadNiagara, meta: 'CANADA / NIAGARA', en: 'Let the scale reset you.', hant: '尼亞加拉，重新校準尺度。', hans: '尼亚加拉，重新校准尺度。', alt: 'Niagara Falls' },
+  { image: abroadWashingtonHotel, meta: 'USA / WASHINGTON, D.C.', en: 'A quiet pause in the capital.', hant: '在首都的旅途中，留一個安靜停頓。', hans: '在首都的旅途中，留一个安静停顿。', alt: 'A Washington, D.C. hotel travel portrait' },
+  { image: abroadWashingtonMonument, meta: 'USA / WASHINGTON, D.C.', en: 'History points into the sky.', hant: '華盛頓紀念碑，把歷史指向天空。', hans: '华盛顿纪念碑，把历史指向天空。', alt: 'Washington Monument in Washington, D.C.' },
 ];
 
 const chinaCards = [
@@ -113,6 +117,17 @@ const campusCards = [
         </div>
       </section>
 
+      <section class="travel-landscape-divider landscape-homeward" aria-label="Transition from abroad to China" data-landscape-divider>
+        <span class="landscape-layer landscape-sun" data-landscape-depth="0.35"></span>
+        <span class="landscape-layer landscape-cloud landscape-cloud-a" data-landscape-depth="0.8"><i></i></span>
+        <span class="landscape-layer landscape-cloud landscape-cloud-b" data-landscape-depth="0.55"><i></i></span>
+        <span class="landscape-layer landscape-hill landscape-hill-back" data-landscape-depth="0.3"></span>
+        <span class="landscape-layer landscape-hill landscape-hill-front" data-landscape-depth="0.65"></span>
+        <span class="landscape-layer landscape-birds" data-landscape-depth="0.95"><i>⌁</i><i>⌁</i><i>⌁</i></span>
+        <span class="landscape-layer landscape-route" data-landscape-depth="0.45"><i></i><b></b></span>
+        <div class="landscape-copy travel-reveal"><span>WORLD → HOME</span><strong><span class="lang-en">Follow the sunset home.</span><span class="lang-zh-hant">沿著日落，走回更近的地方。</span><span class="lang-zh-hans">沿着日落，走回更近的地方。</span></strong></div>
+      </section>
+
       <section class="travel-chapter chapter-domestic" id="domestic">
         <div class="container">
           <div class="travel-heading travel-reveal"><div><p class="section-kicker">02 / CHINA + OUTDOORS</p><h2><span class="lang-en">The long way home.</span><span class="lang-zh-hant">把家鄉走深一點。</span><span class="lang-zh-hans">把家乡走深一点。</span></h2></div><p><span class="lang-en">A slower archive of cliffs, skylines, old towns and the road between them.</span><span class="lang-zh-hant">山崖、天際線、古鎮，以及把它們串起來的路：這一篇慢慢走。</span><span class="lang-zh-hans">山崖、天际线、古镇，以及把它们串起来的路：这一篇慢慢走。</span></p></div>
@@ -120,6 +135,17 @@ const campusCards = [
             {chinaCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
           </div>
         </div>
+      </section>
+
+      <section class="travel-landscape-divider landscape-campus-bound" aria-label="Transition from China to universities" data-landscape-divider>
+        <span class="landscape-layer landscape-moon" data-landscape-depth="0.4"></span>
+        <span class="landscape-layer landscape-cloud landscape-cloud-c" data-landscape-depth="0.7"><i></i></span>
+        <span class="landscape-layer landscape-hill landscape-hill-back" data-landscape-depth="0.25"></span>
+        <span class="landscape-layer landscape-hill landscape-hill-front" data-landscape-depth="0.62"></span>
+        <span class="landscape-layer landscape-campus-silhouette" data-landscape-depth="0.84"><i></i><i></i><i></i></span>
+        <span class="landscape-layer landscape-birds" data-landscape-depth="1"><i>⌁</i><i>⌁</i></span>
+        <span class="landscape-layer landscape-route" data-landscape-depth="0.52"><i></i><b></b></span>
+        <div class="landscape-copy travel-reveal"><span>HOME → FUTURE</span><strong><span class="lang-en">The next horizon has a gate.</span><span class="lang-zh-hant">下一道地平線，有一扇校門。</span><span class="lang-zh-hans">下一道地平线，有一扇校门。</span></strong></div>
       </section>
 
       <section class="travel-chapter chapter-campus" id="universities">
@@ -179,18 +205,46 @@ const campusCards = [
   .portal-abroad { background: #30427a; }.portal-china { background: #a85b3e; }.portal-campus { background: #42675a; }
   .travel-route { display: flex; align-items: center; gap: 1rem; padding: 4.5rem 0 2rem; color: var(--muted); font-family: var(--font-display); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.14em; }.travel-route i { height: 1px; flex: 1; background: var(--line); }
   .travel-chapter { position: relative; padding: clamp(6rem, 10vw, 10rem) 0; }.chapter-abroad { background: linear-gradient(180deg, rgba(221,224,255,0.5), rgba(244,239,231,0.1)); }.chapter-domestic { background: linear-gradient(180deg, rgba(255,231,215,0.38), rgba(244,239,231,0.1)); }.chapter-campus { background: linear-gradient(180deg, rgba(219,242,231,0.48), rgba(244,239,231,0.1)); }
+  .travel-landscape-divider { position: relative; height: clamp(290px, 34vw, 410px); overflow: hidden; isolation: isolate; border-block: 1px solid rgba(23,21,31,0.28); }
+  .landscape-homeward { background: linear-gradient(180deg, #f0a982 0%, #f8cf8f 48%, #d9b27a 100%); }
+  .landscape-campus-bound { background: linear-gradient(180deg, #4f4d86 0%, #8792bd 48%, #b9cfc7 100%); color: white; }
+  .landscape-layer { position: absolute; display: block; transform: translate3d(var(--landscape-x, 0px), calc(var(--landscape-y, 0px) + var(--landscape-scroll, 0px)), 0); will-change: transform; }
+  .landscape-sun, .landscape-moon { top: 16%; right: 16%; width: clamp(72px, 9vw, 120px); aspect-ratio: 1; border-radius: 50%; }
+  .landscape-sun { background: #fff1b9; box-shadow: 0 0 0 22px rgba(255,241,185,0.15), 0 0 70px rgba(255,224,136,0.52); }
+  .landscape-moon { right: auto; left: 14%; background: #eff1d3; box-shadow: 0 0 0 20px rgba(239,241,211,0.1), 0 0 55px rgba(239,241,211,0.26); }
+  .landscape-cloud { z-index: 3; width: clamp(100px, 14vw, 180px); height: 48px; }
+  .landscape-cloud i { position: absolute; inset: 12px 0 0; border-radius: 999px; background: rgba(255,255,255,0.72); animation: landscape-cloud-drift 6.5s ease-in-out infinite alternate; }
+  .landscape-cloud i::before, .landscape-cloud i::after { position: absolute; bottom: 0; border-radius: 50% 50% 0 0; background: inherit; content: ""; }
+  .landscape-cloud i::before { left: 22%; width: 48px; height: 48px; }.landscape-cloud i::after { right: 17%; width: 66px; height: 66px; }
+  .landscape-cloud-a { top: 23%; left: 11%; }.landscape-cloud-b { top: 12%; left: 47%; scale: 0.72; }.landscape-cloud-c { top: 19%; right: 17%; opacity: 0.68; }
+  .landscape-hill { right: -8%; bottom: -42%; left: -8%; height: 84%; border-radius: 52% 48% 0 0 / 78% 70% 0 0; transform-origin: bottom; }
+  .landscape-hill-back { z-index: 1; bottom: -34%; background: #9d8870; opacity: 0.62; }.landscape-hill-front { z-index: 2; right: -24%; bottom: -55%; left: 14%; background: #4d735d; }
+  .landscape-campus-bound .landscape-hill-back { background: #536c73; }.landscape-campus-bound .landscape-hill-front { background: #273f45; }
+  .landscape-birds { z-index: 5; top: 18%; left: 28%; display: flex; gap: 1.7rem; font-size: clamp(1.2rem, 2vw, 2rem); opacity: 0.58; }
+  .landscape-birds i { font-style: normal; animation: landscape-bird-flight 5.4s ease-in-out infinite alternate; }.landscape-birds i:nth-child(2) { animation-delay: -1.8s; }.landscape-birds i:nth-child(3) { animation-delay: -3.2s; }
+  .landscape-route { z-index: 6; right: 12%; bottom: 15%; left: 10%; height: 35px; }
+  .landscape-route i { position: absolute; top: 16px; right: 0; left: 0; border-top: 2px dashed rgba(255,255,255,0.74); transform: rotate(-2deg); }
+  .landscape-route b { position: absolute; top: 10px; left: 2%; width: 14px; height: 14px; border: 2px solid var(--ink); border-radius: 50%; background: var(--lime); animation: landscape-route-marker 7s ease-in-out infinite alternate; }
+  .landscape-campus-silhouette { z-index: 4; right: 12%; bottom: 15%; display: flex; align-items: end; gap: 5px; }
+  .landscape-campus-silhouette i { display: block; width: clamp(34px, 4vw, 54px); height: clamp(60px, 7vw, 90px); border-radius: 5px 5px 0 0; background: #162a31; box-shadow: inset 0 16px rgba(209,255,84,0.22); }.landscape-campus-silhouette i:nth-child(2) { height: clamp(84px, 10vw, 128px); }.landscape-campus-silhouette i:nth-child(3) { height: clamp(48px, 6vw, 76px); }
+  .landscape-copy { position: absolute; z-index: 8; top: 50%; left: 50%; display: grid; gap: 0.55rem; width: min(90%, 850px); text-align: center; transform: translate(-50%, -50%); }
+  .landscape-copy > span { font-family: var(--font-display); font-size: 0.65rem; font-weight: 900; letter-spacing: 0.22em; }.landscape-copy strong { font-family: var(--font-display); font-size: clamp(2.2rem, 5.5vw, 5.8rem); letter-spacing: -0.065em; line-height: 0.9; text-shadow: 0 4px 30px rgba(255,255,255,0.28); }.landscape-copy strong .lang-zh-hans, .landscape-copy strong .lang-zh-hant { font-family: var(--font-story); font-weight: 400; letter-spacing: 0.04em; }
   .travel-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.48fr); align-items: end; gap: 2rem; margin-bottom: 2.7rem; }.travel-heading h2 { margin-top: 0.6rem; font-family: var(--font-display); font-size: clamp(3rem, 7vw, 6.8rem); letter-spacing: -0.075em; line-height: 0.9; }.travel-heading h2 .lang-zh-hans, .travel-heading h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.03em; font-weight: 400; letter-spacing: 0.04em; line-height: 1.05; }.travel-heading > p { color: var(--muted); }
   .travel-gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }.travel-card { position: relative; min-height: 360px; overflow: hidden; padding: 0; border: 1px solid var(--ink); border-radius: 24px; background: var(--ink); color: white; cursor: zoom-in; transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 340ms cubic-bezier(.2,.8,.2,1), box-shadow 340ms ease; }.travel-card:hover, .travel-card.is-interacting { box-shadow: 0 34px 80px rgba(34,27,66,0.22); }.travel-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.8,.2,1); }.travel-card:hover img { transform: scale(1.07); }.travel-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 22%, rgba(9,8,14,0.86)); pointer-events: none; }.travel-card-meta { position: absolute; right: 1.1rem; bottom: 4.4rem; left: 1.1rem; color: rgba(255,255,255,0.7); font-family: var(--font-display); font-size: 0.63rem; font-weight: 900; letter-spacing: 0.14em; text-align: left; }.travel-card strong { position: absolute; right: 1.1rem; bottom: 1.1rem; left: 1.1rem; font-family: var(--font-display); font-size: clamp(1.2rem, 2.1vw, 1.7rem); letter-spacing: -0.04em; line-height: 1.05; text-align: left; }.travel-card strong .lang-zh-hans, .travel-card strong .lang-zh-hant { font-family: var(--font-story); font-size: 1.25em; font-weight: 400; letter-spacing: 0.04em; }
   .gallery-abroad .travel-card:nth-child(1) { grid-column: span 5; grid-row: span 2; min-height: 740px; }.gallery-abroad .travel-card:nth-child(2), .gallery-abroad .travel-card:nth-child(3), .gallery-abroad .travel-card:nth-child(4), .gallery-abroad .travel-card:nth-child(5), .gallery-abroad .travel-card:nth-child(6), .gallery-abroad .travel-card:nth-child(7) { grid-column: span 7; min-height: 350px; }.gallery-abroad .travel-card:nth-child(3), .gallery-abroad .travel-card:nth-child(5), .gallery-abroad .travel-card:nth-child(7) { grid-column: span 4; }.gallery-abroad .travel-card:nth-child(4), .gallery-abroad .travel-card:nth-child(6) { grid-column: span 3; }
+  .gallery-abroad .travel-card:nth-child(8) { grid-column: span 5; min-height: 520px; }.gallery-abroad .travel-card:nth-child(9) { grid-column: span 7; min-height: 520px; }
   .gallery-domestic .travel-card { grid-column: span 4; min-height: 390px; }.gallery-domestic .travel-card:nth-child(1) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(2) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(5) { background: var(--ink); }
   .gallery-campus .travel-card { grid-column: span 6; min-height: 540px; }.campus-note { position: relative; display: flex; min-height: 540px; flex-direction: column; justify-content: space-between; grid-column: span 6; padding: clamp(2rem, 4vw, 3.5rem); overflow: hidden; border: 1px solid var(--ink); border-radius: 30px; background: var(--ink); color: white; transform: perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 340ms cubic-bezier(.2,.8,.2,1), box-shadow 340ms ease; }.campus-note:hover { box-shadow: 0 34px 80px rgba(34,27,66,0.25); }.campus-note h3 { position: relative; z-index: 1; margin-top: 2rem; font-family: var(--font-display); font-size: clamp(2.3rem, 5vw, 5rem); letter-spacing: -0.075em; line-height: 0.9; }.campus-note h3 .lang-zh-hans, .campus-note h3 .lang-zh-hant { font-family: var(--font-story); font-size: 1.15em; font-weight: 400; letter-spacing: 0.04em; line-height: 1.05; }.campus-note p { position: relative; z-index: 1; max-width: 420px; color: rgba(255,255,255,0.68); }.campus-note::after { position: absolute; right: -100px; bottom: -130px; width: 390px; height: 390px; border: 58px solid var(--violet); border-radius: 50%; content: ""; opacity: 0.75; }.campus-arrow { position: relative; z-index: 1; align-self: flex-end; font-size: 5rem; line-height: 0.7; color: var(--lime); }
   .travel-outro { padding: 7rem 0 10rem; text-align: center; }.travel-outro h2 { margin: 1rem auto 2rem; font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.08em; line-height: 0.9; }.travel-outro h2 .lang-zh-hans, .travel-outro h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.1em; font-weight: 400; letter-spacing: 0.04em; }
   .travel-viewer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity 220ms ease; }.travel-viewer[hidden] { display: none; }.travel-viewer.is-open { opacity: 1; pointer-events: auto; }.travel-viewer-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(8,7,13,0.84); backdrop-filter: blur(20px); }.travel-viewer-dialog { position: relative; z-index: 1; width: min(1180px, calc(100% - 70px)); height: min(850px, calc(100vh - 60px)); overflow: hidden; border: 1px solid rgba(255,255,255,0.2); border-radius: 28px; background: #111019; color: white; box-shadow: 0 45px 120px rgba(0,0,0,0.48); transform: perspective(950px) translateY(25px) rotateX(3deg) scale(0.96); transition: transform 280ms cubic-bezier(.2,.8,.2,1); }.travel-viewer.is-open .travel-viewer-dialog { transform: perspective(950px) translateY(0) rotateX(0) scale(1); }.travel-viewer-topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 58px; padding: 0.5rem 0.8rem 0.5rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.13); font-family: var(--font-display); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; }.travel-viewer-topbar button { justify-self: end; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.24); border-radius: 50%; color: white; font-size: 1.45rem; }.travel-viewer-dialog figure { display: grid; height: calc(100% - 58px); grid-template-rows: minmax(0, 1fr) auto; margin: 0; }.travel-viewer-image { width: 100%; height: 100%; min-height: 0; object-fit: contain; background: #0b0a10; }.travel-viewer-dialog figcaption { display: grid; gap: 0.35rem; min-height: 105px; align-content: center; padding: 1rem 6rem; border-top: 1px solid rgba(255,255,255,0.13); background: #17151f; }.travel-viewer-meta { color: var(--lime); font-family: var(--font-display); font-size: 0.64rem; font-weight: 900; letter-spacing: 0.13em; }.travel-viewer-dialog figcaption strong { font-family: var(--font-display); font-size: clamp(1.25rem, 2.6vw, 2.1rem); letter-spacing: -0.04em; line-height: 1.05; }.travel-viewer-nav { position: absolute; top: 50%; z-index: 2; display: grid; width: 50px; height: 50px; place-items: center; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; background: rgba(17,16,25,0.75); color: white; font-size: 1.2rem; transform: translateY(-50%); }.travel-viewer-prev { left: 1rem; }.travel-viewer-next { right: 1rem; }
   .travel-reveal { opacity: 0; transform: translateY(24px); transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1); }.travel-reveal.is-visible { opacity: 1; transform: translateY(0) perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
   @keyframes travel-float { from { translate: -10px 8px; scale: 0.98; } to { translate: 16px -12px; scale: 1.05; } } @keyframes travel-breathe { from { scale: 0.94; opacity: 0.38; } to { scale: 1.06; opacity: 0.62; } } @keyframes travel-cross { from { translate: -10px 6px; } to { translate: 60vw -30px; } } @keyframes travel-ping { 0%, 100% { scale: 0.9; } 50% { scale: 1.16; } }
+  @keyframes landscape-cloud-drift { from { transform: translate3d(-12px, 4px, 0); opacity: 0.68; } to { transform: translate3d(22px, -7px, 0); opacity: 1; } }
+  @keyframes landscape-bird-flight { from { transform: translate3d(-16px, 7px, 0) rotate(-5deg); } to { transform: translate3d(36px, -13px, 0) rotate(7deg); } }
+  @keyframes landscape-route-marker { from { transform: translate3d(0, 0, 0) scale(0.85); opacity: 0.72; } to { transform: translate3d(min(62vw, 760px), -8px, 0) scale(1.2); opacity: 1; } }
   @media (max-width: 900px) { .travel-hero { min-height: auto; padding-top: 8rem; }.travel-hero-grid { grid-template-columns: 1fr; }.travel-hero-art { min-height: 430px; width: min(620px, 92%); margin: 1rem auto 0; }.travel-portals { grid-template-columns: 1fr; margin-top: -2rem; }.travel-portal { min-height: 360px; }.travel-heading { grid-template-columns: 1fr; }.gallery-abroad .travel-card, .gallery-abroad .travel-card:nth-child(n), .gallery-domestic .travel-card, .gallery-domestic .travel-card:nth-child(n), .gallery-campus .travel-card, .gallery-campus .travel-card:nth-child(n), .campus-note { grid-column: span 6; min-height: 390px; }.gallery-abroad .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(2) { min-height: 480px; } }
-  @media (max-width: 590px) { .travel-hero { padding-top: 7rem; }.travel-hero-copy h1 { font-size: clamp(3.6rem, 18vw, 5.6rem); }.travel-hero-art { min-height: 340px; width: 94%; box-shadow: 12px 15px 0 var(--ink); }.hero-art-stamp { width: 88px; height: 88px; }.travel-portals { margin-top: -1.5rem; }.travel-portal { min-height: 300px; border-radius: 24px; }.travel-route { flex-wrap: wrap; gap: 0.55rem; padding: 3rem 1.2rem 1rem; }.travel-route i { min-width: 20px; }.travel-chapter { padding: 5rem 0; }.travel-heading h2 { font-size: clamp(3rem, 15vw, 5rem); }.travel-gallery { grid-template-columns: 1fr; }.gallery-abroad .travel-card, .gallery-abroad .travel-card:nth-child(n), .gallery-domestic .travel-card, .gallery-domestic .travel-card:nth-child(n), .gallery-campus .travel-card, .gallery-campus .travel-card:nth-child(n), .campus-note { grid-column: 1; min-height: 340px; }.gallery-abroad .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(2), .gallery-campus .travel-card, .campus-note { min-height: 430px; }.travel-viewer-dialog { width: calc(100% - 14px); height: calc(100vh - 14px); border-radius: 20px; }.travel-viewer-dialog figcaption { min-height: 125px; padding: 0.9rem 3.8rem; }.travel-viewer-nav { top: auto; bottom: 2rem; width: 42px; height: 42px; transform: none; }.travel-viewer-prev { left: 0.7rem; }.travel-viewer-next { right: 0.7rem; } }
-  @media (prefers-reduced-motion: reduce) { .travel-ambient, .travel-hero-scene { display: none; }.travel-reveal { opacity: 1; transform: none; }.travel-portal, .travel-card, .campus-note, .travel-hero-art { transform: none !important; transition: none; } }
+  @media (max-width: 590px) { .travel-hero { padding-top: 7rem; }.travel-hero-copy h1 { font-size: clamp(3.6rem, 18vw, 5.6rem); }.travel-hero-art { min-height: 340px; width: 94%; box-shadow: 12px 15px 0 var(--ink); }.hero-art-stamp { width: 88px; height: 88px; }.travel-portals { margin-top: -1.5rem; }.travel-portal { min-height: 300px; border-radius: 24px; }.travel-route { flex-wrap: wrap; gap: 0.55rem; padding: 3rem 1.2rem 1rem; }.travel-route i { min-width: 20px; }.travel-chapter { padding: 5rem 0; }.travel-heading h2 { font-size: clamp(3rem, 15vw, 5rem); }.travel-gallery { grid-template-columns: 1fr; }.gallery-abroad .travel-card, .gallery-abroad .travel-card:nth-child(n), .gallery-domestic .travel-card, .gallery-domestic .travel-card:nth-child(n), .gallery-campus .travel-card, .gallery-campus .travel-card:nth-child(n), .campus-note { grid-column: 1; min-height: 340px; }.gallery-abroad .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(1), .gallery-domestic .travel-card:nth-child(2), .gallery-campus .travel-card, .campus-note { min-height: 430px; }.travel-landscape-divider { height: 300px; }.landscape-copy strong { font-size: clamp(2rem, 11vw, 3.4rem); }.landscape-cloud-b, .landscape-campus-silhouette { display: none; }.landscape-route { right: 5%; left: 5%; }.travel-viewer-dialog { width: calc(100% - 14px); height: calc(100vh - 14px); border-radius: 20px; }.travel-viewer-dialog figcaption { min-height: 125px; padding: 0.9rem 3.8rem; }.travel-viewer-nav { top: auto; bottom: 2rem; width: 42px; height: 42px; transform: none; }.travel-viewer-prev { left: 0.7rem; }.travel-viewer-next { right: 0.7rem; } }
+  @media (prefers-reduced-motion: reduce) { .travel-ambient, .travel-hero-scene { display: none; }.travel-reveal { opacity: 1; transform: none; }.travel-portal, .travel-card, .campus-note, .travel-hero-art, [data-landscape-depth] { transform: none !important; transition: none; } }
 </style>
 
 <script>
@@ -220,6 +274,38 @@ const campusCards = [
       card.addEventListener('pointermove', (event) => { const bounds = card.getBoundingClientRect(); const x = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width)); const y = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height)); card.classList.add('is-interacting'); card.style.setProperty('--tilt-x', `${(0.5 - y) * strength}deg`); card.style.setProperty('--tilt-y', `${(x - 0.5) * strength}deg`); });
       card.addEventListener('pointerleave', () => { card.classList.remove('is-interacting'); card.style.setProperty('--tilt-x', '0deg'); card.style.setProperty('--tilt-y', '0deg'); });
     });
+  }
+
+  const landscapeDividers = Array.from(document.querySelectorAll<HTMLElement>('[data-landscape-divider]'));
+  let landscapeFrame = 0;
+  let landscapePointerX = 0;
+  let landscapePointerY = 0;
+  const updateLandscapes = () => {
+    landscapeFrame = 0;
+    landscapeDividers.forEach((divider) => {
+      const bounds = divider.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (window.innerHeight - bounds.top) / (window.innerHeight + bounds.height)));
+      divider.querySelectorAll<HTMLElement>('[data-landscape-depth]').forEach((layer) => {
+        const depth = Number(layer.dataset.landscapeDepth || 0.5);
+        layer.style.setProperty('--landscape-scroll', `${(progress - 0.5) * 46 * depth}px`);
+        layer.style.setProperty('--landscape-x', `${landscapePointerX * 22 * depth}px`);
+        layer.style.setProperty('--landscape-y', `${landscapePointerY * 15 * depth}px`);
+      });
+    });
+  };
+  const scheduleLandscapeUpdate = () => {
+    if (prefersReduced || landscapeFrame) return;
+    landscapeFrame = requestAnimationFrame(updateLandscapes);
+  };
+  if (!prefersReduced && landscapeDividers.length) {
+    window.addEventListener('scroll', scheduleLandscapeUpdate, { passive: true });
+    window.addEventListener('resize', scheduleLandscapeUpdate, { passive: true });
+    if (finePointer) window.addEventListener('pointermove', (event) => {
+      landscapePointerX = event.clientX / window.innerWidth - 0.5;
+      landscapePointerY = event.clientY / window.innerHeight - 0.5;
+      scheduleLandscapeUpdate();
+    }, { passive: true });
+    scheduleLandscapeUpdate();
   }
 
   const travelViewer = document.querySelector<HTMLElement>('.travel-viewer');
