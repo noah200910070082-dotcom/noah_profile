@@ -20,7 +20,7 @@ const readme = await read('README.md');
   'https://www.youtube.com/results?search_query=',
 ].forEach((value) => expectText(index, value, 'homepage'));
 
-['travel-landscape-divider', 'WASHINGTON, D.C.', 'data-landscape-depth'].forEach((value) =>
+['travel-landscape-divider', 'WASHINGTON, D.C.', 'data-landscape-depth', '.landscape-copy.travel-reveal.is-visible'].forEach((value) =>
   expectText(travel, value, 'travel page'),
 );
 
