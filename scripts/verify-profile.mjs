@@ -29,8 +29,6 @@ const readme = await read('README.md');
 );
 
 await Promise.all([
-  'src/assets/skills/tennis-medal.jpg',
-  'src/assets/skills/tennis-team.jpg',
   'src/assets/skills/tennis-championship.jpg',
   'src/assets/skills/violin-portrait.jpg',
   'src/assets/skills/go-ranking-event.jpg',
