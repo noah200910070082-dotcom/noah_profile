@@ -1201,7 +1201,7 @@
   .story-viewer-dialog {
     position: relative;
     z-index: 1;
-    width: min(1180px, calc(100% - 80px));
+    width: min(1320px, calc(100% - 80px));
     height: min(900px, calc(100vh - 70px));
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.2);
@@ -1278,23 +1278,41 @@
   .story-viewer-description { max-width: 760px; color: rgba(255,255,255,0.66); font-size: 0.9rem; line-height: 1.65; }
 
   .story-viewer-dialog.is-skill-story .story-viewer-figure {
-    grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.65fr);
+    grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.78fr);
     grid-template-rows: 1fr;
   }
 
   .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 0;
-    align-content: end;
-    padding: clamp(2rem, 4vw, 4rem);
+    align-content: center;
+    gap: clamp(0.65rem, 1.15vw, 1rem);
+    padding: clamp(2.2rem, 4.2vw, 4.8rem);
     border-top: 0;
     border-left: 1px solid rgba(255,255,255,0.13);
-    background: linear-gradient(160deg, #211d30, #111019 62%);
+    background:
+      linear-gradient(150deg, rgba(116,100,245,0.16), transparent 38%),
+      linear-gradient(160deg, #211d30, #111019 68%);
   }
 
-  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { font-size: clamp(2rem, 4.2vw, 4.7rem); }
-  .skill-music-links { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.9rem; }
-  .skill-music-links a { padding: 0.55rem 0.75rem; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; background: rgba(255,255,255,0.07); font-family: var(--font-display); font-size: 0.66rem; font-weight: 850; letter-spacing: 0.06em; transition: background 180ms ease, transform 180ms ease; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption > *:not(.story-viewer-orbit) { position: relative; z-index: 1; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { max-width: 9ch; font-size: clamp(2.35rem, 4.4vw, 5rem); line-height: 0.94; }
+  .story-viewer-dialog.is-skill-story .story-viewer-description { max-width: 36ch; margin-top: 0.15rem; color: rgba(255,255,255,0.64); }
+  .story-viewer-copy-index { color: rgba(255,255,255,0.34); font-family: var(--font-display); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.2em; }
+  .story-viewer-orbit { position: absolute; z-index: 0; top: 10%; right: -26%; width: min(30vw, 360px); aspect-ratio: 1; border: 1px dashed rgba(213,255,84,0.2); border-radius: 50%; pointer-events: none; animation: story-orbit-turn 24s linear infinite; }
+  .story-viewer-orbit::before, .story-viewer-orbit::after { position: absolute; border-radius: 50%; content: ""; }
+  .story-viewer-orbit::before { inset: 18%; border: 1px solid rgba(255,255,255,0.09); }
+  .story-viewer-orbit::after { top: 11%; left: 13%; width: 14px; height: 14px; border: 2px solid #111019; background: var(--lime); box-shadow: 0 0 0 7px rgba(213,255,84,0.08); }
+  .story-viewer-dialog.is-skill-story .story-viewer-meta { display: flex; align-items: center; gap: 0.7rem; }
+  .story-viewer-dialog.is-skill-story .story-viewer-meta::after { width: clamp(34px, 5vw, 70px); height: 1px; background: rgba(213,255,84,0.48); content: ""; }
+  .skill-music-links { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.65rem; }
+  .skill-music-links a { padding: 0.58rem 0.82rem; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; background: rgba(255,255,255,0.07); font-family: var(--font-display); font-size: 0.66rem; font-weight: 850; letter-spacing: 0.06em; transition: background 180ms ease, transform 180ms ease; }
   .skill-music-links a:hover { background: var(--violet); transform: translateY(-3px); }
+
+  @keyframes story-orbit-turn { to { rotate: 360deg; } }
 
   .story-viewer-nav {
     position: absolute;
@@ -1421,7 +1439,9 @@
   .atlas-tradition { min-height: 640px; }
   .atlas-pku, .atlas-shanghai { min-height: 440px; }
   .story-viewer-dialog { width: calc(100% - 28px); height: calc(100vh - 28px); }
-  .story-viewer-dialog.is-skill-story .story-viewer-figure { grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr); }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure { grid-template-columns: minmax(0, 1fr) minmax(280px, 0.68fr); }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption { padding: clamp(1.6rem, 3vw, 2.5rem); }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { font-size: clamp(2rem, 4.8vw, 3.3rem); }
   .social-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -1476,8 +1496,10 @@
   .atlas-footer p { width: 100%; margin-left: 0; }
   .story-viewer-dialog { width: calc(100% - 14px); height: calc(100vh - 14px); border-radius: 20px; }
   .story-viewer-dialog.is-skill-story .story-viewer-figure { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
-  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption { max-height: 42vh; padding: 1rem 1.1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.13); border-left: 0; overflow-y: auto; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption { max-height: min(40vh, 330px); padding: 1.15rem 1.2rem 1.35rem; border-top: 1px solid rgba(255,255,255,0.13); border-left: 0; overflow-y: auto; }
   .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { font-size: 1.65rem; }
+  .story-viewer-copy-index { font-size: 0.52rem; }
+  .story-viewer-orbit { top: 8%; right: -18%; width: 180px; opacity: 0.7; }
   .story-viewer-description { font-size: 0.78rem; line-height: 1.45; }
   .skill-music-links { margin-top: 0.35rem; }
   .story-viewer-hint { visibility: hidden; }
