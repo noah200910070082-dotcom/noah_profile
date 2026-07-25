@@ -33,6 +33,8 @@ const readme = await read('README.md');
 
 [
   'travel-landscape-divider',
+  'landscape-departure',
+  'landscape-future',
   'WASHINGTON, D.C.',
   'data-landscape-depth',
   '.landscape-copy.travel-reveal.is-visible',

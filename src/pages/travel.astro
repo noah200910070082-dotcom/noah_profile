@@ -108,6 +108,17 @@ const campusCards = [
 
       <div class="travel-route container" aria-hidden="true"><span>MACAU</span><i></i><span>WORLD</span><i></i><span>HOME</span><i></i><span>FUTURE</span></div>
 
+      <section class="travel-landscape-divider landscape-departure" aria-label="Departure from Macau" data-landscape-divider>
+        <span class="landscape-layer landscape-sun" data-landscape-depth="0.32"></span>
+        <span class="landscape-layer travel-orbit" data-landscape-depth="0.45" aria-hidden="true"><i></i></span>
+        <span class="landscape-layer landscape-cloud landscape-cloud-a" data-landscape-depth="0.78"><i></i></span>
+        <span class="landscape-layer landscape-hill landscape-hill-back" data-landscape-depth="0.28"></span>
+        <span class="landscape-layer landscape-hill landscape-hill-front" data-landscape-depth="0.64"></span>
+        <span class="landscape-layer landscape-birds" data-landscape-depth="0.92"><i>⌁</i><i>⌁</i></span>
+        <span class="landscape-layer landscape-route" data-landscape-depth="0.48"><i></i><b></b></span>
+        <div class="landscape-copy travel-reveal"><span>MACAU → WORLD</span><strong><span class="lang-en">Start small. See farther.</span><span class="lang-zh-hant">從澳門出發，看見更遠。</span><span class="lang-zh-hans">从澳门出发，看见更远。</span></strong></div>
+      </section>
+
       <section class="travel-chapter chapter-abroad" id="abroad">
         <div class="container">
           <div class="travel-heading travel-reveal"><div><p class="section-kicker">01 / ABROAD</p><h2><span class="lang-en">Outside the frame.</span><span class="lang-zh-hant">走出畫框之外。</span><span class="lang-zh-hans">走出画框之外。</span></h2></div><p><span class="lang-en">Tokyo, Osaka, New York, Boston and Niagara — places that changed the scale of the world.</span><span class="lang-zh-hant">東京、大阪、紐約、波士頓與尼亞加拉：把世界的尺度重新放大。</span><span class="lang-zh-hans">东京、大阪、纽约、波士顿与尼亚加拉：把世界的尺度重新放大。</span></p></div>
@@ -160,6 +171,17 @@ const campusCards = [
         </div>
       </section>
 
+      <section class="travel-landscape-divider landscape-future" aria-label="Arrival at the future" data-landscape-divider>
+        <span class="landscape-layer landscape-moon" data-landscape-depth="0.36"></span>
+        <span class="landscape-layer travel-orbit" data-landscape-depth="0.5" aria-hidden="true"><i></i></span>
+        <span class="landscape-layer landscape-cloud landscape-cloud-c" data-landscape-depth="0.72"><i></i></span>
+        <span class="landscape-layer landscape-hill landscape-hill-back" data-landscape-depth="0.26"></span>
+        <span class="landscape-layer landscape-hill landscape-hill-front" data-landscape-depth="0.66"></span>
+        <span class="landscape-layer landscape-campus-silhouette" data-landscape-depth="0.86"><i></i><i></i><i></i></span>
+        <span class="landscape-layer landscape-route" data-landscape-depth="0.5"><i></i><b></b></span>
+        <div class="landscape-copy travel-reveal"><span>HOME → FUTURE</span><strong><span class="lang-en">Leave a light on for the next map.</span><span class="lang-zh-hant">為下一張地圖，留一盞燈。</span><span class="lang-zh-hans">为下一张地图，留一盏灯。</span></strong></div>
+      </section>
+
       <section class="travel-outro container travel-reveal"><p class="section-kicker">NEXT COORDINATE</p><h2><span class="lang-en">The map is not finished.</span><span class="lang-zh-hant">地圖還沒有完成。</span><span class="lang-zh-hans">地图还没有完成。</span></h2><a class="button button-primary" href="/"><span class="lang-en">Return to Noah's orbit</span><span class="lang-zh-hant">回到 Noah 的軌道</span><span class="lang-zh-hans">回到 Noah 的轨道</span> ↗</a></section>
     </main>
 
@@ -210,6 +232,8 @@ const campusCards = [
   .travel-landscape-divider { position: relative; width: min(1380px, calc(100% - 40px)); height: clamp(220px, 24vw, 300px); margin: 1.25rem auto; overflow: hidden; isolation: isolate; border: 1px solid rgba(23,21,31,0.28); border-radius: clamp(24px, 3vw, 38px); box-shadow: 0 24px 70px rgba(37,29,57,0.1); }
   .landscape-homeward { background: linear-gradient(180deg, #f0a982 0%, #f8cf8f 48%, #d9b27a 100%); }
   .landscape-campus-bound { background: linear-gradient(180deg, #4f4d86 0%, #8792bd 48%, #b9cfc7 100%); color: white; }
+  .landscape-departure { background: linear-gradient(180deg, #d7e7ff 0%, #b3c5ec 48%, #7187ad 100%); }
+  .landscape-future { background: linear-gradient(180deg, #29274f 0%, #4c4a87 48%, #849ab5 100%); color: white; }
   .landscape-layer { position: absolute; display: block; transform: translate3d(var(--landscape-x, 0px), calc(var(--landscape-y, 0px) + var(--landscape-scroll, 0px)), 0); will-change: transform; }
   .landscape-sun, .landscape-moon { top: 14%; right: 13%; width: clamp(54px, 6vw, 82px); aspect-ratio: 1; border-radius: 50%; }
   .landscape-sun { background: #fff1b9; box-shadow: 0 0 0 15px rgba(255,241,185,0.15), 0 0 48px rgba(255,224,136,0.5); }
@@ -242,6 +266,7 @@ const campusCards = [
   .gallery-abroad .travel-card:nth-child(8) { grid-column: span 5; min-height: 520px; }.gallery-abroad .travel-card:nth-child(9) { grid-column: span 7; min-height: 520px; }
   .gallery-domestic .travel-card { grid-column: span 4; min-height: 390px; }.gallery-domestic .travel-card:nth-child(1) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(2) { grid-column: span 6; min-height: 520px; }.gallery-domestic .travel-card:nth-child(5) { background: var(--ink); }
   .gallery-campus .travel-card { grid-column: span 6; min-height: 540px; }.campus-note { position: relative; display: flex; min-height: 540px; flex-direction: column; justify-content: space-between; grid-column: span 6; padding: clamp(2rem, 4vw, 3.5rem); overflow: hidden; border: 1px solid var(--ink); border-radius: 30px; background: var(--ink); color: white; transform: perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 340ms cubic-bezier(.2,.8,.2,1), box-shadow 340ms ease; }.campus-note:hover { box-shadow: 0 34px 80px rgba(34,27,66,0.25); }.campus-note h3 { position: relative; z-index: 1; margin-top: 2rem; font-family: var(--font-display); font-size: clamp(2.3rem, 5vw, 5rem); letter-spacing: -0.075em; line-height: 0.9; }.campus-note h3 .lang-zh-hans, .campus-note h3 .lang-zh-hant { font-family: var(--font-story); font-size: 1.15em; font-weight: 400; letter-spacing: 0.04em; line-height: 1.05; }.campus-note p { position: relative; z-index: 1; max-width: 420px; color: rgba(255,255,255,0.68); }.campus-note::after { position: absolute; right: -100px; bottom: -130px; width: 390px; height: 390px; border: 58px solid var(--violet); border-radius: 50%; content: ""; opacity: 0.75; }.campus-arrow { position: relative; z-index: 1; align-self: flex-end; font-size: 5rem; line-height: 0.7; color: var(--lime); }
+  .travel-card-meta { right: auto; display: inline-flex; align-items: center; padding: 0.38rem 0.58rem; border: 1px solid rgba(255,255,255,0.38); border-radius: 999px; background: rgba(10,9,16,0.45); color: rgba(255,255,255,0.86); backdrop-filter: blur(8px); }
   .travel-outro { padding: 7rem 0 10rem; text-align: center; }.travel-outro h2 { margin: 1rem auto 2rem; font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.08em; line-height: 0.9; }.travel-outro h2 .lang-zh-hans, .travel-outro h2 .lang-zh-hant { font-family: var(--font-story); font-size: 1.1em; font-weight: 400; letter-spacing: 0.04em; }
   .travel-viewer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity 220ms ease; }.travel-viewer[hidden] { display: none; }.travel-viewer.is-open { opacity: 1; pointer-events: auto; }.travel-viewer-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(8,7,13,0.84); backdrop-filter: blur(20px); }.travel-viewer-dialog { position: relative; z-index: 1; width: min(1180px, calc(100% - 70px)); height: min(850px, calc(100vh - 60px)); overflow: hidden; border: 1px solid rgba(255,255,255,0.2); border-radius: 28px; background: #111019; color: white; box-shadow: 0 45px 120px rgba(0,0,0,0.48); transform: perspective(950px) translateY(25px) rotateX(3deg) scale(0.96); transition: transform 280ms cubic-bezier(.2,.8,.2,1); }.travel-viewer.is-open .travel-viewer-dialog { transform: perspective(950px) translateY(0) rotateX(0) scale(1); }.travel-viewer-topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 58px; padding: 0.5rem 0.8rem 0.5rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.13); font-family: var(--font-display); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; }.travel-viewer-topbar button { justify-self: end; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.24); border-radius: 50%; color: white; font-size: 1.45rem; }.travel-viewer-dialog figure { display: grid; height: calc(100% - 58px); grid-template-rows: minmax(0, 1fr) auto; margin: 0; }.travel-viewer-image { width: 100%; height: 100%; min-height: 0; object-fit: contain; background: #0b0a10; }.travel-viewer-dialog figcaption { display: grid; gap: 0.35rem; min-height: 105px; align-content: center; padding: 1rem 6rem; border-top: 1px solid rgba(255,255,255,0.13); background: #17151f; }.travel-viewer-meta { color: var(--lime); font-family: var(--font-display); font-size: 0.64rem; font-weight: 900; letter-spacing: 0.13em; }.travel-viewer-dialog figcaption strong { font-family: var(--font-display); font-size: clamp(1.25rem, 2.6vw, 2.1rem); letter-spacing: -0.04em; line-height: 1.05; }.travel-viewer-nav { position: absolute; top: 50%; z-index: 2; display: grid; width: 50px; height: 50px; place-items: center; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; background: rgba(17,16,25,0.75); color: white; font-size: 1.2rem; transform: translateY(-50%); }.travel-viewer-prev { left: 1rem; }.travel-viewer-next { right: 1rem; }
   .travel-reveal { opacity: 0; transform: translateY(24px); transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1); }.travel-reveal.is-visible { opacity: 1; transform: translateY(0) perspective(950px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
