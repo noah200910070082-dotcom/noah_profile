@@ -905,7 +905,17 @@
   .route-line::after { position: absolute; top: 50%; left: 58%; width: 10px; height: 10px; border: 2px solid var(--ink); border-radius: 50%; background: var(--violet); content: ""; transform: translate(-50%, -50%); }
   .route-point:last-child { background: var(--violet); color: white; }
 
-  .life-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-flow: dense; grid-auto-rows: 190px; gap: 1rem; }
+  .life-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      "tennis tennis tennis tennis go go go go violin violin violin violin"
+      "tennis tennis tennis tennis imsc imsc imsc imsc imsc imsc imsc imsc"
+      "travel travel travel travel imsc imsc imsc imsc imsc imsc imsc imsc"
+      "travel travel travel travel music music music music music music music music";
+    grid-auto-rows: 176px;
+    gap: 1rem;
+  }
 
   .life-card {
     position: relative;
@@ -913,7 +923,7 @@
     overflow: hidden;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1.5rem;
+    padding: clamp(1.15rem, 2vw, 1.55rem);
     border: 1px solid var(--ink);
     border-radius: 24px;
     background: var(--paper-2);
@@ -923,24 +933,27 @@
     transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease;
   }
 
-  .life-card:hover, .life-card.is-interacting { --interactive-transform: perspective(730px) translateY(-16px) scale(1.035) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); box-shadow: 0 34px 76px rgba(34, 27, 66, 0.24); }
+  .life-card:hover, .life-card.is-interacting { --interactive-transform: perspective(730px) translateY(-10px) scale(1.025) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); z-index: 4; box-shadow: 0 34px 76px rgba(34, 27, 66, 0.24); }
   .life-card:focus-visible { outline: 4px solid var(--lime); outline-offset: 4px; }
   .life-card h3 { font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -0.03em; line-height: 1.05; }
   .life-card h3 .lang-zh-hans, .life-card h3 .lang-zh-hant, .life-card h3.lang-zh-hans, .life-card h3.lang-zh-hant { font-family: var(--font-story); font-size: 1.55rem; font-weight: 400; letter-spacing: 0.04em; }
   .life-card p { color: var(--muted); font-size: 0.88rem; }
   .life-card-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 680ms cubic-bezier(.2,.8,.2,1), filter 420ms ease; }
   .life-card:hover .life-card-image, .life-card.is-interacting .life-card-image { transform: scale(1.11); }
-  .life-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,18,0.08), rgba(11,10,18,0.78)); pointer-events: none; }
+  .life-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,18,0.06) 24%, rgba(11,10,18,0.84) 100%); pointer-events: none; }
   .life-card-content { position: relative; z-index: 2; display: flex; width: 100%; height: 100%; flex-direction: column; justify-content: flex-end; gap: 0.7rem; color: white; transform: translateZ(24px); }
   .life-card-content p { color: rgba(255,255,255,0.72); font-family: var(--font-display); font-size: 0.67rem; font-weight: 850; letter-spacing: 0.12em; }
   .life-open { width: max-content; padding-bottom: 0.12rem; border-bottom: 1px solid rgba(255,255,255,0.72); font-size: 0.7rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
   .life-card > .interaction-light { display: none; }
   .life-symbol { position: absolute; right: 1.2rem; bottom: 0.2rem; color: rgba(23,21,31,0.1); font-family: Georgia, serif; font-size: 6.5rem; font-weight: 800; line-height: 1; transition: transform 420ms cubic-bezier(.2,.8,.2,1), color 420ms ease; }
   .life-card:hover .life-symbol, .life-card.is-interacting .life-symbol { color: rgba(23,21,31,0.22); transform: translate(-6px, -17px) rotate(15deg) scale(1.13); }
-  .life-imsc-feature { grid-column: span 8; grid-row: span 2; min-height: 396px; }
+  .life-tennis { grid-area: tennis; min-height: 0; }
+  .life-go { grid-area: go; }
+  .life-violin { grid-area: violin; }
+  .life-imsc-feature { grid-area: imsc; min-height: 0; }
+  .life-travel { grid-area: travel; }
+  .life-music { grid-area: music; }
   .life-imsc-feature h3 { max-width: 680px; font-size: clamp(2rem, 4vw, 4rem); }
-  .life-tennis { grid-column: span 4; grid-row: span 2; min-height: 396px; }
-  .life-go, .life-violin, .life-travel, .life-music { grid-column: span 3; }
   .life-travel { background: linear-gradient(145deg, #b7d2ff, #d8f3df); }
   .life-travel .life-card-content { color: var(--ink); justify-content: space-between; }
   .life-travel .life-card-content p { color: rgba(23,21,31,0.62); }
@@ -1427,10 +1440,17 @@
   .work-primary { min-height: 500px; }
   .work-imsc { min-height: 520px; }
   .project-showcase > p { max-width: 64%; }
-  .life-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
-  .life-imsc-feature { grid-column: span 2; grid-row: span 2; }
-  .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 220px; }
-  .life-tennis { grid-row: span 2; }
+  .life-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "tennis go"
+      "tennis violin"
+      "imsc imsc"
+      "imsc imsc"
+      "travel music";
+    grid-auto-rows: 170px;
+  }
+  .life-imsc-feature, .life-tennis, .life-go, .life-violin, .life-travel, .life-music { min-height: 0; }
   .chapter-heading { grid-template-columns: 1fr; }
   .robotics-card-wide, .robot-loop-card, .robotics-card-debug, .robotics-card-team { grid-column: span 12; }
   .robot-loop-card { min-height: 470px; }
@@ -1476,8 +1496,12 @@
   .project-showcase > p { max-width: 100%; }
   .fieldguard-viz, .transit-viz { right: -7%; bottom: -9%; width: 66%; opacity: 0.78; }
   .mini-browser { right: -3rem; width: 95%; }
-  .life-grid { display: grid; grid-template-columns: 1fr; grid-auto-rows: 160px; }
-  .life-imsc-feature, .life-tennis, .life-go, .life-violin, .life-travel, .life-music { grid-column: span 1; grid-row: auto; min-height: 260px; }
+  .life-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "tennis" "go" "violin" "imsc" "travel" "music";
+    grid-auto-rows: auto;
+  }
+  .life-imsc-feature, .life-tennis, .life-go, .life-violin, .life-travel, .life-music { min-height: 260px; }
   .life-imsc-feature { min-height: 420px; }
   .chapter-nav { grid-template-columns: 1fr; gap: 0.55rem; margin-bottom: 5rem; }
   .chapter-nav a { min-height: 64px; }
