@@ -37,8 +37,8 @@ const readme = await read('README.md');
   'data-landscape-depth',
   '.landscape-copy.travel-reveal.is-visible',
   'travel-orbit',
-  'clamp(220px, 24vw, 300px)',
-  'height: 220px',
+  'height: clamp(108px, 11vw, 156px)',
+  'height: 128px',
 ].forEach((value) =>
   expectText(travel, value, 'travel page'),
 );

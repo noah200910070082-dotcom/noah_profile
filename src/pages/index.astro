@@ -15,6 +15,9 @@ import tennisChampionship from '../assets/skills/tennis-championship.jpg';
 import goRankingEvent from '../assets/skills/go-ranking-event.jpg';
 import violinPortrait from '../assets/skills/violin-portrait.jpg';
 import musicConcert from '../assets/skills/music-concert.jpg';
+import fieldguardLive from '../assets/showcase/fieldguard-live.png';
+import transitLive from '../assets/showcase/transit-live.png';
+import noahWorkOverview from '../assets/showcase/noah-work-overview.png';
 
 const [tennisStoryImage, goStoryImage, violinStoryImage, imscStoryImage, musicStoryImage] = await Promise.all([
   getImage({ src: tennisChampionship, format: 'webp', width: 1200, quality: 80 }),
@@ -301,6 +304,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
           <div class="work-grid">
             <article class="work-card work-primary reveal">
+              <div class="project-overview-media" aria-hidden="true"><Image src={noahWorkOverview} alt="" widths={[720, 1200, 1600]} sizes="(max-width: 900px) 100vw, 58vw" format="webp" /></div>
+              <span class="project-overview-shade" aria-hidden="true"></span>
               <span class="card-label"><span class="lang-en">Product · School ops</span><span class="lang-zh-hant">產品 · 校園管理</span><span class="lang-zh-hans">产品 · 校园管理</span></span>
               <h3>濠江通<br /><span class="lang-en">Sports Day Assistant</span><span class="lang-zh-hant">校運會管理助手</span><span class="lang-zh-hans">校运会管理助手</span></h3>
               <p class="lang-en">A practical tool designed around the moving parts of a school sports day — turning coordination into a clearer digital flow.</p>
@@ -333,6 +338,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             </article>
 
             <a class="work-card project-showcase project-fieldguard reveal" href="https://github.com/noah200910070082-dotcom/fieldguard-ai" target="_blank" rel="noreferrer" aria-label="View FieldGuard AI on GitHub">
+              <div class="project-live-media" aria-hidden="true"><Image src={fieldguardLive} alt="" widths={[720, 1200, 1600]} sizes="(max-width: 900px) 100vw, 42vw" format="webp" /></div>
+              <span class="project-live-shade" aria-hidden="true"></span>
               <span class="card-label"><span class="lang-en">Showcase · Computer vision</span><span class="lang-zh-hant">作品展示 · 電腦視覺</span><span class="lang-zh-hans">作品展示 · 计算机视觉</span></span>
               <h3>FieldGuard<br />AI</h3>
               <p class="lang-en">A field-monitoring concept that turns visual signals into clearer, faster crop observations.</p>
@@ -344,6 +351,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             </a>
 
             <a class="work-card project-showcase project-transit reveal" href="https://github.com/noah200910070082-dotcom/ai-transit-station" target="_blank" rel="noreferrer" aria-label="View AI Transit Station on GitHub">
+              <div class="project-live-media" aria-hidden="true"><Image src={transitLive} alt="" widths={[720, 1200, 1600]} sizes="(max-width: 900px) 100vw, 42vw" format="webp" /></div>
+              <span class="project-live-shade" aria-hidden="true"></span>
               <span class="card-label"><span class="lang-en">Showcase · AI routing</span><span class="lang-zh-hant">作品展示 · AI 路由</span><span class="lang-zh-hans">作品展示 · AI 路由</span></span>
               <h3>AI Transit<br />Station</h3>
               <p class="lang-en">A visual hub for routing useful AI capabilities — more signal, fewer unnecessary detours.</p>
@@ -423,6 +432,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
             </button>
 
             <a class="life-card life-travel reveal" href="/travel" aria-label="Open the dedicated travel atlas">
+              <Image class="life-card-image" src={shanghaiPhoto} alt="Shanghai skyline at dusk" widths={[640, 960, 1440]} sizes="(max-width: 590px) 100vw, 33vw" format="webp" />
+              <span class="life-card-shade" aria-hidden="true"></span>
               <span class="life-card-content">
                 <p>05 · TRAVEL</p>
                 <h3><span class="lang-en">New maps, new people</span><span class="lang-zh-hant">新地圖，新朋友</span><span class="lang-zh-hans">新地图，新朋友</span></h3>

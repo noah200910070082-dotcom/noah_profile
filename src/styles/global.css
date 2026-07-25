@@ -814,6 +814,14 @@
   .work-ai { grid-column: span 12; min-height: 360px; background: var(--lime); }
   .work-target { grid-column: span 7; min-height: 360px; background: var(--paper-2); }
 
+  .work-primary { isolation: isolate; background: #1b2858; }
+  .project-overview-media, .project-overview-shade { position: absolute; inset: 0; pointer-events: none; }
+  .project-overview-media { z-index: 0; overflow: hidden; }
+  .project-overview-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; opacity: 0.66; filter: saturate(0.82) contrast(1.02); transition: transform 800ms cubic-bezier(.2,.8,.2,1), filter 500ms ease; }
+  .project-overview-shade { z-index: 1; background: linear-gradient(115deg, rgba(9,17,50,0.92) 0%, rgba(16,28,80,0.66) 46%, rgba(12,15,29,0.18) 100%); }
+  .work-primary:hover .project-overview-media img, .work-primary.is-interacting .project-overview-media img { transform: scale(1.06); filter: saturate(1) contrast(1.08); }
+  .work-primary > .card-label, .work-primary > h3, .work-primary > p, .work-primary > .project-link { position: relative; z-index: 2; }
+
   .card-label {
     display: inline-flex;
     align-items: center;
@@ -834,6 +842,7 @@
 
   .mini-browser {
     position: absolute;
+    z-index: 2;
     right: -2rem;
     bottom: -2.8rem;
     width: min(470px, 76%);
@@ -871,12 +880,18 @@
   .ai-orbit::after { inset: 82px; background: var(--violet); }
   .work-ai:hover .ai-orbit, .work-ai.is-interacting .ai-orbit { transform: rotate(32deg) translate(-8px, -10px) scale(1.13); }
 
-  .project-showcase { grid-column: span 6; min-height: 430px; isolation: isolate; }
+  .project-showcase { grid-column: span 6; min-height: 430px; isolation: isolate; color: white; }
   .project-showcase > .card-label, .project-showcase > h3, .project-showcase > p, .project-showcase > .project-link { position: relative; z-index: 2; }
   .project-showcase > p { max-width: 52%; }
   .project-showcase > .interaction-light { display: none; }
-  .project-fieldguard { background: linear-gradient(145deg, #d9f6c6, #87d49f); }
-  .project-transit { background: linear-gradient(145deg, #ded5ff, #8a72e8); }
+  .project-fieldguard { background: #244e44; }
+  .project-transit { background: #4f3c8e; }
+  .project-live-media, .project-live-shade { position: absolute; inset: 0; pointer-events: none; }
+  .project-live-media { z-index: 0; overflow: hidden; }
+  .project-live-media img { width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 0.78; filter: saturate(0.9) contrast(1.04); transition: transform 800ms cubic-bezier(.2,.8,.2,1), filter 500ms ease; }
+  .project-live-shade { z-index: 1; background: linear-gradient(125deg, rgba(8,12,18,0.84), rgba(8,12,18,0.36) 52%, rgba(8,12,18,0.1)); }
+  .project-showcase:hover .project-live-media img, .project-showcase.is-interacting .project-live-media img { transform: scale(1.08); filter: saturate(1.08) contrast(1.08); }
+  .project-showcase .fieldguard-viz, .project-showcase .transit-viz { opacity: 0.42; }
 
   .fieldguard-viz, .transit-viz { position: absolute; right: -3%; bottom: -8%; width: 49%; aspect-ratio: 1; border: 1px solid rgba(23,21,31,0.62); border-radius: 32px; transform: perspective(700px) rotateX(58deg) rotateZ(-18deg); transition: transform 620ms cubic-bezier(.2,.8,.2,1); }
   .fieldguard-viz { overflow: hidden; background: repeating-linear-gradient(0deg, transparent 0 31px, rgba(23,21,31,0.16) 32px 33px), repeating-linear-gradient(90deg, transparent 0 31px, rgba(23,21,31,0.16) 32px 33px), rgba(255,255,255,0.25); }
@@ -954,9 +969,12 @@
   .life-travel { grid-area: travel; }
   .life-music { grid-area: music; }
   .life-imsc-feature h3 { max-width: 680px; font-size: clamp(2rem, 4vw, 4rem); }
-  .life-travel { background: linear-gradient(145deg, #b7d2ff, #d8f3df); }
-  .life-travel .life-card-content { color: var(--ink); justify-content: space-between; }
-  .life-travel .life-card-content p { color: rgba(23,21,31,0.62); }
+  .life-travel { isolation: isolate; background: #3a5c78; color: white; }
+  .life-travel .life-card-image { opacity: 0.9; filter: saturate(0.88) contrast(1.04); }
+  .life-travel .life-card-shade { background: linear-gradient(180deg, rgba(19,24,46,0.08) 12%, rgba(19,24,46,0.88) 100%); }
+  .life-travel .life-card-content { color: white; justify-content: space-between; }
+  .life-travel .life-card-content p { color: rgba(255,255,255,0.72); }
+  .life-travel .life-symbol { position: relative; z-index: 2; color: var(--lime); }
 
   .life-card-cta {
     position: relative;
