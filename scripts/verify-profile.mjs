@@ -7,6 +7,7 @@ const expectText = (source, value, label) => {
 
 const index = await read('src/pages/index.astro');
 const travel = await read('src/pages/travel.astro');
+const styles = await read('src/styles/global.css');
 const readme = await read('README.md');
 
 [
@@ -22,7 +23,23 @@ const readme = await read('README.md');
   '.inert = true',
 ].forEach((value) => expectText(index, value, 'homepage'));
 
-['travel-landscape-divider', 'WASHINGTON, D.C.', 'data-landscape-depth', '.landscape-copy.travel-reveal.is-visible'].forEach((value) =>
+['story-viewer-orbit', 'story-viewer-copy-index'].forEach((value) =>
+  expectText(index, value, 'editorial story markup'),
+);
+
+['grid-template-areas:', 'life-imsc-feature'].forEach((value) =>
+  expectText(styles, value, 'editorial skills collage'),
+);
+
+[
+  'travel-landscape-divider',
+  'WASHINGTON, D.C.',
+  'data-landscape-depth',
+  '.landscape-copy.travel-reveal.is-visible',
+  'travel-orbit',
+  'clamp(220px, 24vw, 300px)',
+  'height: 220px',
+].forEach((value) =>
   expectText(travel, value, 'travel page'),
 );
 
