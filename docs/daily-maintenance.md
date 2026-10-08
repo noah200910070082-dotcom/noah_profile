@@ -42,6 +42,7 @@
 - 本轮开始时远程 `main` 是 `b0b948e5c50b51c2b1b1a520832d106d7f195b34`，本地原 HEAD 是 `207eff5`（项目记忆提交）。GitHub 连接器读到 `b0b948e` 的 Vercel 状态为 success，这不代表本轮修复已上线。
 - 本轮代码和维护记录保存为独立本地提交，提交说明为 `fix: contain travel viewer focus and localize captions`。项目记忆中的既有自动任务段落已完整保留，一并保存。
 - 命令行 `gh auth status` 未登录；本轮发布状态为待推送，不得将本地验证通过描述为线上已修复。
+- 修复提交：`d22b2c0`。本轮收尾推送未完成：第一次等待认证，已中止；禁用交互登录后得到 `fatal: unable to get password from user`。认证恢复前保留本地提交，不标记发布成功。
 
 ### 后续
 
