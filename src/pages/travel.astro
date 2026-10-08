@@ -186,7 +186,7 @@ const campusCards = [
     </main>
 
     <div class="travel-viewer" hidden aria-hidden="true">
-      <button class="travel-viewer-backdrop" type="button" data-travel-close aria-label="Close image viewer"></button>
+      <button class="travel-viewer-backdrop" type="button" data-travel-close tabindex="-1" aria-hidden="true"></button>
       <div class="travel-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="travel-viewer-caption" tabindex="-1">
         <div class="travel-viewer-topbar"><span class="travel-viewer-counter">01 / 01</span><span>← → · ESC</span><button type="button" data-travel-close aria-label="Close image viewer">×</button></div>
         <figure><img class="travel-viewer-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" /><figcaption><span class="travel-viewer-meta"></span><strong id="travel-viewer-caption"></strong></figcaption></figure>
@@ -301,6 +301,7 @@ const campusCards = [
     travelHtml.lang = next === 'zh-hans' ? 'zh-Hans' : next === 'zh-hant' ? 'zh-Hant' : 'en';
     travelLanguageButtons.forEach((button) => { const active = button.dataset.languageOption === next; button.classList.toggle('is-active', active); button.setAttribute('aria-pressed', String(active)); });
     if (persist) localStorage.setItem('noah-language', next);
+    document.dispatchEvent(new CustomEvent('noah:language-change'));
   };
   travelLanguageButtons.forEach((button) => button.addEventListener('click', () => setTravelLanguage(button.dataset.languageOption || 'en')));
   travelMenuButton?.addEventListener('click', () => { const open = travelNavLinks?.classList.toggle('is-open') ?? false; travelMenuButton.setAttribute('aria-expanded', String(open)); travelMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); });
@@ -352,22 +353,109 @@ const campusCards = [
   }
 
   const travelViewer = document.querySelector<HTMLElement>('.travel-viewer');
+  const travelViewerDialog = document.querySelector<HTMLElement>('.travel-viewer-dialog');
   const travelViewerImage = document.querySelector<HTMLImageElement>('.travel-viewer-image');
   const travelViewerCaption = document.querySelector<HTMLElement>('#travel-viewer-caption');
   const travelViewerMeta = document.querySelector<HTMLElement>('.travel-viewer-meta');
   const travelViewerCounter = document.querySelector<HTMLElement>('.travel-viewer-counter');
   const travelCards = Array.from(document.querySelectorAll<HTMLButtonElement>('.travel-card'));
+  const travelBackground = Array.from(document.querySelectorAll<HTMLElement>('.site-header, main'));
   let travelIndex = 0;
-  const showTravelImage = (index: number) => { if (!travelViewer || !travelViewerImage || !travelViewerCaption || !travelViewerMeta || !travelViewerCounter || !travelCards.length) return; travelIndex = (index + travelCards.length) % travelCards.length; const card = travelCards[travelIndex]; const image = card.querySelector('img'); if (!image) return; travelViewerImage.src = image.currentSrc || image.src; travelViewerImage.alt = card.dataset.alt || ''; travelViewerCaption.textContent = card.dataset.caption || ''; travelViewerMeta.textContent = card.dataset.meta || ''; travelViewerCounter.textContent = `${String(travelIndex + 1).padStart(2, '0')} / ${String(travelCards.length).padStart(2, '0')}`; travelViewer.hidden = false; travelViewer.setAttribute('aria-hidden', 'false'); requestAnimationFrame(() => travelViewer.classList.add('is-open')); document.body.classList.add('viewer-open'); };
-  const closeTravelViewer = () => { if (!travelViewer) return; travelViewer.classList.remove('is-open'); travelViewer.setAttribute('aria-hidden', 'true'); document.body.classList.remove('viewer-open'); window.setTimeout(() => { travelViewer.hidden = true; }, 220); };
-  travelCards.forEach((card, index) => card.addEventListener('click', () => showTravelImage(index)));
+  let travelReturnFocus: HTMLElement | null = null;
+  let travelCloseTimer = 0;
+  let travelOpenFrame = 0;
+  let travelBackgroundState: Array<{ element: HTMLElement; inert: boolean }> = [];
+
+  const renderTravelImage = (index: number) => {
+    if (!travelViewerImage || !travelViewerCaption || !travelViewerMeta || !travelViewerCounter || !travelCards.length) return;
+    travelIndex = (index + travelCards.length) % travelCards.length;
+    const card = travelCards[travelIndex];
+    const image = card.querySelector('img');
+    if (!image) return;
+    travelViewerImage.src = image.currentSrc || image.src;
+    travelViewerImage.alt = card.dataset.alt || '';
+    travelViewerCaption.textContent = card.querySelector('strong')?.innerText.trim() || card.dataset.caption || '';
+    travelViewerMeta.textContent = card.dataset.meta || '';
+    travelViewerCounter.textContent = `${String(travelIndex + 1).padStart(2, '0')} / ${String(travelCards.length).padStart(2, '0')}`;
+  };
+
+  const showTravelImage = (index: number, trigger: HTMLElement) => {
+    if (!travelViewer || !travelViewerDialog) return;
+    window.clearTimeout(travelCloseTimer);
+    window.cancelAnimationFrame(travelOpenFrame);
+    travelReturnFocus = trigger;
+    renderTravelImage(index);
+    travelViewer.hidden = false;
+    travelViewer.inert = false;
+    travelViewer.setAttribute('aria-hidden', 'false');
+    travelBackgroundState = travelBackground.map((element) => ({ element, inert: element.inert }));
+    travelBackground.forEach((element) => { element.inert = true; });
+    document.body.classList.add('viewer-open');
+    travelViewerDialog.focus({ preventScroll: true });
+    travelOpenFrame = requestAnimationFrame(() => travelViewer.classList.add('is-open'));
+  };
+
+  const closeTravelViewer = () => {
+    if (!travelViewer || travelViewer.getAttribute('aria-hidden') === 'true') return;
+    window.cancelAnimationFrame(travelOpenFrame);
+    travelViewer.classList.remove('is-open');
+    travelBackgroundState.forEach(({ element, inert }) => { element.inert = inert; });
+    document.body.classList.remove('viewer-open');
+    travelReturnFocus?.focus({ preventScroll: true });
+    travelViewer.inert = true;
+    travelViewer.setAttribute('aria-hidden', 'true');
+    travelCloseTimer = window.setTimeout(() => { travelViewer.hidden = true; }, prefersReduced ? 0 : 220);
+  };
+
+  const trapTravelFocus = (event: KeyboardEvent) => {
+    if (!travelViewerDialog || event.key !== 'Tab') return;
+    const controls = Array.from(travelViewerDialog.querySelectorAll<HTMLButtonElement>('button:not([disabled]):not([hidden])'))
+      .filter((button) => button.offsetParent !== null);
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (!first || !last) return;
+    if (document.activeElement === travelViewerDialog) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  const updateTravelViewerLanguage = () => {
+    const labels = travelHtml.dataset.language === 'zh-hans'
+      ? ['关闭图片查看器', '上一张图片', '下一张图片']
+      : travelHtml.dataset.language === 'zh-hant'
+        ? ['關閉圖片查看器', '上一張圖片', '下一張圖片']
+        : ['Close image viewer', 'Previous image', 'Next image'];
+    travelViewerDialog?.querySelector('[data-travel-close]')?.setAttribute('aria-label', labels[0]);
+    travelViewerDialog?.querySelector('[data-travel-prev]')?.setAttribute('aria-label', labels[1]);
+    travelViewerDialog?.querySelector('[data-travel-next]')?.setAttribute('aria-label', labels[2]);
+    if (travelViewer?.getAttribute('aria-hidden') === 'false') renderTravelImage(travelIndex);
+  };
+
+  travelCards.forEach((card, index) => {
+    card.setAttribute('aria-haspopup', 'dialog');
+    card.addEventListener('click', () => showTravelImage(index, card));
+  });
   document.querySelectorAll<HTMLElement>('[data-travel-close]').forEach((button) => button.addEventListener('click', closeTravelViewer));
-  document.querySelector<HTMLElement>('[data-travel-prev]')?.addEventListener('click', () => showTravelImage(travelIndex - 1));
-  document.querySelector<HTMLElement>('[data-travel-next]')?.addEventListener('click', () => showTravelImage(travelIndex + 1));
+  document.querySelector<HTMLElement>('[data-travel-prev]')?.addEventListener('click', () => renderTravelImage(travelIndex - 1));
+  document.querySelector<HTMLElement>('[data-travel-next]')?.addEventListener('click', () => renderTravelImage(travelIndex + 1));
+  document.addEventListener('noah:language-change', updateTravelViewerLanguage);
+  setTravelLanguage(travelHtml.dataset.language || 'en', false);
   window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeTravelViewer();
-    if (!travelViewer?.classList.contains('is-open')) return;
-    if (event.key === 'ArrowLeft') showTravelImage(travelIndex - 1);
-    if (event.key === 'ArrowRight') showTravelImage(travelIndex + 1);
+    if (travelViewer?.getAttribute('aria-hidden') !== 'false') return;
+    trapTravelFocus(event);
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeTravelViewer();
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      renderTravelImage(travelIndex + (event.key === 'ArrowLeft' ? -1 : 1));
+    }
   });
 </script>
