@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 
 import abroadTokyo from '../assets/travel/abroad-tokyo-shibuya.jpg';
@@ -45,6 +45,20 @@ const campusCards = [
   { image: campusPeking, meta: 'UNIVERSITY / PKU', en: 'A north star you can walk through.', hant: '可以親自走進的北極星。', hans: '可以亲自走进的北极星。', alt: 'Peking University campus visit' },
   { image: campusJiaotong, meta: 'UNIVERSITY / JIAOTONG', en: 'Keep collecting possible futures.', hant: '把可能的未來，一站站收集起來。', hans: '把可能的未来，一站站收集起来。', alt: 'Jiaotong University campus' },
 ];
+
+// The viewer needs a clear image even when its lazy-loaded card is still offscreen.
+const viewerImageSources = new Map(await Promise.all(
+  [...abroadCards, ...chinaCards, ...campusCards].map(async (card) => {
+    const scale = Math.min(1, 1600 / Math.max(card.image.width, card.image.height));
+    const image = await getImage({
+      src: card.image,
+      width: Math.round(card.image.width * scale),
+      format: 'webp',
+      quality: 80,
+    });
+    return [card.image.src, image.src] as const;
+  }),
+));
 ---
 
 <Layout title="Noah Xu — Travel Atlas" description={description} image={campusPeking.src}>
@@ -123,7 +137,7 @@ const campusCards = [
         <div class="container">
           <div class="travel-heading travel-reveal"><div><p class="section-kicker">01 / ABROAD</p><h2><span class="lang-en">Outside the frame.</span><span class="lang-zh-hant">走出畫框之外。</span><span class="lang-zh-hans">走出画框之外。</span></h2></div><p><span class="lang-en">Tokyo, Osaka, New York, Boston and Niagara — places that changed the scale of the world.</span><span class="lang-zh-hant">東京、大阪、紐約、波士頓與尼亞加拉：把世界的尺度重新放大。</span><span class="lang-zh-hans">东京、大阪、纽约、波士顿与尼亚加拉：把世界的尺度重新放大。</span></p></div>
           <div class="travel-gallery gallery-abroad">
-            {abroadCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+            {abroadCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt} data-viewer-src={viewerImageSources.get(card.image.src)}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
           </div>
         </div>
       </section>
@@ -144,7 +158,7 @@ const campusCards = [
         <div class="container">
           <div class="travel-heading travel-reveal"><div><p class="section-kicker">02 / CHINA + OUTDOORS</p><h2><span class="lang-en">The long way home.</span><span class="lang-zh-hant">把家鄉走深一點。</span><span class="lang-zh-hans">把家乡走深一点。</span></h2></div><p><span class="lang-en">A slower archive of cliffs, skylines, old towns and the road between them.</span><span class="lang-zh-hant">山崖、天際線、古鎮，以及把它們串起來的路：這一篇慢慢走。</span><span class="lang-zh-hans">山崖、天际线、古镇，以及把它们串起来的路：这一篇慢慢走。</span></p></div>
           <div class="travel-gallery gallery-domestic">
-            {chinaCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+            {chinaCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="9" data-caption={card.en} data-meta={card.meta} data-alt={card.alt} data-viewer-src={viewerImageSources.get(card.image.src)}><Image src={card.image} alt={card.alt} widths={[420, 720, 1000]} sizes="(max-width: 700px) 100vw, 31vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
           </div>
         </div>
       </section>
@@ -165,7 +179,7 @@ const campusCards = [
         <div class="container">
           <div class="travel-heading travel-reveal"><div><p class="section-kicker">03 / UNIVERSITIES</p><h2><span class="lang-en">Future has<br />an address.</span><span class="lang-zh-hant">未來，<br />有一個地址。</span><span class="lang-zh-hans">未来，<br />有一个地址。</span></h2></div><p><span class="lang-en">Campus gates turn a distant goal into a place you can actually walk towards.</span><span class="lang-zh-hant">大學的門，把遙遠的目標變成可以親自走近的地方。</span><span class="lang-zh-hans">大学的门，把遥远的目标变成可以亲自走近的地方。</span></p></div>
           <div class="travel-gallery gallery-campus">
-            {campusCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="10" data-caption={card.en} data-meta={card.meta} data-alt={card.alt}><Image src={card.image} alt={card.alt} widths={[520, 900, 1280]} sizes="(max-width: 700px) 100vw, 48vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
+            {campusCards.map((card) => <button class="travel-card travel-tilt travel-reveal" type="button" data-tilt-strength="10" data-caption={card.en} data-meta={card.meta} data-alt={card.alt} data-viewer-src={viewerImageSources.get(card.image.src)}><Image src={card.image} alt={card.alt} widths={[520, 900, 1280]} sizes="(max-width: 700px) 100vw, 48vw" format="webp" /><span class="travel-card-shade"></span><span class="travel-card-meta">{card.meta}</span><strong><span class="lang-en">{card.en}</span><span class="lang-zh-hant">{card.hant}</span><span class="lang-zh-hans">{card.hans}</span></strong></button>)}
             <aside class="campus-note travel-tilt travel-reveal" data-tilt-strength="7"><span class="section-kicker">NORTH STAR / MO → PKU</span><h3><span class="lang-en">Keep walking<br />towards the gate.</span><span class="lang-zh-hant">繼續走，<br />走向那扇門。</span><span class="lang-zh-hans">继续走，<br />走向那扇门。</span></h3><p><span class="lang-en">The campus archive will keep growing with every new city and every new question.</span><span class="lang-zh-hant">每一座新城市、每一個新問題，都會讓這份校園圖集繼續長大。</span><span class="lang-zh-hans">每一座新城市、每一个新问题，都会让这份校园图集继续长大。</span></p><span class="campus-arrow">↗</span></aside>
           </div>
         </div>
@@ -372,7 +386,7 @@ const campusCards = [
     const card = travelCards[travelIndex];
     const image = card.querySelector('img');
     if (!image) return;
-    travelViewerImage.src = image.currentSrc || image.src;
+    travelViewerImage.src = card.dataset.viewerSrc || image.currentSrc || image.src;
     travelViewerImage.alt = card.dataset.alt || '';
     travelViewerCaption.textContent = card.querySelector('strong')?.innerText.trim() || card.dataset.caption || '';
     travelViewerMeta.textContent = card.dataset.meta || '';
