@@ -19,6 +19,8 @@ import fieldguardLive from '../assets/showcase/fieldguard-live.png';
 import transitLive from '../assets/showcase/transit-live.png';
 import noahWorkOverview from '../assets/showcase/noah-work-overview.png';
 
+const siteUrl = Astro.site?.href ?? 'https://www.noahxu.org/';
+
 const [tennisStoryImage, goStoryImage, violinStoryImage, imscStoryImage, musicStoryImage] = await Promise.all([
   getImage({ src: tennisChampionship, format: 'webp', width: 1200, quality: 80 }),
   getImage({ src: goRankingEvent, format: 'webp', width: 1200, quality: 80 }),
@@ -1036,7 +1038,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Noah Xu',
-    url: 'https://noahxu.org',
+    url: siteUrl,
     homeLocation: { '@type': 'Place', name: 'Macau' },
     affiliation: { '@type': 'EducationalOrganization', name: 'Hou Kong Middle School' },
     sameAs: [

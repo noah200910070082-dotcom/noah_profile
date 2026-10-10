@@ -100,3 +100,44 @@
 
 - SEO 巡检发现现有 `public/sitemap.xml` 只有首页，尚未列出 `/travel`；留待后续单独维护。
 - 同一照片可以有卡片缩略图和弹窗查看图两个版本。`getImage()` 在构建时完成缩放和压缩，访问者拿到的仍是静态图片，不需要新增服务器。
+
+## 2026-10-10 — 统一 SEO 主域名并补齐旅行页 sitemap
+
+### 发现与复现
+
+- 本轮开始时跟踪文件干净，HEAD 为 `bd5af75`；已有未跟踪的 `Hongshuling/` 保持不动。
+- 按 Vercel verification 的浏览器/部署/外部链路检查，公开首页和 `/travel/` 返回 HTTP 200，Vercel 之前的部署状态为 success，三语言、桌面/手机、键盘弹窗、减少动画、音乐和项目外链回归通过。
+- SEO 链路检查发现：`https://noahxu.org/robots.txt` 会跳转到 www，但 `robots.txt` 和 sitemap 仍写裸域；`public/sitemap.xml` 只有首页，没有列出已公开的 `/travel/`。页面实际 canonical 为裸域旅行地址，和最终 www 主站不统一。
+- `https://houkong.up.railway.app/` 仍返回 HTTP 404（`application/json`），这是展示项目的外部部署问题，本轮未修改外部仓库或链接。
+
+### 技能与参考来源
+
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：按“公开入口 → robots/sitemap → canonical → 页面构建与浏览器”的完整链路检查。
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：本轮未改变界面；沿用已安装技能作为网站维护范围参考。
+- [Google Search Central sitemap 指南](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)：确认 sitemap 应使用完整绝对 URL，并列出希望出现在搜索结果中的 canonical URL；也确认 robots 可声明 sitemap 地址。
+- [Astro 配置参考](https://docs.astro.build/en/reference/configuration-reference/#site)：确认 `site` 是最终部署 URL，Astro 用它生成 canonical URL；本项目继续使用静态输出，没有新增依赖或后端。
+
+### 实际修改
+
+- `astro.config.mjs` 的 `site` 改为 `https://www.noahxu.org`。
+- `src/pages/index.astro` 的 JSON-LD Person URL 从硬编码裸域改为使用 Astro 前置代码计算的 `siteUrl`，避免脚本表达式直接引用不可用的 `Astro` 变量。
+- `public/robots.txt` 的 Sitemap 地址改为 www 域名。
+- `public/sitemap.xml` 改为 www 域名，并新增 canonical 的 `https://www.noahxu.org/travel/`。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：通过，0 errors、0 warnings、89 hints；已有 `Hongshuling/` 提示未变。
+- 首次构建发现 `ReferenceError: Astro is not defined`，原因是 JSON-LD 的模板表达式直接在脚本对象中使用 `Astro.site`；改为前置 `siteUrl` 后，`npm run build` 成功，2 page(s) built、164 个图片输出。
+- `git diff --check`：通过。
+- 构建产物核对：首页 canonical 和 JSON-LD 为 `https://www.noahxu.org/`，旅行页 canonical 为 `https://www.noahxu.org/travel/`，sitemap 含两条 www URL。
+- 本地预览 Chrome/Playwright：桌面、手机、减少动画三种场景，每种 English/简体/繁体均通过；弹窗焦点、16 张照片、移动菜单、首页故事、音乐链接、项目链接和浏览器错误检查均通过，3 个场景均为 0 browser errors。
+
+### 提交与发布
+
+- 本轮相关文件待提交：`astro.config.mjs`、`public/robots.txt`、`public/sitemap.xml`、`src/pages/index.astro`，不包含 `Hongshuling/`。
+- 线上发布需要本轮提交推送后再确认 Vercel 状态与公开 sitemap；在确认前不把本地验证描述为已上线。
+
+### 学习提示
+
+- `canonical` 告诉搜索引擎哪一个 URL 是页面的标准地址；sitemap 则集中列出希望被发现的标准页面。两者使用同一个 www 域名，可以减少裸域与 www 的重复信号。

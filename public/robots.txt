@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://noahxu.org/sitemap.xml
+Sitemap: https://www.noahxu.org/sitemap.xml
