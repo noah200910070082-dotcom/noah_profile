@@ -136,7 +136,9 @@
 ### 提交与发布
 
 - 本轮相关文件待提交：`astro.config.mjs`、`public/robots.txt`、`public/sitemap.xml`、`src/pages/index.astro`，不包含 `Hongshuling/`。
-- 线上发布需要本轮提交推送后再确认 Vercel 状态与公开 sitemap；在确认前不把本地验证描述为已上线。
+- 提交 `e08f7d9` 已推送；Vercel 状态从 pending 变为 success，部署地址为 https://vercel.com/noah-xu/noah-profile/DFq54gugrrDxYFuFwBWqBaeZaWCr。
+- 线上复验：`https://noahxu.org/robots.txt`、`/sitemap.xml`、`/`、`/travel/` 均返回 HTTP 200 并跳转到 www；robots 指向 `https://www.noahxu.org/sitemap.xml`，sitemap 含 `https://www.noahxu.org/` 与 `https://www.noahxu.org/travel/`，首页和旅行页 canonical 均匹配 www 地址。
+- 发布状态：已上线。
 
 ### 学习提示
 
