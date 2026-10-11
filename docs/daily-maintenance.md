@@ -177,5 +177,8 @@
 
 ### 提交与发布
 
-- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
+- 本轮相关代码和文档提交为 `f08e8d8`（`fix: restore focus when closing story viewer`），已推送到 `main`；不包含 `Hongshuling/`。
+- Vercel 部署状态为 success，部署地址为 https://vercel.com/noah-xu/noah-profile/7NpQtF4fwE7CQdKkNYtR23。
+- 线上首页专用回归已通过：桌面、手机、减少动画 × English/简体/繁体，共 9 组均确认关闭后焦点返回、背景解除 inert、查看器进入 inert、立即重新打开成功。
+- 发布状态：已上线。
 - 学习提示：`inert` 不是视觉效果，而是告诉浏览器“这部分暂时不能被键盘和辅助技术操作”；弹窗关闭时应和焦点恢复同步解除它。
