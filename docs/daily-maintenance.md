@@ -143,3 +143,39 @@
 ### 学习提示
 
 - `canonical` 告诉搜索引擎哪一个 URL 是页面的标准地址；sitemap 则集中列出希望被发现的标准页面。两者使用同一个 www 域名，可以减少裸域与 www 的重复信号。
+
+## 2026-10-11 — 修复首页故事弹窗关闭后的焦点锁定
+
+### 发现与复现
+
+- 本轮开始时跟踪代码干净，HEAD 为 `c1e9f50`；已有未跟踪 `Hongshuling/` 保持不动。
+- 在线上首页打开 Tennis 故事弹窗，按 `Escape` 后立即检查：焦点仍在淡出的弹窗内，`main.inert` 仍为 `true`，查看器 `inert` 为 `false`；此时再次按 Enter 无法从原卡片立即重新打开。
+- 这违反了 WAI-ARIA Modal Dialog 对 Escape 关闭、焦点返回触发元素和弹窗外内容不可交互范围的完整要求。旅行页查看器此前已处理该流程，本轮只修复首页故事弹窗。
+
+### 技能与参考来源
+
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：复现“故事卡片 → 弹窗 → Escape → 焦点恢复 → 再次打开”的用户流程。
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `keyboard focus modal --domain ux`，采用可见焦点、弹窗内 Tab 循环和不遮挡焦点的指导。
+- [WAI-ARIA Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)：确认打开时焦点应进入弹窗，Tab 应留在弹窗内，Escape 关闭，关闭后通常返回触发元素。
+
+### 实际修改
+
+- 首页故事查看器初始添加 `inert`，背景元素的原始 inert 状态单独保存。
+- 关闭时立即恢复背景 inert 状态和触发卡片焦点，再等待淡出动画完成后隐藏查看器；查看器自身在关闭后立即 inert。
+- 打开时取消旧关闭计时器和待执行动画帧，避免快速关闭/重新打开被旧回调覆盖。
+- 背景关闭按钮从 Tab 顺序和辅助技术树中隐藏；Escape 和方向键只在真正打开状态响应。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：通过，0 errors、0 warnings、89 hints。
+- `npm run build`：通过，2 page(s) built、164 个图片输出。
+- `git diff --check`：通过。
+- 首页故事弹窗专用 Playwright 验证：桌面、手机、减少动画 × English/简体/繁体，共 9 组。每组确认关闭后焦点回到触发卡片、背景解除 inert、查看器进入 inert、立即重新打开成功；音乐故事的 Tab 循环也通过，0 browser errors。
+- 既有首页与旅行页完整回归仍通过：3 个场景均 0 browser errors，旅行 16 张图片与三语言流程正常。
+- 线上检查仍为首页、旅行页、robots 和 sitemap HTTP 200；濠江通外链仍为 HTTP 404，未修改外部项目。
+
+### 提交与发布
+
+- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
+- 学习提示：`inert` 不是视觉效果，而是告诉浏览器“这部分暂时不能被键盘和辅助技术操作”；弹窗关闭时应和焦点恢复同步解除它。

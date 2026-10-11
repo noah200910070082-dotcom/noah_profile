@@ -1,6 +1,6 @@
 # Noah Profile 项目记忆
 
-> 更新时间：2026-10-10
+> 更新时间：2026-10-11
 > 适用目录：`C:\Users\LENOVO\OneDrive\文档\Noah profile`
 > 目的：为后续新对话提供可靠的项目背景、用户偏好、已完成内容和继续开发规则。
 
@@ -110,6 +110,7 @@ git diff --check
 - 2026-10-09 命令行 `git push origin main` 已成功，之前的 Git 认证阻塞解除；`40553fb` 与此前本地记忆、弹窗修复提交已推送。`40553fb` 的 Vercel 状态为 success，公开站点三语言、桌面/手机/减少动画及 16 张查看器图片的浏览器验证通过。详情见 `docs/daily-maintenance.md`。公开首页与 `/travel` 仍为 HTTP 200，濠江通外链仍为 404。
 - 2026-10-10 已将 Astro `site`、页面 canonical/JSON-LD、robots 和 sitemap 统一为 `https://www.noahxu.org`，并把 `/travel/` 加入 sitemap；本地构建与浏览器回归通过，线上发布状态见维护记录。
 - 2026-10-10 提交 `e08f7d9` 的 Vercel 状态为 success；线上 robots、sitemap、首页和旅行页均返回 200，canonical 与 sitemap 已确认使用 www 地址。
+- 2026-10-11 修复首页故事弹窗关闭时焦点和 `inert` 延迟恢复的问题：关闭立即恢复触发卡片焦点并解除背景 `inert`，弹窗保持淡出后隐藏；打开时取消旧的关闭计时器和动画帧，支持快速重新打开。旅行页查看器逻辑保持不变。
 - noahxu.org 的域名/DNS/部署状态可能随时间变化；需要实时确认时再访问，不要把旧对话中的 HTTP 200 当作永久事实。
 - 旧对话里的 Git 提交号只代表当时状态；继续开发前以本地 `git log` 和远程状态为准。
 - 本记忆文件本身需要随重大内容、部署、结构或用户偏好变化而更新。

@@ -676,8 +676,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     <script is:inline id="skill-story-data" type="application/json" set:html={JSON.stringify(skillStories)}></script>
 
-    <div class="story-viewer" hidden aria-hidden="true">
-      <button class="story-viewer-backdrop" type="button" data-viewer-close aria-label="Close image viewer"></button>
+    <div class="story-viewer" hidden inert aria-hidden="true">
+      <button class="story-viewer-backdrop" type="button" data-viewer-close tabindex="-1" aria-hidden="true"></button>
       <div class="story-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="story-viewer-caption" tabindex="-1">
         <div class="story-viewer-topbar">
           <span class="story-viewer-counter">01 / 01</span>
@@ -842,6 +842,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     let activeSkillStory: SkillStory | null = null;
     let viewerReturnFocus: HTMLElement | null = null;
     let viewerCloseTimer = 0;
+    let viewerOpenFrame = 0;
+    let viewerBackgroundState: Array<{ element: HTMLElement; inert: boolean }> = [];
 
     const largestImageSource = (image: HTMLImageElement) => {
       const candidates = image.srcset
@@ -912,36 +914,37 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     const openStoryViewer = (index: number, trigger: HTMLElement, story?: SkillStory) => {
       if (!storyViewer || !storyViewerDialog) return;
-      if (viewerCloseTimer) window.clearTimeout(viewerCloseTimer);
+      window.clearTimeout(viewerCloseTimer);
+      window.cancelAnimationFrame(viewerOpenFrame);
       viewerReturnFocus = trigger;
       activeViewerMode = story ? 'skill' : 'gallery';
       activeSkillStory = story || null;
       storyViewerDialog.classList.toggle('is-skill-story', Boolean(story));
       renderStoryViewer(index);
       storyViewer.hidden = false;
+      storyViewer.inert = false;
       storyViewer.setAttribute('aria-hidden', 'false');
+      viewerBackgroundState = viewerBackgroundElements.map((element) => ({ element, inert: element.inert }));
       viewerBackgroundElements.forEach((background) => { background.inert = true; });
       document.body.classList.add('viewer-open');
-      window.requestAnimationFrame(() => {
-        storyViewer.classList.add('is-open');
-        storyViewerDialog.focus({ preventScroll: true });
-      });
+      storyViewerDialog.focus({ preventScroll: true });
+      viewerOpenFrame = window.requestAnimationFrame(() => storyViewer.classList.add('is-open'));
     };
 
     const closeStoryViewer = () => {
-      if (!storyViewer || storyViewer.hidden) return;
+      if (!storyViewer || storyViewer.getAttribute('aria-hidden') === 'true') return;
+      window.cancelAnimationFrame(viewerOpenFrame);
       storyViewer.classList.remove('is-open');
-      storyViewer.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('viewer-open');
-      viewerCloseTimer = window.setTimeout(() => {
-        storyViewer.hidden = true;
-        viewerBackgroundElements.forEach((background) => { background.inert = false; });
-        viewerReturnFocus?.focus({ preventScroll: true });
-      }, reducedMotion ? 0 : 240);
+      viewerBackgroundState.forEach(({ element, inert }) => { element.inert = inert; });
+      viewerReturnFocus?.focus({ preventScroll: true });
+      storyViewer.inert = true;
+      storyViewer.setAttribute('aria-hidden', 'true');
+      viewerCloseTimer = window.setTimeout(() => { storyViewer.hidden = true; }, reducedMotion ? 0 : 240);
     };
 
     const trapViewerFocus = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab' || !storyViewerDialog || !storyViewer || storyViewer.hidden) return;
+      if (event.key !== 'Tab' || !storyViewerDialog || storyViewer?.getAttribute('aria-hidden') !== 'false') return;
       const focusable = Array.from(storyViewerDialog.querySelectorAll<HTMLElement>('button:not([disabled]):not([hidden]), a[href]'))
         .filter((element) => element.offsetParent !== null);
       if (!focusable.length) return;
@@ -993,7 +996,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     });
 
     window.addEventListener('keydown', (event) => {
-      if (!storyViewer || storyViewer.hidden) return;
+      if (storyViewer?.getAttribute('aria-hidden') !== 'false') return;
       trapViewerFocus(event);
       if (event.key === 'Escape') closeStoryViewer();
       if (event.key === 'ArrowLeft') renderStoryViewer(activeViewerIndex - 1);
