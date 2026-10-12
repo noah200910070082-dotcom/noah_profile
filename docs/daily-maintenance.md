@@ -215,8 +215,10 @@
 
 ### 提交与发布
 
-- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
-- 上一轮线上部署继续为 success；本轮发布状态待新提交部署完成后确认。
+- 本轮相关代码和文档提交为 `78d54e0`（`fix: tolerate unavailable language storage`），已推送到 `main`；不包含 `Hongshuling/`。
+- Vercel 部署状态为 success，部署地址为 https://vercel.com/noah-xu/noah-profile/6iN6pJ9qyAvbNswpN9qYbi5M8p1T。
+- 线上禁止存储专用验证通过：首页和旅行页按繁体浏览器语言启动，旅行弹窗关闭标签为“关闭图片查看器”，浏览器错误为 0。
+- 发布状态：已上线。
 
 ### 学习提示
 
