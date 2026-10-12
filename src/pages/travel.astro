@@ -314,7 +314,13 @@ const viewerImageSources = new Map(await Promise.all(
     travelHtml.dataset.language = next;
     travelHtml.lang = next === 'zh-hans' ? 'zh-Hans' : next === 'zh-hant' ? 'zh-Hant' : 'en';
     travelLanguageButtons.forEach((button) => { const active = button.dataset.languageOption === next; button.classList.toggle('is-active', active); button.setAttribute('aria-pressed', String(active)); });
-    if (persist) localStorage.setItem('noah-language', next);
+    if (persist) {
+      try {
+        localStorage.setItem('noah-language', next);
+      } catch {
+        // Saving a preference must not interrupt the language update.
+      }
+    }
     document.dispatchEvent(new CustomEvent('noah:language-change'));
   };
   travelLanguageButtons.forEach((button) => button.addEventListener('click', () => setTravelLanguage(button.dataset.languageOption || 'en')));

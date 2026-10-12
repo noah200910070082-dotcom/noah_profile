@@ -182,3 +182,42 @@
 - 线上首页专用回归已通过：桌面、手机、减少动画 × English/简体/繁体，共 9 组均确认关闭后焦点返回、背景解除 inert、查看器进入 inert、立即重新打开成功。
 - 发布状态：已上线。
 - 学习提示：`inert` 不是视觉效果，而是告诉浏览器“这部分暂时不能被键盘和辅助技术操作”；弹窗关闭时应和焦点恢复同步解除它。
+
+## 2026-10-12 — 让语言切换兼容被禁用的浏览器存储
+
+### 发现与复现
+
+- 本轮开始时跟踪代码干净，HEAD 为 `52b771a`；已有未跟踪 `Hongshuling/` 保持不动。
+- 使用无头 Chrome 模拟 `localStorage` 被浏览器策略禁止：首页和旅行页各产生 2 个 `SecurityError`。繁体浏览器被迫回落为英文；切换到简体后，旅行查看器关闭按钮仍显示英文。
+- 模拟存储配额写满同样会让 `setItem()` 抛异常。MDN 说明浏览器阻止持久化数据时读取 `localStorage` 可能抛 `SecurityError`，写入也可能抛异常，因此语言偏好不应成为页面交互的硬依赖。
+
+### 技能与参考来源
+
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：复现“浏览器语言 → 页面初始化 → 切换语言 → 弹窗辅助标签”的完整流程。
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：沿用多语言交互和可访问弹窗检查。
+- [MDN `localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)：确认受策略限制时读取可能抛 `SecurityError`。
+- [MDN `Storage.setItem()`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem)：确认存储空间不足时写入可能抛 `QuotaExceededError`。
+
+### 实际修改
+
+- `src/layouts/Layout.astro` 读取已保存语言时加入 `try/catch`，存储不可用时继续使用浏览器语言。
+- 首页和旅行页保存语言时加入 `try/catch`；当前页面语言、`aria-pressed`、弹窗说明和辅助标签照常更新，只有持久化记忆被跳过。
+- 没有新增依赖、后端或视觉改动。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：通过，0 errors、0 warnings、89 hints。
+- `npm run build`：通过，2 page(s) built、164 个图片输出。
+- `git diff --check`：通过。
+- 专用 Playwright 存储验证：禁止存储、配额写满、正常存储 × 首页和旅行页，全部无 browser errors；繁体默认语言、三语言切换、旅行弹窗中文关闭标签均通过。
+- 完整 Playwright 回归：桌面、手机、减少动画 × English/简体/繁体，共 9 组；首页故事、旅行 16 张照片、键盘焦点、移动菜单、音乐和项目链接均通过，3 个场景均为 0 browser errors。
+
+### 提交与发布
+
+- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
+- 上一轮线上部署继续为 success；本轮发布状态待新提交部署完成后确认。
+
+### 学习提示
+
+- 浏览器存储是“增强功能”：它能记住语言，但不能阻塞页面启动。`try/catch` 让核心功能和可选的记忆功能分开。

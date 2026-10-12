@@ -35,7 +35,12 @@ const socialImage = new URL(image, Astro.site);
     <script is:inline>
       (() => {
         const supported = ['en', 'zh-hans', 'zh-hant'];
-        const savedValue = localStorage.getItem('noah-language');
+        let savedValue = null;
+        try {
+          savedValue = localStorage.getItem('noah-language');
+        } catch {
+          // Use the browser language when storage is unavailable.
+        }
         const saved = savedValue === 'zh' ? 'zh-hant' : savedValue;
         const browserLanguage = (navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
         const prefersTraditional = /(^zh-(tw|hk|mo)|^zh-hant)/.test(browserLanguage);

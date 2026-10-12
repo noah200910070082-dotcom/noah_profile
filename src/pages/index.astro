@@ -721,7 +721,13 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         button.classList.toggle('is-active', active);
         button.setAttribute('aria-pressed', String(active));
       });
-      if (persist) localStorage.setItem('noah-language', next);
+      if (persist) {
+        try {
+          localStorage.setItem('noah-language', next);
+        } catch {
+          // Saving a preference must not interrupt the language update.
+        }
+      }
       document.dispatchEvent(new CustomEvent('noah:language-change'));
     };
 
