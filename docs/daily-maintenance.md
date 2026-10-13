@@ -223,3 +223,36 @@
 ### 学习提示
 
 - 浏览器存储是“增强功能”：它能记住语言，但不能阻塞页面启动。`try/catch` 让核心功能和可选的记忆功能分开。
+
+## 2026-10-13 — 同步图片故事卡片的多语言辅助标签
+
+### 发现与复现
+
+- 本轮开始时跟踪代码干净，HEAD 为 `b919ddf`；已有未跟踪 `Hongshuling/` 保持不动。
+- 在线上首页依次切换 English、简体中文、繁体中文，读取前三个可打开图片故事卡片的 `aria-label`：三种语言始终是 `Open image: ...` 英文标签，和当前可见标题不一致。
+- WAI-ARIA APG 建议交互元素的 accessible name 使用简短、有用且随翻译更新的文本；这里属于可复现的无障碍本地化问题。
+
+### 技能与参考来源
+
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：验证“语言切换 → 图片故事卡片 → 屏幕阅读器名称”的完整流程。
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：沿用交互可访问性和多语言界面检查。
+- [WAI-ARIA accessible names](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/)：确认交互元素需要 accessible name，并建议翻译界面同步翻译 `aria-label`。
+
+### 实际修改
+
+- 首页 `updateGalleryCardLabels()` 根据当前语言和卡片当前可见标题，生成 `Open image: …`、`打开图片：…` 或 `開啟圖片：…`。
+- 语言切换时立即刷新所有图片故事卡片标签；不改变视觉文案、图片、弹窗或 Editorial Orbit 布局。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：通过，0 errors、0 warnings、89 hints。
+- `npm run build`：通过，2 page(s) built、164 个图片输出。
+- `git diff --check`：通过。
+- 专用 Playwright：三语言下前三张卡片标签分别使用对应语言标题和操作前缀。
+- 完整 Playwright：桌面、手机、减少动画 × 三语言，共 9 组；首页故事、旅行 16 张照片、键盘焦点、移动菜单、音乐和项目链接通过，3 个场景均为 0 browser errors。
+
+### 提交与发布
+
+- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
+- 学习提示：`aria-label` 是屏幕阅读器看到的名称；界面翻译时，视觉文字和辅助文字也要一起更新。

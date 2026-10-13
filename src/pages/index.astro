@@ -728,6 +728,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
           // Saving a preference must not interrupt the language update.
         }
       }
+      updateGalleryCardLabels();
       document.dispatchEvent(new CustomEvent('noah:language-change'));
     };
 
@@ -832,6 +833,15 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     const viewerNext = document.querySelector<HTMLButtonElement>('[data-viewer-next]');
     const viewerBackgroundElements = Array.from(document.querySelectorAll<HTMLElement>('.site-header, main, .toast'));
     const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.explore-card')).filter((card) => card.querySelector('img'));
+    const updateGalleryCardLabels = () => {
+      const language = html.dataset.language;
+      const prefix = language === 'zh-hans' ? '打开图片：' : language === 'zh-hant' ? '開啟圖片：' : 'Open image: ';
+      galleryCards.forEach((card) => {
+        const image = card.querySelector<HTMLImageElement>('img');
+        const caption = card.querySelector<HTMLElement>('figcaption strong, h4')?.innerText.trim() || image?.alt || 'Noah Xu story';
+        card.setAttribute('aria-label', `${prefix}${caption}`);
+      });
+    };
     type SkillStory = {
       meta: string;
       title: Record<'en' | 'hant' | 'hans', string>;
@@ -969,12 +979,10 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     };
 
     galleryCards.forEach((card, index) => {
-      const image = card.querySelector<HTMLImageElement>('img');
       card.classList.add('is-viewable');
       card.tabIndex = 0;
       card.setAttribute('role', 'button');
       card.setAttribute('aria-haspopup', 'dialog');
-      card.setAttribute('aria-label', `Open image: ${image?.alt || 'Noah Xu story'}`);
       card.addEventListener('click', (event) => {
         const target = event.target;
         if (target instanceof Element && target.closest('a, button')) return;
