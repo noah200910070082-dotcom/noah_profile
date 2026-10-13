@@ -254,5 +254,7 @@
 
 ### 提交与发布
 
-- 本轮相关代码和文档待提交后推送；不包含 `Hongshuling/`。
+- 本轮相关代码和文档提交为 `4cfa3cc`（`fix: localize story card accessible names`），已推送到 `main`；不包含 `Hongshuling/`。
+- Vercel 部署状态为 success，部署地址为 https://vercel.com/noah-xu/noah-profile/AFvhHQFQpFZRWwvCpWjgGD4Uok4u。
+- 线上三语言回归读取前三张图片故事卡片的标签，English/简体/繁体均与可见标题一致，页面错误为 0；发布状态：已上线。
 - 学习提示：`aria-label` 是屏幕阅读器看到的名称；界面翻译时，视觉文字和辅助文字也要一起更新。
