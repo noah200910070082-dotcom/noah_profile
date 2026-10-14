@@ -293,7 +293,10 @@
 
 ### 提交与发布
 
-- 本轮代码和两份记忆/维护文档验证通过，按既有约定提交并推送；线上状态将在部署后核实。
+- 修复提交 `b91ed25`（`fix: synchronize mobile navigation state`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/5sqKuNdEVnHsvk8ondDvr867EdW2) 状态为 success。
+- 线上手机导航专项重验：首页与旅行页 × 三语言共 6 组均通过；Escape 收起并返回按钮焦点，选择链接后状态和打开标签一致，展开时切换语言也正确；页面错误为 0。
+- 发布状态：已上线。项目记忆和发布确认另存文档提交并推送。
 
 ### 学习提示
 
