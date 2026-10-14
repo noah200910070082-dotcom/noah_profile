@@ -258,3 +258,43 @@
 - Vercel 部署状态为 success，部署地址为 https://vercel.com/noah-xu/noah-profile/AFvhHQFQpFZRWwvCpWjgGD4Uok4u。
 - 线上三语言回归读取前三张图片故事卡片的标签，English/简体/繁体均与可见标题一致，页面错误为 0；发布状态：已上线。
 - 学习提示：`aria-label` 是屏幕阅读器看到的名称；界面翻译时，视觉文字和辅助文字也要一起更新。
+
+## 2026-10-14 — 修复手机导航的关闭行为与辅助状态
+
+### 发现与复现
+
+- 开始时 HEAD 为 `2f1068e`，跟踪文件干净；已有未跟踪目录 `Hongshuling/` 未改动。该提交的 Vercel 状态为 success。
+- 线上 390×844 手机场景：首页与旅行页打开导航、将焦点放到导航链接后按 Escape，均仍为 `aria-expanded="true"`，焦点没有返回开关按钮。
+- 首页选择 `#about` 链接后，菜单虽然收起为 `aria-expanded="false"`，按钮标签仍是 `Close navigation`。旅行页跨页导航因重新加载恢复标签，但原开关逻辑同样没有统一更新关闭标签。两页按钮标签也没有跟随简体/繁体切换。
+- 首页、旅行页、robots、sitemap 均 HTTP 200；canonical 和 sitemap 的 www 地址正常。濠江通外链仍 HTTP 404，属于已知外部部署问题，没有修改其独立仓库或链接。本项目仍是 Astro 静态站点，没有后端/API。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：初始 `disclosure navigation escape --domain ux` 结果不够聚焦，改用 `keyboard navigation --domain ux`，采用键盘可操作与可见焦点指导。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：验证“开关导航 → 聚焦链接 → Escape/选择链接 → 收起状态与按钮焦点”的完整交互。
+- [W3C APG Disclosure Navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)：参考 Escape 收起并返回控制按钮、`aria-expanded` 与实际显示同步的指导；按现有原生按钮和链接结构实现，没有复制示例代码或引入额外菜单角色。
+
+### 修改
+
+- 新增 `src/scripts/navigation.ts`，让首页和旅行页共用导航开关逻辑，统一更新 `.is-open`、`aria-expanded` 和按钮辅助标签。
+- 导航区域内按 Escape，立即收起菜单并把焦点返回按钮；保留原生 Enter/Space 激活按钮的行为。
+- 三语言切换后，无论菜单打开或关闭，标签均同步为“打开/关闭导航”“開啟/關閉導航”或英文。
+- 导航链接点击后统一收起并恢复打开标签，保留首页锚点和旅行页跨页跳转。未更改布局、照片、个人资料、MO/IMSC 卡片或依赖。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：退出码 0；16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。
+- `npm run build`：退出码 0；2 page(s) built，164 个图片输出完成。
+- `git diff --check`：通过。
+- Chrome/Playwright 手机导航专项：首页与旅行页 × English/简体/繁体共 6 组，Enter 打开、Escape 收起并返回焦点、Space 重新打开、选择链接后收起与标签恢复均通过；展开时切换语言也能更新标签。每组页面错误为 0。
+- 完整交互回归：1280×900 桌面、390×844 手机、减少动画 × 三语言共 9 组；旅行 16 张卡片、照片加载、弹窗焦点与首尾切换、快速重新打开、首页故事、音乐四个链接、项目外链和 IMSC 大卡均通过，3 个场景均为 0 browser errors。
+- 验证脚本和输出留在被忽略的 `.superpowers/` 与 `.daily-*.log`，不加入提交。
+
+### 提交与发布
+
+- 本轮代码和两份记忆/维护文档验证通过，按既有约定提交并推送；线上状态将在部署后核实。
+
+### 学习提示
+
+- 菜单是否显示、`aria-expanded` 和“打开/关闭导航”标签描述的是同一个状态；让一个函数一起更新它们，能减少画面和屏幕阅读器信息不一致的问题。

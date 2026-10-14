@@ -706,6 +706,8 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
   </div>
 
   <script>
+    import { setupNavigationMenu } from '../scripts/navigation';
+
     const html = document.documentElement;
     const languageButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-language-option]'));
     const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
@@ -734,18 +736,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     languageButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.languageOption || 'en')));
 
-    menuButton?.addEventListener('click', () => {
-      const open = navLinks?.classList.toggle('is-open') ?? false;
-      menuButton.setAttribute('aria-expanded', String(open));
-      menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    });
-
-    navLinks?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('is-open');
-        menuButton?.setAttribute('aria-expanded', 'false');
-      });
-    });
+    setupNavigationMenu(menuButton, navLinks);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {

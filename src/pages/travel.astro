@@ -305,6 +305,8 @@ const viewerImageSources = new Map(await Promise.all(
 </style>
 
 <script>
+  import { setupNavigationMenu } from '../scripts/navigation';
+
   const travelHtml = document.documentElement;
   const travelLanguageButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-language-option]'));
   const travelMenuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
@@ -324,8 +326,7 @@ const viewerImageSources = new Map(await Promise.all(
     document.dispatchEvent(new CustomEvent('noah:language-change'));
   };
   travelLanguageButtons.forEach((button) => button.addEventListener('click', () => setTravelLanguage(button.dataset.languageOption || 'en')));
-  travelMenuButton?.addEventListener('click', () => { const open = travelNavLinks?.classList.toggle('is-open') ?? false; travelMenuButton.setAttribute('aria-expanded', String(open)); travelMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); });
-  travelNavLinks?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { travelNavLinks.classList.remove('is-open'); travelMenuButton?.setAttribute('aria-expanded', 'false'); }));
+  setupNavigationMenu(travelMenuButton, travelNavLinks);
 
   const travelObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); travelObserver.unobserve(entry.target); } }), { threshold: 0.1 });
   document.querySelectorAll('.travel-reveal').forEach((element) => travelObserver.observe(element));
