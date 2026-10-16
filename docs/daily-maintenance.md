@@ -334,7 +334,10 @@
 
 ### 提交与发布
 
-- 本轮首页代码与两份维护文档将在验证后提交并推送，随后核对 Vercel 和线上按钮名称。
+- 修复提交 `00dc426`（`fix: localize story viewer control labels`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/HgeU91FECsRLaVZtRmVBkjJTK3Dm) 状态为 success。
+- 线上专项重验：桌面、手机、减少动画 × 三语言共 9 组按钮名称、按名称匹配操作、翻页计数、关闭返回焦点及音乐故事均通过，无页面错误。
+- 发布状态：已上线。项目记忆与发布确认另存文档提交并推送。
 
 ### 学习提示
 
