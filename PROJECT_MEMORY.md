@@ -1,6 +1,6 @@
 # Noah Profile 项目记忆
 
-> 更新时间：2026-10-14
+> 更新时间：2026-10-16
 > 适用目录：`C:\Users\LENOVO\OneDrive\文档\Noah profile`
 > 目的：为后续新对话提供可靠的项目背景、用户偏好、已完成内容和继续开发规则。
 
@@ -33,6 +33,7 @@
 - FieldGuard AI 和 AI Transit Station 只是外部项目的展示卡片，不修改这两个仓库的源码。
 - Skills 卡片包含 Tennis、Go、Violin、MO/IMSC、Music；MO/IMSC 是视觉上最大的卡片。Travel 卡片进入 `/travel`，其他技能通过共享图片故事弹窗打开。
 - 图片故事弹窗保留图片、标题、说明、前后切换、Escape 关闭、焦点恢复、`inert` 和音乐链接；Jay Chou 链接使用 YouTube 搜索链接，不自动播放。
+- 首页故事弹窗的关闭、上一张、下一张按钮辅助名称跟随 English/简体/繁体；使用现有 `noah:language-change` 事件在初始加载和语言切换后更新。
 - 项目卡使用真实截图和 Astro 图片优化；“新地图，新朋友”使用真实上海照片。
 
 ### 旅行页 `/travel`

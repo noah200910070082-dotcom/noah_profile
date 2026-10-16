@@ -301,3 +301,41 @@
 ### 学习提示
 
 - 菜单是否显示、`aria-expanded` 和“打开/关闭导航”标签描述的是同一个状态；让一个函数一起更新它们，能减少画面和屏幕阅读器信息不一致的问题。
+
+## 2026-10-16 — 同步首页故事弹窗的三语言按钮名称
+
+### 发现与复现
+
+- 本轮开始时 HEAD 为 `fdd4a9f`，跟踪文件干净；已有未跟踪 `Hongshuling/` 未改动。GitHub 上该提交的 Vercel 状态为 success。
+- 在线上首页依次选择 English、简体、繁体后打开图片故事，三个图标按钮始终使用 `Close image viewer`、`Previous image`、`Next image`。卡片和故事标题已翻译，但弹窗操作名称仍是英文。
+- 首页、旅行页、robots、sitemap 均 HTTP 200，canonical 与 sitemap 的 www 地址正常；濠江通外链仍 HTTP 404，保持用户已有展示链接和独立仓库不动。本项目仍是 Astro 静态站点，无新增后端/API。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `icon button accessible label --domain icons`，采用精确匹配的 `icon-context-accessibility` 指导，为只有图标的交互控件提供有意义的名称；未引入搜索结果中的 React 或图标依赖。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：沿“语言切换 → 图片故事 → 按名称找到翻页/关闭按钮 → 返回触发卡片”验证。
+- [W3C APG Accessible Names](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/)：核对只有图标的按钮应有辅助名称，多语言界面的 `aria-label` 也应翻译。
+
+### 修改
+
+- 仅修改 `src/pages/index.astro`：增加 `updateStoryViewerLabels()`，根据现有 `activeLanguage()` 更新三个按钮的 `aria-label`。
+- 接入已有 `noah:language-change` 监听器，初始语言应用和后续语言切换都会更新按钮名称。
+- 保持原有图片、三语言文案、Editorial Orbit 布局、MO/IMSC 大卡、焦点管理、音乐链接与旅行页逻辑。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：退出码 0；16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。
+- `npm run build`：退出码 0；2 page(s) built，164 个图片输出完成。
+- `git diff --check`：通过。
+- Chrome/Playwright 专项：桌面、手机、减少动画 × 三语言，共 9 组；三个标签均为当前语言，`getByRole` 能按本地化名称匹配按钮，点击下一张后的计数正确，Escape 关闭后返回原卡片；音乐故事的关闭名称及四个链接正常。页面错误为 0。
+- 完整交互回归：桌面、手机、减少动画 × 三语言，共 9 组；首页故事、旅行 16 张卡片与照片加载、焦点循环、首尾切换、快速重新打开、移动菜单、音乐及项目链接均通过，3 个场景均为 0 browser errors。
+- 临时脚本与截图保留在忽略目录 `.superpowers/`，没有加入提交。
+
+### 提交与发布
+
+- 本轮首页代码与两份维护文档将在验证后提交并推送，随后核对 Vercel 和线上按钮名称。
+
+### 学习提示
+
+- 语言切换可以通过一个事件通知多个组件。组件分别更新自己的标题、说明和辅助标签，能减少只翻译画面、遗漏操作名称的问题。

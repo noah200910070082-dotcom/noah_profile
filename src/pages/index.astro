@@ -866,6 +866,18 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     const activeLanguage = () => html.dataset.language === 'zh-hans' ? 'hans' : html.dataset.language === 'zh-hant' ? 'hant' : 'en';
 
+    const updateStoryViewerLabels = () => {
+      const language = activeLanguage();
+      const labels = language === 'hans'
+        ? ['关闭图片查看器', '上一张图片', '下一张图片']
+        : language === 'hant'
+          ? ['關閉圖片查看器', '上一張圖片', '下一張圖片']
+          : ['Close image viewer', 'Previous image', 'Next image'];
+      storyViewerDialog?.querySelector('[data-viewer-close]')?.setAttribute('aria-label', labels[0]);
+      viewerPrev?.setAttribute('aria-label', labels[1]);
+      viewerNext?.setAttribute('aria-label', labels[2]);
+    };
+
     const renderMusicLinks = (links: SkillStory['links']) => {
       if (!skillMusicLinks) return;
       skillMusicLinks.replaceChildren();
@@ -997,6 +1009,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
     viewerPrev?.addEventListener('click', () => renderStoryViewer(activeViewerIndex - 1));
     viewerNext?.addEventListener('click', () => renderStoryViewer(activeViewerIndex + 1));
     document.addEventListener('noah:language-change', () => {
+      updateStoryViewerLabels();
       if (storyViewer && !storyViewer.hidden && activeViewerMode === 'skill') renderStoryViewer(activeViewerIndex);
     });
 
