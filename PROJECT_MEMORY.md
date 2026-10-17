@@ -1,6 +1,6 @@
 # Noah Profile 项目记忆
 
-> 更新时间：2026-10-16
+> 更新时间：2026-10-17
 > 适用目录：`C:\Users\LENOVO\OneDrive\文档\Noah profile`
 > 目的：为后续新对话提供可靠的项目背景、用户偏好、已完成内容和继续开发规则。
 
@@ -29,6 +29,7 @@
 
 - Hero、About、Projects、Skills/生活、Journey/Explore、Contact 等分区在一个连续页面中展示。
 - 顶部支持 English、简体中文、繁体中文；语言保存于浏览器 `localStorage` 的 `noah-language`。
+- 首页与旅行页均提供三语言“跳至内容”入口，作为页首第一个 Tab 停靠点；Enter 后聚焦 `main#main`，下一次 Tab 进入正文交互元素。正文使用 `tabindex="-1"` 接收跳转焦点。
 - 主要项目展示：濠江通校运会管理助手、FieldGuard AI、AI Transit Station，以及 AI/机器人相关内容。
 - FieldGuard AI 和 AI Transit Station 只是外部项目的展示卡片，不修改这两个仓库的源码。
 - Skills 卡片包含 Tennis、Go、Violin、MO/IMSC、Music；MO/IMSC 是视觉上最大的卡片。Travel 卡片进入 `/travel`，其他技能通过共享图片故事弹窗打开。

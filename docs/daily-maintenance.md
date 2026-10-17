@@ -342,3 +342,43 @@
 ### 学习提示
 
 - 语言切换可以通过一个事件通知多个组件。组件分别更新自己的标题、说明和辅助标签，能减少只翻译画面、遗漏操作名称的问题。
+
+## 2026-10-17 — 为旅行页补齐键盘跳至正文入口
+
+### 发现与复现
+
+- 开始时 HEAD 为 `b9a2fed`，跟踪文件干净；已有未跟踪 `Hongshuling/` 保持不动。该提交的 Vercel 状态为 success。
+- 线上首次 Tab 实测：首页聚焦已有的 `a.skip-link[href="#main"]`；旅行页则直接聚焦返回首页的品牌链接，没有相同的快捷入口。
+- 本轮补齐键盘绕过重复顶部导航的入口。参考 W3C G1 技术指导，不据此声称整站已完成 WCAG 合规评估。
+- 首页、旅行页、robots、sitemap 均 HTTP 200，www canonical 和旅行页 sitemap 记录正常。濠江通外链仍 HTTP 404，未改动其独立仓库和用户链接。本站继续为 Astro 静态输出，没有新增后端/API。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `skip links keyboard --domain ux`，精确匹配 Skip Links 指导，允许键盘用户跳过导航。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：验证“首次 Tab → 入口可见 → Enter → 正文焦点 → 下一次 Tab”的完整键盘流程。
+- [W3C WCAG Technique G1](https://www.w3.org/WAI/WCAG22/Techniques/general/G1)：核对页首入口、焦点可见性、转移到正文及后续 Tab 的验证方法。
+
+### 修改
+
+- `src/pages/travel.astro` 添加与首页一致的 English/简体/繁体“跳至内容”链接，复用已有 `.skip-link` 样式，无需新增 CSS 或依赖。
+- 旅行页正文添加 `id="main"`；两页 `main` 均添加 `tabindex="-1"`，接收锚点跳转焦点，不新增常规 Tab 停靠点。
+- 保持个人资料、真实照片、Editorial Orbit 布局、MO/IMSC 大卡、语言切换及图片故事不变。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：退出码 0；16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。
+- `npm run build`：退出码 0；2 page(s) built，164 个图片输出完成。
+- `git diff --check`：通过。
+- Chrome/Playwright 专项：两页 × 桌面/手机/减少动画 × English/简体/繁体，共 18 组。首次 Tab 聚焦对应语言的入口，入口显示于视口内，Enter 后 `main` 成为 activeElement，下一次 Tab 落在正文内；全部通过，页面错误为 0。
+- 专项检查起初在减少动画模式的首帧采样到入口原始位置；读取 CSS 后确认共享 reduced-motion 样式将过渡设置为 0.01ms，验证改为等待浏览器完成可见状态渲染后通过，没有为测试额外修改页面动画。
+- 完整交互回归：桌面/手机/减少动画 × 三语言，共 9 组；首页故事、旅行 16 张卡片、照片加载、焦点循环、首尾切换、快速重新打开、移动菜单、音乐及项目链接均通过，3 个场景均为 0 browser errors。
+- 临时脚本与截图保留在被忽略的 `.superpowers/`，不加入提交。
+
+### 提交与发布
+
+- 本轮两页代码及记忆/维护文档验证完成，按既有约定提交推送；部署后再核对线上键盘流程。
+
+### 学习提示
+
+- `tabindex="-1"` 让元素能接收程序或锚点跳转焦点，但不会增加普通 Tab 顺序中的停靠点，适合正文这样的跳转目标。

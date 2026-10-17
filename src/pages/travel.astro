@@ -63,6 +63,7 @@ const viewerImageSources = new Map(await Promise.all(
 
 <Layout title="Noah Xu — Travel Atlas" description={description} image={campusPeking.src}>
   <div class="travel-shell">
+    <a class="skip-link" href="#main"><span class="lang-en">Skip to content</span><span class="lang-zh-hans">跳至内容</span><span class="lang-zh-hant">跳至內容</span></a>
     <div class="travel-ambient" aria-hidden="true"><span></span><span></span><span></span></div>
 
     <header class="site-header">
@@ -85,7 +86,7 @@ const viewerImageSources = new Map(await Promise.all(
       </nav>
     </header>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="travel-hero" id="travel-top">
         <div class="travel-hero-scene" aria-hidden="true"><span class="travel-sun"></span><span class="travel-route-line"></span><span class="travel-compass">N</span><span class="travel-bird">⌁</span></div>
         <div class="container travel-hero-grid">
