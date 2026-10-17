@@ -377,7 +377,10 @@
 
 ### 提交与发布
 
-- 本轮两页代码及记忆/维护文档验证完成，按既有约定提交推送；部署后再核对线上键盘流程。
+- 改进提交 `41ad748`（`feat: add accessible travel skip navigation`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/Ha5PkduPGeFUdeVbbDCY4wyDumzy) 状态为 success。
+- 线上专项重验：两页 × 桌面/手机/减少动画 × 三语言共 18 组全部通过，首次 Tab 的入口可见，Enter 后正文获得焦点，下一次 Tab 进入正文交互元素，页面错误为 0。
+- 发布状态：已上线。项目记忆与发布确认另存文档提交并推送。
 
 ### 学习提示
 
