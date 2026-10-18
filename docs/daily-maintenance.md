@@ -423,7 +423,10 @@
 
 ### 提交与发布
 
-- 本地修改与验证已完成，待提交、推送及线上发布确认；不将本地通过视为已上线。
+- 修复提交 `a9400e3`（`fix: handle contact clipboard failures and restore focus`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/9LgNTqQocdBJaXsTTbNLympvsvUK) 状态为 success。
+- 线上复制专项重验：桌面/手机/减少动画 × 三语言 × 五种接口结果 × 两个账号，共 90 组全部通过；反馈显示、错误处理、账号和备用选区内容、焦点恢复、临时文本框清理、提示计时器均正常，无浏览器错误，手机提示位于视口内。
+- 发布状态：已上线。项目记忆与发布确认另存文档提交并推送；本轮启动的本地预览服务已关闭。
 
 ### 学习提示
 
