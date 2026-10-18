@@ -700,9 +700,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       </div>
     </div>
 
-    <div class="toast" role="status" aria-live="polite">
-      <span class="lang-en">Copied — see you there.</span><span class="lang-zh-hant">已複製，等你來聊。</span><span class="lang-zh-hans">已复制，等你来聊。</span>
-    </div>
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   </div>
 
   <script>
@@ -1026,18 +1024,41 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         await navigator.clipboard.writeText(value);
         return true;
       } catch {
+        const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         const temporary = document.createElement('textarea');
         temporary.value = value;
         temporary.setAttribute('readonly', '');
         temporary.style.position = 'fixed';
         temporary.style.opacity = '0';
-        document.body.appendChild(temporary);
-        temporary.select();
-        const legacyCopy = (document as unknown as { execCommand: (command: string) => boolean }).execCommand;
-        const copied = legacyCopy.call(document, 'copy');
-        temporary.remove();
-        return copied;
+        try {
+          document.body.appendChild(temporary);
+          temporary.select();
+          const legacyCopy = (document as unknown as { execCommand?: (command: string) => boolean }).execCommand;
+          return typeof legacyCopy === 'function' && legacyCopy.call(document, 'copy');
+        } catch {
+          return false;
+        } finally {
+          temporary.remove();
+          previousFocus?.focus({ preventScroll: true });
+        }
       }
+    };
+
+    let toastTimer = 0;
+    const showCopyFeedback = (copied: boolean) => {
+      if (!toast) return;
+      window.clearTimeout(toastTimer);
+      const messages = copied
+        ? { en: 'Copied — see you there.', 'zh-hant': '已複製，等你來聊。', 'zh-hans': '已复制，等你来聊。' }
+        : { en: 'Copy failed. Please copy the account manually.', 'zh-hant': '複製失敗，請手動複製帳號。', 'zh-hans': '复制失败，请手动复制账号。' };
+      toast.replaceChildren(...Object.entries(messages).map(([language, message]) => {
+        const text = document.createElement('span');
+        text.className = `lang-${language}`;
+        text.textContent = message;
+        return text;
+      }));
+      toast.classList.add('is-visible');
+      toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), copied ? 1800 : 5000);
     };
 
     document.querySelectorAll<HTMLButtonElement>('.copy-handle').forEach((button) => {
@@ -1045,10 +1066,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
         const value = button.dataset.copy;
         if (!value) return;
         const copied = await copyText(value);
-        if (copied) {
-          toast?.classList.add('is-visible');
-          window.setTimeout(() => toast?.classList.remove('is-visible'), 1800);
-        }
+        showCopyFeedback(copied);
       });
     });
 

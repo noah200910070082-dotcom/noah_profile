@@ -385,3 +385,46 @@
 ### 学习提示
 
 - `tabindex="-1"` 让元素能接收程序或锚点跳转焦点，但不会增加普通 Tab 顺序中的停靠点，适合正文这样的跳转目标。
+
+## 2026-10-18 — 修复联系账号复制的失败反馈与焦点丢失
+
+### 发现与复现
+
+- 开始时 HEAD 为 `ec17af9`，跟踪文件干净；已有未跟踪 `Hongshuling/` 未改动。该提交的 Vercel 状态为 success。
+- 在线上首页模拟 Clipboard API 拒绝写入后，用 Enter 触发 WeChat 复制：备用方式返回成功时，焦点落回 `BODY`；返回 `false` 时没有失败提示且同样丢失焦点；抛出异常时产生未处理的 `Copy denied`，焦点停在未清理的隐藏 `TEXTAREA`。
+- 复现使用浏览器接口模拟，不更改系统剪贴板。现代 Clipboard API 的 `NotAllowedError` 和备用 `execCommand` 的支持限制已按 MDN 文档核对。
+- 首页、旅行页、robots、sitemap 均 HTTP 200，www canonical 和旅行 sitemap 记录正常。濠江通外链仍 HTTP 404，保持已有链接和独立仓库不动。项目继续为 Astro 静态输出，无本项目后端/API。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `action success error feedback --domain ux`，采用 Success Feedback、Error Recovery、Error Feedback 指导，提供明确结果与可执行的恢复说明。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：验证“选择语言 → 键盘触发账号复制 → Clipboard/备用方式 → 反馈、清理与焦点”的完整流程。
+- [MDN Clipboard.writeText](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText)：核对写入拒绝会导致 Promise 失败。
+- [MDN Document.execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)：核对旧接口的弃用与浏览器支持限制；保留项目现有备用复制，只补齐保护，不新增相关依赖。
+- [W3C ARIA22](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA22)：状态容器先存在，操作后写入信息，并显式设置 `aria-atomic="true"`。本轮验证 DOM 与浏览器交互，未进行真实屏幕阅读器语音测试。
+
+### 修改
+
+- 仅修改 `src/pages/index.astro` 的复制流程及原有 toast 标记：备用复制加入接口存在检查、异常捕获和 `finally` 清理，同时恢复之前的键盘焦点，禁止清理过程引起滚动。
+- 成功提示保留原有三语言文案；失败显示三语言“复制失败，请手动复制账号”提示，保留 5 秒。
+- 状态区域初始为空，操作后写入三语言反馈；切换语言时沿用已有 CSS 翻译显示规则。每次复制取消旧计时器，避免前一次操作提前隐藏新提示。
+- 保持真实账号、照片、Editorial Orbit 风格、MO/IMSC 大卡及旅行页不变，无新增依赖。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：退出码 0；16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。
+- `npm run build`：退出码 0；2 page(s) built，164 个图片输出完成。
+- `git diff --check`：通过。
+- Chrome/Playwright 复制专项：桌面/手机/减少动画 × 三语言 × 现代接口成功、备用成功、备用返回失败、备用抛异常、备用接口缺失 × 两个账号，共 90 组全部通过；检查 Enter/Space、传入账号及备用选区正确、反馈翻译与视口内显示、无临时文本框残留、焦点保留、无横向溢出及无浏览器错误。
+- 补充检查：初始状态区域为空；提示显示时切换语言正确；重复复制后新提示不会被旧计时器提前隐藏，最终按时收起。手机提示截图已检查。
+- 完整回归：桌面/手机/减少动画 × 三语言共 9 组；首页故事、旅行 16 张卡片与照片加载、弹窗焦点循环、首尾切换、快速重新打开、移动导航、音乐及项目链接均通过，3 个场景均为 0 browser errors。
+- 验证脚本、截图及命令输出保留在忽略目录 `.superpowers/` 和 `.daily-*.log`，不加入提交。
+
+### 提交与发布
+
+- 本地修改与验证已完成，待提交、推送及线上发布确认；不将本地通过视为已上线。
+
+### 学习提示
+
+- `try/catch` 负责处理失败，`finally` 负责无论结果如何都要做的清理。这里用它移除临时文本框并恢复焦点，避免异常打断后留下页面状态。
