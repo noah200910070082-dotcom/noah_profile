@@ -474,7 +474,10 @@
 
 ### 提交与发布
 
-- 本地优化、资源专项与交互回归已完成；待提交推送和线上部署确认。
+- 优化提交 `1dded89`（`perf: optimize social preview images during build`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/H9XCkwoWPXUkG2751mNwncuyGkA3) 状态为 success。
+- 线上资源专项重验通过：无需 JavaScript 即可读取两页完整分享元数据；图片 HTTP 200、JPEG 类型、尺寸、比例、alt、绝对 URL 与 canonical 均正确。实测首页 93,689 字节、旅行页 171,940 字节，与本地一致。
+- 发布状态：已上线。项目记忆及发布确认另存文档提交并推送；本轮启动的本地预览服务已关闭。
 
 ### 学习提示
 
