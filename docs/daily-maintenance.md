@@ -431,3 +431,51 @@
 ### 学习提示
 
 - `try/catch` 负责处理失败，`finally` 负责无论结果如何都要做的清理。这里用它移除临时文本框并恢复焦点，避免异常打断后留下页面状态。
+
+## 2026-10-19 — 优化分享预览图片并补齐图片元数据
+
+### 发现与测量
+
+- 开始时 HEAD 为 `7c81d4d`，跟踪文件干净；既有未跟踪 `Hongshuling/` 未改动。该提交的 Vercel 状态为 success。
+- 线上首页与旅行页的 `og:image`/`twitter:image` 直接引用原始 JPEG。HTTP 实测：首页图片 121,869 字节、1125×1125；旅行图片 3,891,200 字节、4032×3024。两页均未提供分享图片尺寸和 alt 元数据。
+- 首页、旅行页、robots、sitemap 均 HTTP 200，www canonical 和旅行 sitemap 记录正常。濠江通外链仍 HTTP 404，未改动该链接或独立仓库。本站仍为 Astro 静态站点，无本项目后端/API。
+- 修改前的线上交互巡检已通过：桌面/手机/减少动画 × 三语言，图片查看器、导航、音乐与项目链接无新错误。本轮选择有明确字节收益的分享资源优化。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `image size optimization --domain ux`，采用 Image Optimization 指导，避免为小尺寸用途传输完整大图。此次输出 JPEG，保持已有分享图片格式与广泛兼容性；网页内原有 WebP 不变。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：验证“无需执行 JavaScript 读取页面 → 解析分享元数据 → 获取图片 → 核对内容类型、尺寸、体积”的完整资源流程。
+- [Astro Image and Assets API](https://docs.astro.build/en/reference/modules/astro-assets/#getimage)：核对 `getImage()` 的输出 URL、宽高属性与构建时图片处理；同时读取本地 Astro 7.0.7 类型和 Sharp 服务实现，确认适用现有技术栈及自动处理原图方向。
+- [Open Graph protocol](https://ogp.me/#structured)：核对 `og:image:type`、`width`、`height` 和图片说明 `alt` 的结构化属性。
+
+### 修改
+
+- `src/layouts/Layout.astro` 接收本地图片元数据与说明，在构建时生成长边最多 1200 像素、quality 80 的 JPEG；保持原图比例，不放大、不裁切。Open Graph 和 Twitter 复用同一绝对 URL。
+- 补齐 Open Graph MIME、实际宽高和 alt，以及 Twitter 图片 alt。
+- 首页与旅行页改为传入已有图片对象和说明；没有新增个人资料、替换照片、修改 CSS、增加依赖或客户端请求。
+- 这是分享图片资源优化，收益对应预览图片的传输体积，不将其描述为整页加载提速 95.6%。
+
+### 验证
+
+- `npm run test:profile`：通过。
+- `npm run check`：退出码 0；16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。
+- `npm run build`：退出码 0；2 page(s) built，166 个图片输出完成（新增两个分享 JPEG）。
+- `git diff --check`：通过。
+- 本地 HTTP 专项：无需 JavaScript，两页静态 HTML 均包含唯一且一致的 Open Graph/Twitter 图片 URL、说明及正确的 canonical；图片 HTTP 200、`image/jpeg`，解码后的尺寸与声明一致，无放大或比例变化。
+
+| 分享图 | 原图字节 | 新图字节 | 减少 | 输出尺寸 |
+| --- | ---: | ---: | ---: | --- |
+| 首页童年头像 | 121,869 | 93,689 | 23.1% | 1125×1125 |
+| 旅行北大照片 | 3,891,200 | 171,940 | 95.6% | 1200×900 |
+
+- 两张输出已人工查看，照片内容、方向与比例正常。此处验证静态元数据和公开资源，不声称已测试每个平台生成的最终分享卡片或刷新其缓存。
+- 本地完整交互回归：桌面/手机/减少动画 × 三语言共 9 组；首页故事、旅行 16 张卡片与照片加载、弹窗焦点循环、首尾切换、快速重新打开、移动菜单、音乐及项目链接均通过，3 个场景均为 0 browser errors。
+- 临时脚本、测量报告和下载的验证图片位于被忽略的 `.superpowers/`；检查与构建输出保留在 `.daily-*.log`，不加入提交。
+
+### 提交与发布
+
+- 本地优化、资源专项与交互回归已完成；待提交推送和线上部署确认。
+
+### 学习提示
+
+- 分享预览图由页面 `<head>` 的元数据指定，可以与页面卡片大图分别优化。Astro 在构建时生成图片，访问者无需等待服务器现场压缩。

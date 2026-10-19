@@ -1,6 +1,6 @@
 # Noah Profile 项目记忆
 
-> 更新时间：2026-10-18
+> 更新时间：2026-10-19
 > 适用目录：`C:\Users\LENOVO\OneDrive\文档\Noah profile`
 > 目的：为后续新对话提供可靠的项目背景、用户偏好、已完成内容和继续开发规则。
 
@@ -64,6 +64,7 @@
 - 远程：`origin` 指向上述仓库；默认分支是 `main`。
 - 生产域名：[https://www.noahxu.org/](https://www.noahxu.org/)，旅行页为 `/travel`。
 - Astro 配置为 `site: https://www.noahxu.org`、`output: static`；生产 canonical、JSON-LD、robots 和 sitemap 统一使用 www 域名。
+- 共享 `Layout.astro` 接收本地 `ImageMetadata` 与图片说明，通过 `getImage()` 在构建时生成 Open Graph/Twitter 分享 JPEG，长边最多 1200 像素、不放大、不裁切，quality 80；输出绝对图片 URL、MIME、实际宽高及 alt 元数据。首页使用原有童年头像，旅行页使用原有北大照片；页面卡片与查看器图片保持各自的优化方式。
 - README 已记录本地开发、验证、部署和站点地图。
 - 生产部署可使用 Vercel、Netlify、Cloudflare Pages 或 GitHub Pages；重新连接域名时必须保留现有邮件 MX/TXT 记录。
 - `Hongshuling/` 是同工作区内的另一套“羽迹·深湾”候鸟地图展示目录，不属于 Noah Profile 的实现范围。除非用户明确要求，不能修改、删除、加入提交或把它混入本项目记忆中的主站架构。
@@ -124,6 +125,7 @@ git diff --check
 - 2026-10-16 首页弹窗按钮辅助名称修复 `00dc426` 已推送，Vercel success；线上桌面、手机、减少动画 × 三语言共 9 组名称与翻页/关闭操作验证通过。
 - 2026-10-17 键盘跳至正文改进 `41ad748` 已推送，Vercel success；线上两页 × 桌面/手机/减少动画 × 三语言共 18 组首次 Tab、Enter 聚焦正文和后续 Tab 验证通过。
 - 2026-10-18 联系账号复制容错修复 `a9400e3` 已推送，Vercel success；线上桌面/手机/减少动画 × 三语言 × 五种接口结果 × 两个账号共 90 组专项通过，无浏览器错误。详情见 `docs/daily-maintenance.md`。
+- 2026-10-19 分享图片优化已通过本地构建与元数据/图片验证：旅行分享图从 3,891,200 字节降至 171,940 字节（减少 95.6%），首页从 121,869 字节降至 93,689 字节。提交及线上发布状态见维护记录。
 - noahxu.org 的域名/DNS/部署状态可能随时间变化；需要实时确认时再访问，不要把旧对话中的 HTTP 200 当作永久事实。
 - 旧对话里的 Git 提交号只代表当时状态；继续开发前以本地 `git log` 和远程状态为准。
 - 本记忆文件本身需要随重大内容、部署、结构或用户偏好变化而更新。
