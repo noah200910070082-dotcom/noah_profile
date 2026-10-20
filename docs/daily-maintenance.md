@@ -520,7 +520,10 @@
 
 ### 提交与发布
 
-- 本地修复与验证已完成，待提交推送及线上部署确认。
+- 修复提交 `d0106b2`（`fix: make overflowing skill stories readable by keyboard`）已推送到 `main`。
+- [Vercel 部署](https://vercel.com/noah-xu/noah-profile/5vwrmtoFY1RawZ9gtxj2Z9mQqi4B) 状态为 success。
+- 线上同样的 75 组故事专项全部通过：开头标签无裁切、末尾内容可达，Tab 可进入说明区，PageDown/Home 正常且背景不滚动；音乐链接聚焦可见、焦点循环和 Escape 返回正确，无页面错误。
+- 发布状态：已上线。项目记忆与发布确认另存文档提交并推送；本轮启动的本地预览服务已关闭。
 
 ### 学习提示
 
