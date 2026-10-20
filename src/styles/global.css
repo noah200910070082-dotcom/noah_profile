@@ -1323,7 +1323,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     min-height: 0;
-    align-content: center;
+    align-content: safe center;
     gap: clamp(0.65rem, 1.15vw, 1rem);
     padding: clamp(2.2rem, 4.2vw, 4.8rem);
     border-top: 0;
@@ -1334,6 +1334,7 @@
   }
 
   .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption > *:not(.story-viewer-orbit) { position: relative; z-index: 1; }
+  .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption:focus-visible { outline-offset: -4px; }
   .story-viewer-dialog.is-skill-story .story-viewer-figure figcaption strong { max-width: 9ch; font-size: clamp(2.35rem, 4.4vw, 5rem); line-height: 0.94; }
   .story-viewer-dialog.is-skill-story .story-viewer-description { max-width: 36ch; margin-top: 0.15rem; color: rgba(255,255,255,0.64); }
   .story-viewer-copy-index { color: rgba(255,255,255,0.34); font-family: var(--font-display); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.2em; }

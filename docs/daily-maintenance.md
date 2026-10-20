@@ -482,3 +482,46 @@
 ### 学习提示
 
 - 分享预览图由页面 `<head>` 的元数据指定，可以与页面卡片大图分别优化。Astro 在构建时生成图片，访问者无需等待服务器现场压缩。
+
+## 2026-10-20 — 修复矮屏故事说明裁切并支持键盘滚动
+
+### 发现与复现
+
+- 开始时 HEAD 为 `6c8713f`，跟踪文件干净；既有未跟踪 `Hongshuling/` 未改动。该提交的 Vercel 状态为 success。
+- 扩展布局巡检覆盖 320、590、768、900、901、1024、844px 宽度，两页 × 三语言共 42 组，未发现页面横向溢出或桌面导航重叠。
+- 故事专项在线上复现：568×320 横屏下，五个技能故事的三语言说明开头均被居中布局挤出滚动区域。English IMSC 的说明容器顶部为 184.59px，开头标签位于 134.03px；即使 `scrollTop=0`，仍有约 50.6px 内容位于可见区域上方。320×568 的 English 音乐故事也存在开头裁切。
+- 键盘复现：打开 IMSC 后连续两次 Tab 都停在关闭按钮；PageDown 后说明区 `scrollTop` 仍为 0。原有焦点循环只包含按钮和链接，无法进入可滚动说明区。
+- 图片和动画完成后再测量，排除了打开动画首帧的影响。
+- 首页、旅行页、robots、sitemap 与分享 JPEG 资源正常；昨天的分享图体积保持不变。濠江通外链仍 HTTP 404，保持原链接和独立仓库不动。本站仍为 Astro 静态输出，无本项目后端/API。
+
+### 技能与来源
+
+- [UI/UX Pro Max](C:/Users/LENOVO/.codex/skills/ui-ux-pro-max/SKILL.md)：运行 `scroll overflow content --domain ux`，采用检查容器内完整内容是否可达的指导；保留弹窗外层裁切和内部滚动，仅修复实际丢失内容的边界。
+- [Vercel verification](C:/Users/LENOVO/.codex/plugins/cache/openai-curated-remote/vercel/0.54.1/skills/verification/SKILL.md)：沿“打开故事 → 查看开头 → Tab 进入说明 → PageDown/Home → 音乐链接 → Escape 返回”的流程复现和验证。
+- [MDN align-content](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-content#values)：核对 `safe center` 在内容溢出时改用起始对齐，避免内容丢失。
+- [MDN overflow accessibility](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/overflow#accessibility)：核对可滚动区域的键盘聚焦需求。
+
+### 修改
+
+- `src/styles/global.css`：技能故事说明区改为 `align-content: safe center`，内容放得下时继续居中，溢出时从顶部排列；聚焦描边使用内侧偏移，避免被弹窗边界裁掉。
+- `src/pages/index.astro`：打开技能故事时为现有 `figcaption` 设置 `tabindex="0"`，普通图片模式设置为 `-1`；焦点循环纳入显式可聚焦的说明区。
+- 说明滚动使用浏览器原生 PageDown/Home 行为，没有增加滚动拦截器、依赖或新的界面按钮。
+- 保留照片、个人资料、Editorial Orbit 风格、MO/IMSC 大卡、三语言和旅行页实现。
+
+### 验证
+
+- 修改后重新运行 `npm run test:profile`、`npm run check`、`npm run build` 和 `git diff --check`，均退出码 0。
+- Astro 检查：16 files、0 errors、0 warnings、89 hints，既有 `Hongshuling/` 提示未变。构建生成 2 个页面、166 个图片输出。
+- Chrome/Playwright 故事专项共 75 组：320×568、568×320、844×390、1280×900 的减少动画模式，以及 568×320 正常动画 × 三语言 × 五个技能故事。所有开头标签均可见，末尾内容可滚动到达；Tab 能进入说明且有焦点描边，溢出时 PageDown/Home 生效且背景不滚动；音乐四个链接聚焦时可见，Tab 循环及 Escape 返回触发按钮正确，页面错误为 0。
+- 修复后 568×320 English IMSC 的说明顶部为 183.59px，开头标签为 202.98px；首次显示时标签位于容器内，滚动后可读完整标题和说明，前后截图已核对。
+- 完整交互回归：桌面/手机/减少动画 × 三语言共 9 组；旅行 16 张卡片、图片加载、焦点循环与恢复、首尾切换、快速重开、移动菜单、首页故事、音乐及项目链接均通过，3 个场景均为 0 browser errors。
+- 首页弹窗专项另测 9 组，关闭立即恢复背景和焦点、同帧取消打开、快速重开及更新后的 Tab/Shift+Tab 循环均通过。
+- 临时脚本、截图和测量记录位于忽略目录 `.superpowers/`；命令输出位于 `.daily-*.log`，不加入提交。
+
+### 提交与发布
+
+- 本地修复与验证已完成，待提交推送及线上部署确认。
+
+### 学习提示
+
+- 能用滚轮滚动，不代表键盘一定能进入该区域。弹窗里的长说明需要同时检查滚动、焦点和 Tab 循环，才能让键盘用户读到完整内容。

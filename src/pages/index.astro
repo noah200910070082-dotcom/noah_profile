@@ -937,6 +937,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
       activeViewerMode = story ? 'skill' : 'gallery';
       activeSkillStory = story || null;
       storyViewerDialog.classList.toggle('is-skill-story', Boolean(story));
+      storyViewerDialog.querySelector('figcaption')?.setAttribute('tabindex', story ? '0' : '-1');
       renderStoryViewer(index);
       storyViewer.hidden = false;
       storyViewer.inert = false;
@@ -962,7 +963,7 @@ const description = 'Noah Xu — a Macau student developer exploring algorithms,
 
     const trapViewerFocus = (event: KeyboardEvent) => {
       if (event.key !== 'Tab' || !storyViewerDialog || storyViewer?.getAttribute('aria-hidden') !== 'false') return;
-      const focusable = Array.from(storyViewerDialog.querySelectorAll<HTMLElement>('button:not([disabled]):not([hidden]), a[href]'))
+      const focusable = Array.from(storyViewerDialog.querySelectorAll<HTMLElement>('button:not([disabled]):not([hidden]), a[href], [tabindex="0"]'))
         .filter((element) => element.offsetParent !== null);
       if (!focusable.length) return;
       const first = focusable[0];
